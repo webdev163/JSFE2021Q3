@@ -1,0 +1,61 @@
+.visiting-section {
+  padding-top: 75px;
+  padding-bottom: 55px;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 103px;
+  max-width: 1440px;
+  column-gap: 60px;
+  row-gap: 58px;
+}
+
+.card-item {
+  text-decoration: none;
+}
+
+.card-item:hover .card-title::after {
+  width: 100%;
+}
+
+.card-title {
+  font-weight: normal;
+  font-size: var(--font-medium);
+  line-height: 35px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--font-dark);
+  margin-top: 21px;
+  position: relative;
+}
+
+.card-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 44px;
+  width: 68%;
+  height: 2px;
+  background-color: var(--dark-red);
+  transition: width 1s;
+}
+
+.card-additional {
+  font-family: Roboto, sans-serif;
+  font-weight: 200;
+  font-size: 22px;
+  line-height: 26px;
+  color: var(--font-dark);
+  margin-bottom: 0;
+}
+
+.card-source {
+  font-family: Roboto, sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 21px;
+  color: var(--font-dark);
+  margin-top: 10px;
+}

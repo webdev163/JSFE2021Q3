@@ -1,0 +1,32 @@
+.explore-section {
+  padding-top: 75px;
+  padding-bottom: 75px;
+}
+
+.explore-container {
+  display: flex;
+  position: relative;
+}
+
+.explore-text-wrapper {
+  margin-top: 104px;
+}
+
+.explore-text {
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 38px;
+  color: var(--font-light);
+  max-width: 655px;
+  margin-top: 26px;
+}
+
+.explore-text span {
+  color: #CAAA7D;
+}
+
+.explore-img {
+  margin-top: 15px;
+  margin-left: 63px;
+}

@@ -1,0 +1,140 @@
+.video-section {
+  padding-top: 90px;
+  padding-bottom: 59px;
+}
+
+.img-wrapper {
+  position: relative;
+}
+
+.videopleer {
+  display: block;
+}
+
+.video-button {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.video-button-img {
+  fill: #fff;
+  transition: fill 0.3s;
+}
+
+.video-button-img:hover,
+.video-button-img:active {
+  fill: #e4e4e4;
+}
+
+.play-big:hover {
+  cursor: pointer;
+}
+
+.control-panel {
+  background-color: #000;
+  padding-top: 23px;
+  padding-bottom: 21px;
+  padding-left: 41px;
+  padding-right: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pleer-button {
+  border: none;
+  background-color: transparent;
+}
+
+.pleer-button-svg {
+  fill: #B3B3B3;
+  transition: fill 0.3s;
+}
+
+.pleer-button:hover svg,
+.pleer-button:active svg {
+  fill: #989898;
+  cursor: pointer;
+}
+
+.progress-big {
+  background: linear-gradient(to right, #24809E 0%, #24809E 40%, #fff 40%, #fff 100%);
+  border: solid 2px #24809E;
+  height: 8px;
+  width: 820px;
+  outline: none;
+  transition: background 450ms ease-in;
+  -webkit-appearance: none;
+}
+
+.progress-big::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  cursor: ew-resize;
+  background: #fff;
+}
+
+.progress {
+  background: linear-gradient(to right, #24809E 0%, #24809E 40%, #fff 40%, #fff 100%);
+  border: solid 2px #24809E;
+  height: 8px;
+  outline: none;
+  transition: background 450ms ease-in;
+  -webkit-appearance: none;
+}
+
+.progress::-webkit-slider-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  cursor: ew-resize;
+  background: #fff;
+  margin-bottom: 2px;
+}
+
+.progress-big {
+  width: 820px;
+}
+.progress-small {
+  width: 155px;
+}
+
+.play-back {
+  margin-left: -5px;
+}
+
+.volume {
+  margin-right: -7px;
+}
+
+.fullscreen {
+  margin-right: -5px;
+}
+
+.video-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.video-title {
+  color: var(--font-gold);
+  margin-top: 39px;
+}
+
+.video-text {
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 38px;
+  color: var(--font-dark);
+  max-width: 720px;
+  padding-top: 25px;
+}

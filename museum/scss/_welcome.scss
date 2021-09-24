@@ -1,0 +1,42 @@
+.welcome-section {
+  min-height: 750px;
+  background-image: url("../assets/img/welcome-bg.jpg");
+  background-size: 1215px 750px;
+  background-repeat: no-repeat;
+  background-position: calc(50% + 352px) 100%;
+  padding-top: 30px;
+  padding-bottom: 0;
+}
+
+.welcome-title {
+  margin-top: 113px;
+  margin-bottom: 26px;
+}
+
+.welcome-text {
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 33px;
+  letter-spacing: 2px;
+}
+
+.welcome-button {
+  font-family: Roboto, sans-serif;
+  font-weight: 200;
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: 2px;
+  color: var(--font-light);
+  text-decoration: none;
+  background-color: var(--dark-red);
+  padding: 25px 68px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-top: 47px;
+  transition: background-color 1s;
+}
+
+.welcome-button:hover {
+  background-color: var(--font-gold);
+}

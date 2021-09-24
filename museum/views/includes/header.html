@@ -1,0 +1,47 @@
+<!-- linthtml-configure tag-close=false -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum</title>
+    <% for (var i in styles) { %><link rel="stylesheet" href="<%= styles[i] %>"><% } %>
+    <link rel="icon" href="assets/favicon.ico">
+</head>
+
+<body>
+    <header class="header dark-section">
+        <div class="container">
+            <div class="header-wrapper">
+                <a class="logo" href="#">
+                    <svg class="logo__img" width="49" height="26">
+                        <title>Louvre logo</title>
+                        <use href="assets/icons/sprite.svg#logo"></use>
+                    </svg>
+                    <span class="logo__text">Louvre</span>
+                </a>
+                <nav class="main-menu">
+                    <ul class="main-menu__list">
+                        <li class="main-menu__item">
+                            <a href="#visiting" class="main-menu__link">Visiting</a>
+                        </li>
+                        <li class="main-menu__item">
+                            <a href="#explore" class="main-menu__link">Explore</a>
+                        </li>
+                        <li class="main-menu__item">
+                            <a href="#video" class="main-menu__link">Video</a>
+                        </li>
+                        <li class="main-menu__item">
+                            <a href="#tickets" class="main-menu__link">Tickets</a>
+                        </li>
+                        <li class="main-menu__item">
+                            <a href="#contacts" class="main-menu__link">Contacts</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>

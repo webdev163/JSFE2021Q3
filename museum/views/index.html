@@ -1,4 +1,8 @@
-<%- include("includes/header.html", { title: "Document" , styles: ["css/style.css"] }); %>
+<!-- linthtml-configure doctype-first=false -->
+
+<% const obj = { title: "Louvre museum site", styles: [] }; %>
+<% if (process.env.NODE_ENV === "production") { obj.styles = ["css/style.css"] }; %> 
+<%- include("includes/header.html", obj); %>
 
   <main class="main">
     <h1 class="visuallyhidden">Louvre museum site</h1>

@@ -1,5 +1,5 @@
 .header {
-  padding-top: 44px;
+  padding-top: 21px;
   padding-bottom: 14px;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .logo__img {
-  margin-right: 17px;
+  margin-right: 20px;
   fill: var(--font-light);
   transition: fill 1s;
 }
@@ -19,6 +19,7 @@
   text-decoration: none;
   color: var(--font-light);
   transition: color 1s;
+  margin-top: 6px;
 }
 
 .logo:hover,
@@ -39,7 +40,7 @@
 }
 
 .main-menu {
-  max-width: 720px;
+  max-width: 775px;
 }
 
 .main-menu__list {
@@ -50,8 +51,17 @@
 }
 
 .main-menu__item {
-  padding: 15px 38px 15px;
+  padding: 16px 28px 16px;
   transition: color 1s;
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: 2px;
+  font-weight: 200;
+  margin-top: 1px;
+}
+
+.main-menu__item:nth-child(4n) {
+  margin-right: 2px;
 }
 
 .main-menu__item:last-child {

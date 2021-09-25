@@ -3,3 +3,4 @@ if (module.hot) {
 }
 
 import './progressBar';
+import './exploreSlider';

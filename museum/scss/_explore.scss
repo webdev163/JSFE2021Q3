@@ -28,5 +28,51 @@
 
 .explore-img {
   margin-top: 15px;
-  margin-left: 63px;
+  margin-left: 62px;
+  position: relative;
+  height: 700px;
+}
+
+.explore-img-main {
+  position: absolute;
+  width: auto;
+  height: auto;
+  top: 0;
+  overflow: hidden;
+}
+
+.explore-img-main img {
+  display: block;
+  vertical-align: middle;
+}
+
+.explore-img-slider {
+  z-index: 9;
+  cursor: ew-resize;
+  width: 29px;
+  height: 29px;
+  background: none;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  position: relative;
+  &::before {
+    content: '';
+    width: 5px;
+    height: 335px;
+    background-color: #fff;
+    display: block;
+    position: absolute;
+    top: -335px;
+    left: 12px;
+  }
+  &::after {
+    content: '';
+    width: 5px;
+    height: 335px;
+    background-color: #fff;
+    display: block;
+    position: absolute;
+    top: 29px;
+    left: 12px;
+  }
 }

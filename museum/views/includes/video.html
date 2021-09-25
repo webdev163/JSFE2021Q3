@@ -1,7 +1,13 @@
 <section class="section light-section video-section" id="video">
   <div class="container">
+    <div class="video-info">
+      <h2 class="section-title video-title">Video journey</h2>
+      <p class="video-text">Enter and visit one of the most famous museums in the world and enjoy masterpieces such as
+        Mona
+        Lisa or Hammurabi's Code</p>
+    </div>
     <div class="img-wrapper">
-      <img src="assets/img/video-screenshot.jpg" alt="Video screenshot" class="videopleer" width="1440" height="629">
+      <img src="assets/img/video-screenshot.jpg" alt="Video screenshot" class="videopleer" width="1440" height="650">
       <button class="video-button">
         <svg class="video-button-img" width="220" height="220">
           <title>Play</title>
@@ -10,22 +16,10 @@
       </button>
     </div>
     <div class="control-panel">
-      <button class="play-back pleer-button">
-        <svg class="pleer-button-svg" width="27" height="30">
-          <title>Play back</title>
-          <use href="assets/icons/sprite.svg#play-back"></use>
-        </svg>
-      </button>
       <button class="play pleer-button">
         <svg class="pleer-button-svg" width="23" height="30">
           <title>Play</title>
           <use href="assets/icons/sprite.svg#play"></use>
-        </svg>
-      </button>
-      <button class="play-forward pleer-button">
-        <svg class="pleer-button-svg" width="27" height="30">
-          <title>Play</title>
-          <use href="assets/icons/sprite.svg#play-forward"></use>
         </svg>
       </button>
       <input type="range" value="40" min="0" max="100" step="1" class="progress progress-big">
@@ -43,11 +37,29 @@
         </svg>
       </button>
     </div>
-    <div class="video-info">
-      <h2 class="section-title video-title">Video journey</h2>
-      <p class="video-text">Enter and visit one of the most famous museums in the world and enjoy masterpieces such as
-        Mona
-        Lisa or Hammurabi's Code</p>
+    <div class="video-slider-wrapper">
+      <iframe width="452" height="254" loading="lazy" src="https://www.youtube.com/embed/aWmJ5DgyWPI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width="452" height="254" loading="lazy" src="https://www.youtube.com/embed/Vi5D6FKhRmo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width="452" height="254" loading="lazy" src="https://www.youtube.com/embed/NOhDysLnTvY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="video-slider-controls">
+      <button class="video-slider-arrow">
+        <svg class="video-slider-arrow-left" width="10" height="12">
+          <use href="assets/icons/sprite.svg#double-arrow"></use>
+        </svg>
+      </button>
+      <div class="video-slider-dots">
+        <button class="video-slider-dots-item active"></button>
+        <button class="video-slider-dots-item"></button>
+        <button class="video-slider-dots-item"></button>
+        <button class="video-slider-dots-item"></button>
+        <button class="video-slider-dots-item"></button>
+      </div>
+      <button class="video-slider-arrow">
+        <svg class="video-slider-arrow-right" width="10" height="12">
+          <use href="assets/icons/sprite.svg#double-arrow"></use>
+        </svg>
+      </button>
     </div>
   </div>
 </section>

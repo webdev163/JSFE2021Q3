@@ -1,4 +1,4 @@
-const rippleBtn = document.querySelector('.buy-button');
+const rippleBtn = document.querySelector('.book-btn');
 
 rippleBtn.addEventListener('click', function (e) {
   const x = e.clientX;

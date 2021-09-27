@@ -4,6 +4,7 @@
   --font-light: #ffffff;
   --font-dark: #000000;
   --font-gold: #9d8665;
+  --font-active: #7E6C51;
   --font-big: 80px;
   --font-medium: 32px;
 }
@@ -14,6 +15,10 @@ html {
 
 body {
   font-family: Forum, sans-serif;
+}
+
+a:active {
+  color: var(--font-active);
 }
 
 .container {

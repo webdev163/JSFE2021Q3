@@ -1,0 +1,108 @@
+<div class="tickets-popup">
+  <div class="popup-close"></div>
+  <form action="#" class="popup-form">
+    <div class="popup-container">
+      <div class="popup-left">
+        <svg class="popup-logo" width="49" height="26">
+          <title>Louvre logo</title>
+          <use href="assets/icons/sprite.svg#logo"></use>
+        </svg>
+        <h2 class="popup-title">Booking tickets</h2>
+        <p class="popup-subtitle">Tour to Louvre</p>
+        <div class="popup-wrapper">
+          <div class="input-wrapper">
+            <input class="input-date placeholder" type="date" required data-value="Date" name="#" id="input-date">
+            <input class="input-time placeholder" type="time" required data-value="Time" name="#" id="input-time">
+          </div>
+          <input class="input-name" placeholder="Name" type="text" name="#" id="input-name">
+          <div class="email-icon"></div>
+          <input class="input-mail" placeholder="E-mail" type="email" name="#" id="input-mail" style="background-image: none">
+          <input class="input-tel" placeholder="Phone" type="tel" name="#" id="input-tel">
+          <select class="select-ticket" name="#" id="select-ticket">
+            <option value="" disabled selected hidden>Ticket Type</option>
+            <option>Permanent exhibition</option>
+            <option>Temporary exhibition</option>
+            <option>Combined Admission</option>
+          </select>
+          <div class="entry-ticket">
+            <p class="entry-ticket-title">Entry ticket</p>
+            <div class="entry-ticket-wrapper">
+              <div class="entry-ticket-type entry-ticket-basic">Basic 18+ (20 €)</div>
+              <div class="entry-ticket-counter">
+                <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
+                <input type="number" min="0" max="20" value="1" readonly class="number">
+                <button class="plus-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+              </div>
+            </div>
+            <div class="entry-ticket-wrapper">
+              <div class="entry-ticket-type entry-ticket-senior">Senior 65+ (10 €)</div>
+              <div class="entry-ticket-counter">
+                <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
+                <input type="number" min="0" max="20" value="1" readonly class="number">
+                <button class="plus-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-side">
+        <div class="summary-wrapper">
+          <div class="summary-text">
+            <h2 class="summary-title">Overview</h2>
+            <p class="summary-subtitle">Tour to Louvre</p>
+            <div class="overview-info overview-date">Friday, August 19</div>
+            <div class="overview-info overview-time">16 : 30</div>
+            <div class="overview-info overview-type">Temporary exhibition</div>
+          </div>
+          <div class="summary-img"><img src="../assets/img/overview-img.jpg" alt="overview"></div>
+        </div>
+        <div class="price-wrapper">
+          <div class="price-basic-wrapper">
+            <div class="price-item">
+              <span class="price-number">2</span>
+              <p class="price-title">Basic (20 €)</p>
+            </div>
+            <div class="price-subtotal">40 €</div>
+          </div>
+          <div class="price-senior-wrapper">
+            <div class="price-item">
+              <span class="price-number">2</span>
+              <p class="price-title">Senior (10 €)</p>
+            </div>
+            <div class="price-subtotal">20 €</div>
+          </div>
+        </div>
+        <div class="total-wrapper">
+          <span class="total-text">Total:</span>
+          <span class="total-price">60 €</span>
+        </div>
+        <div class="card">
+          <div class="card-first-side">
+            <label class="card-number-label" for="card-number">Card number</label>
+            <input class="card-number" type="number" name="#" id="card-number" min="16" max="16">
+            <label class="card-expiration-label">Expiration date</label>
+            <div class="card-input-wrapper">
+              <span class='number-wrapper'>
+                <input type="number" name="#" min="01" max="12" value="01" class="card-expiration-month" id="card-expiration-month">
+              </span>
+              <span class='number-wrapper'>
+                <input type="number" name="#" min="2021" max="2026" value="2021" class="card-expiration-year" id="card-expiration-year">
+              </span>
+            </div>
+            <label class="cardholder-label" for="cardholder">Cardholder name</label>
+            <input class="cardholder" type="text" name="#" id="cardholder">
+          </div>
+          <div class="card-second-side">
+            <div class="black-line"></div>
+            <div class="card-info-wrapper">
+              <span class="cvc-code">CVC/CVV</span>
+              <input class="cvc-code-input" type="number" name="#" id="cvc-code-input" min="1" max="9999">
+              <span class="cvc-code-additional">The last<br> 3 or 4 digits<br> on back<br> of the card</span>
+            </div>
+          </div>
+        </div>
+        <button type="submit" value="Submit" class="book-btn">Book</button>
+      </div>
+    </div>
+  </form>
+</div>

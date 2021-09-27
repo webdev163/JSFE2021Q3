@@ -104,8 +104,12 @@
   background-color: #fff;
   border: none;
   display: block;
+  transition: background-color .3s;
   &.active {
     background-color: #D2B183;
+  }
+  &:hover {
+    background-color: #9D8665;
   }
 }
 
@@ -119,6 +123,13 @@
   background-color: transparent;
   cursor: pointer;
   padding: 0;
+  & svg {
+    fill: #fff;
+    transition: fill .3s;
+    &:hover {
+      fill: #9D8665;
+    }
+  }
 }
 
 .slider-arrow-left {

@@ -1,6 +1,10 @@
 .footer {
   padding-top: 77px;
-  padding-bottom: 75px;
+  padding-bottom: 50px;
+}
+
+.footer .logo {
+  margin-top: 0;
 }
 
 .footer-wrapper {
@@ -16,17 +20,20 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin-left: 145px;
+  margin-left: 142px;
   margin-top: -1px;
 }
 
 .footer-nav-item {
-  width: 260px;
+  width: 256px;
 }
 
-.footer-nav-item:hover .footer-nav-link,
-.footer-nav-item:active .footer-nav-link {
+.footer-nav-item:hover .footer-nav-link {
   color: var(--font-gold);
+}
+
+.footer-nav-item:active .footer-nav-link  {
+  color: var(--font-active);
 }
 
 .footer-nav-link {
@@ -50,21 +57,27 @@
 }
 
 .footer-social-item {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .footer-social-item:not(:last-child) {
-  margin-right: 22px;
+  margin-right: 23px;
 }
 
-.footer-social-item:hover .footer-social-img,
-.footer-social-item:active .footer-social-img {
+.footer-social-item:hover .footer-social-img {
   fill: var(--font-gold);
 }
 
-.footer-social-item:hover .footer-social-img-wrapper,
-.footer-social-item:active .footer-social-img-wrapper {
+.footer-social-item:active .footer-social-img {
+  fill: var(--font-active);
+}
+
+.footer-social-item:hover .footer-social-img-wrapper {
   border: 1px solid #9d8665;
+}
+
+.footer-social-item:active .footer-social-img-wrapper {
+  border: 1px solid #7E6C51;
 }
 
 .footer-social-img-wrapper {
@@ -72,7 +85,6 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  border: 1px solid #fff;
   width: 48px;
   height: 48px;
   border: 1px solid #666666;
@@ -84,4 +96,42 @@
 .footer-social-img {
   fill: #ffffff;
   transition: fill 1s;
+}
+
+footer::after {
+  content: '';
+  width: 100%;
+  height: 3px;
+  display: block;
+  background-color: #666666;
+  position: relative;
+  bottom: 76px;
+}
+
+.footer-info-wrapper {
+  margin-top: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Roboto, sans-serif;
+  font-weight: 200;
+  font-size: 22px;
+  line-height: 22px;
+  letter-spacing: 2px;
+  color: #fff;
+  & a {
+    color: inherit;
+    text-decoration: none;
+    transition: color .3s;
+    &:hover {
+      color: var(--font-gold);
+    }
+    &:active {
+      color: var(--font-active);
+    }
+  }
+}
+
+.footer-school {
+  margin-left: 45px;
 }

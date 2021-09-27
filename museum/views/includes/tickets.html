@@ -1,11 +1,11 @@
-<section class="section dark-section tickets-section" id="tickets">
+<section class="section tickets-section" id="tickets">
   <div class="container">
-    <h2 class="section-title underline-title">Buy tickets</h2>
+    <h2 class="section-title tickets-title underline-title">Buy tickets</h2>
     <div class="tickets-wrapper">
       <img src="assets/img/tickets-img.jpg" alt="Tickets image" class="tickets-img" width="720" height="550">
       <div class="tickets-type">
         <p class="tickets-type-title">Ticket Type</p>
-        <label class="radio-label">Permanent exhibition
+        <label class="radio-label radio-label-first">Permanent exhibition
           <input type="radio" name="radio">
           <span class="checkmark"></span>
         </label>
@@ -23,17 +23,17 @@
         <p class="tickets-category">Basic 18+</p>
         <div class="tickets-counter">
           <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
-          <input type="number" min="0" max="100" value="1" readonly class="number">
+          <input type="number" min="0" max="20" value="1" readonly class="number">
           <button class="plus-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
         </div>
         <p class="tickets-category">Senior 65+</p>
         <div class="tickets-counter">
           <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
-          <input type="number" min="0" max="100" value="1" readonly class="number">
+          <input type="number" min="0" max="20" value="1" readonly class="number">
           <button class="plus-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
         </div>
         <div class="total"><span class="total-text">Total €</span><span class="total-price">220</span></div>
-        <button class="buy-button">Buy Now</button>
+        <button class="buy-button ripple-btn">Buy Now</button>
       </div>
     </div>
   </div>

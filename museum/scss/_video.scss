@@ -1,6 +1,6 @@
 .video-section {
   padding-top: 76px;
-  padding-bottom: 59px;
+  padding-bottom: 61px;
 }
 
 .img-wrapper {
@@ -150,6 +150,13 @@
   background: none;
   cursor: pointer;
   padding: 0;
+  & svg {
+    fill: #999;
+    transition: fill .3s;
+    &:hover {
+      fill: #710707;
+    }
+  }
 }
 
 .video-slider-dots {
@@ -167,8 +174,12 @@
   border: none;
   display: block;
   margin: 10px;
+  transition: background-color .3s;
   &.active {
     background-color: #333333;
+  }
+  &:hover {
+    background-color: #710707;
   }
 }
 
@@ -181,4 +192,8 @@
   transform: rotate(180deg);
   padding: 10px;
   margin-top: 2px;
+}
+
+iframe {
+  border: none;
 }

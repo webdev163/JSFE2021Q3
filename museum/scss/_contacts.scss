@@ -16,9 +16,9 @@
   font-size: 28px;
   line-height: 33px;
   color: var(--font-dark);
-  margin-top: 10px;
+  margin-top: -2px;
   line-height: 34px;
-  margin-bottom: 36px;
+  margin-bottom: 51px;
 }
 
 .contacts-details {
@@ -30,9 +30,21 @@
   color: var(--font-dark);
 }
 
+.contacts-text a {
+  text-decoration: none;
+  color: inherit;
+  transition: color .3s;
+  &:hover {
+    color: var(--font-gold);
+  }
+  &:active {
+    color: var(--font-active);
+  }
+}
+
 .contacts-phone {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .contacts-email {

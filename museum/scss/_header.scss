@@ -22,14 +22,20 @@
   margin-top: 6px;
 }
 
-.logo:hover,
-.logo:active {
+.logo:hover {
   color: var(--font-gold);
 }
 
-.logo:hover .logo__img,
-.logo:active .logo__img {
+.logo:active {
+  color: var(--font-active);
+}
+
+.logo:hover .logo__img {
   fill: var(--font-gold);
+}
+
+.logo:active .logo__img {
+  fill: var(--font-active);
 }
 
 .logo__text {
@@ -70,6 +76,10 @@
 .main-menu__item:hover {
   color: var(--font-gold);
   cursor: pointer;
+}
+
+.main-menu__item:active {
+  color: var(--font-active);
 }
 
 .main-menu__link {

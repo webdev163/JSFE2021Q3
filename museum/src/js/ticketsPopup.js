@@ -8,6 +8,7 @@ function toggleActive() {
   elArr.forEach((el) => el.classList.toggle('active'));
 }
 
+
 btn.addEventListener('click', toggleActive);
 closeBtn.addEventListener('click', toggleActive);
 overlay.addEventListener('click', toggleActive);

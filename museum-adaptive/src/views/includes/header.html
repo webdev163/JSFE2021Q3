@@ -1,0 +1,141 @@
+<!-- linthtml-configure tag-close=false -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <% for (var i in styles) { %><link rel="stylesheet" href="<%= styles[i] %>"><% } %>
+  <link rel="icon" href="assets/favicon.ico">
+</head>
+
+<body>
+  <header class="header dark-section">
+    <div class="container">
+      <div class="header-wrapper">
+        <a class="logo" href="#">
+          <svg class="logo__img" width="49" height="26">
+            <title>Louvre logo</title>
+            <use href="assets/icons/sprite.svg#logo"></use>
+          </svg>
+          <span class="logo__text">Louvre</span>
+        </a>
+        <nav class="main-menu">
+          <ul class="main-menu__list">
+            <li class="main-menu__item">
+              <a href="#visiting" class="main-menu__link">Visiting</a>
+              <svg class="main-menu-arrow" width="12" height="12">
+                <use href="assets/icons/sprite.svg#menu-arrow"></use>
+              </svg>
+            </li>
+            <li class="main-menu__item">
+              <a href="#explore" class="main-menu__link">Explore</a>
+              <svg class="main-menu-arrow" width="12" height="12">
+                <use href="assets/icons/sprite.svg#menu-arrow"></use>
+              </svg>
+            </li>
+            <li class="main-menu__item">
+              <a href="#video" class="main-menu__link">Video</a>
+              <svg class="main-menu-arrow" width="12" height="12">
+                <use href="assets/icons/sprite.svg#menu-arrow"></use>
+              </svg>
+            </li>
+            <li class="main-menu__item">
+              <a href="#gallery" class="main-menu__link">Gallery</a>
+              <svg class="main-menu-arrow" width="12" height="12">
+                <use href="assets/icons/sprite.svg#menu-arrow"></use>
+              </svg>
+            </li>
+            <li class="main-menu__item">
+              <a href="#tickets" class="main-menu__link">Tickets</a>
+              <svg class="main-menu-arrow" width="12" height="12">
+                <use href="assets/icons/sprite.svg#menu-arrow"></use>
+              </svg>
+            </li>
+            <li class="main-menu__item">
+              <a href="#contacts" class="main-menu__link">Contacts</a>
+              <svg class="main-menu-arrow" width="12" height="12">
+                <use href="assets/icons/sprite.svg#menu-arrow"></use>
+              </svg>
+            </li>
+            <li class="menu-img-wrapper">
+              <div class="menu-img-1-wrapper">
+                <img class="menu-img-1" src="assets/img/menu-img1.jpg" alt="menu img 1">
+              </div>
+              <div class="menu-img-2-wrapper">
+                <img class="menu-img-2" src="assets/img/menu-img2.jpg" alt="menu img 2">
+                <img class="menu-img-3" src="assets/img/menu-img3.jpg" alt="menu img 3">
+              </div>
+            </li>
+            <li class="menu-img-mini-wrapper">
+              <img class="menu-img-mini" src="assets/img/menu-img1-mini.jpg" alt="menu img 1">
+              <img class="menu-img-mini" src="assets/img/menu-img2-mini.jpg" alt="menu img 2">
+              <img class="menu-img-mini" src="assets/img/menu-img3-mini.jpg" alt="menu img 3">
+            </li>
+            <li class="menu-social-links">
+              <ul class="footer-social-list">
+                <li class="footer-social-item">
+                  <a href="https://www.youtube.com/user/louvre" class="footer-social-link">
+                    <div class="footer-social-img-wrapper">
+                      <svg class="footer-social-img" width="23" height="16">
+                        <title>Youtube</title>
+                        <use href="assets/icons/sprite.svg#youtube"></use>
+                      </svg>
+                    </div>
+                  </a>
+                </li>
+                <li class="footer-social-item">
+                  <a href="https://www.instagram.com/museelouvre/" class="footer-social-link">
+                    <div class="footer-social-img-wrapper">
+                      <svg class="footer-social-img" width="21" height="20">
+                        <title>Instagram</title>
+                        <use href="assets/icons/sprite.svg#instagram"></use>
+                      </svg>
+                    </div>
+                  </a>
+                </li>
+                <li class="footer-social-item">
+                  <a href="https://www.facebook.com/museedulouvre" class="footer-social-link">
+                    <div class="footer-social-img-wrapper">
+                      <svg class="footer-social-img" width="13" height="20">
+                        <title>Facebook</title>
+                        <use href="assets/icons/sprite.svg#facebook"></use>
+                      </svg>
+                    </div>
+                  </a>
+                </li>
+                <li class="footer-social-item">
+                  <a href="http://twitter.com/museelouvre" class="footer-social-link">
+                    <div class="footer-social-img-wrapper">
+                      <svg class="footer-social-img" width="20" height="17">
+                        <title>Twitter</title>
+                        <use href="assets/icons/sprite.svg#twitter"></use>
+                      </svg>
+                    </div>
+                  </a>
+                </li>
+                <li class="footer-social-item">
+                  <a href="https://www.pinterest.fr/museedulouvre/" class="footer-social-link">
+                    <div class="footer-social-img-wrapper">
+                      <svg class="footer-social-img" width="20" height="20">
+                        <title>Pinterest</title>
+                        <use href="assets/icons/sprite.svg#pinterest"></use>
+                      </svg>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </div>
+  </header>

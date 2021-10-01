@@ -1,6 +1,18 @@
 .visiting-section {
   padding-top: 75px;
   padding-bottom: 55px;
+  @include laptop {
+    padding-top: 53px;
+    padding-bottom: 42px;
+  }
+  @include tablet {
+    padding-top: 22px;
+    padding-bottom: 61px;
+  }
+  @include mobile {
+    padding-top: 16px;
+    padding-bottom: 23px;
+  }
 }
 
 .card-wrapper {
@@ -10,14 +22,63 @@
   max-width: 1440px;
   column-gap: 60px;
   row-gap: 56px;
+  @include media(1500px) {
+    max-width: 1115px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+  }
+  @include media(1150px) {
+    max-width: 768px;
+  }
+  @include laptop {
+    margin-top: 75px;
+    row-gap: 43px;
+  }
+  @include tablet {
+    max-width: 616px;
+    column-gap: 3%;
+    margin-top: 48px;
+    row-gap: 23px;
+  }
+  @include media(620px) {
+    max-width: 440px;
+  }
+  @include mobile {
+    max-width: 280px;
+    margin-top: 37px;
+  }
 }
 
 .card-item {
   text-decoration: none;
+  @include media(1500px) {
+    width: 330px;
+  }
+  @include tablet {
+    width: 280px;
+  }
+  @include media(620px) {
+    width: 100%;
+    max-width: 440px;
+  }
+  @include mobile {
+    max-width: 280px;
+  }
 }
 
 .card-item:hover .card-title::after {
   width: 100%;
+}
+
+.card-image {
+  @include media(1500px) {
+    object-fit: cover;
+    height: 215px;
+  }
+  @include tablet {
+    height: 180px;
+  }
 }
 
 .card-title {
@@ -29,6 +90,21 @@
   color: var(--font-dark);
   margin-top: 21px;
   position: relative;
+  @include media(1500px) {
+    font-size: 28px;
+    line-height: 31px;
+    color: #000;
+    letter-spacing: 3px;
+  }
+  @include tablet {
+    font-size: 22px;
+    line-height: 24px;
+  }
+  @include mobile {
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: 5px
+  }
 }
 
 .card-title::after {
@@ -40,6 +116,19 @@
   height: 2px;
   background-color: var(--dark-red);
   transition: width 1s;
+  @include media(1500px) {
+    width: 45.5%;
+  }
+  @include laptop {
+    top: 41px;
+  }
+  @include tablet {
+    top: 34px;
+    width: 53.5%;
+  }
+  @include mobile {
+    top: 30px;
+  }
 }
 
 .card-additional {
@@ -50,6 +139,20 @@
   color: var(--font-dark);
   margin-bottom: 0;
   margin-top: 23px;
+  @include media(1500px) {
+    font-size: 20px;
+    line-height: 23px;
+    color: #000;
+  }
+  @include tablet {
+    font-size: 18px;
+    line-height: 21px;
+  }
+  @include mobile {
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 22.5px;
+  }
 }
 
 .card-source {
@@ -59,4 +162,9 @@
   line-height: 21px;
   color: var(--font-dark);
   margin-top: 10px;
+  @include media(1500px) {
+    font-size: 16px;
+    line-height: 19px;
+    color: #000;
+  }
 }

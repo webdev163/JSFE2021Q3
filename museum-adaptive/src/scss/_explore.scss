@@ -1,15 +1,66 @@
 .explore-section {
   padding-top: 75px;
   padding-bottom: 75px;
+  @include laptop {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  @include tablet {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
 }
 
 .explore-container {
   display: flex;
   position: relative;
+  justify-content: space-between;
+  @include laptop {
+    flex-direction: column;
+  }
 }
 
 .explore-text-wrapper {
   margin-top: 104px;
+  @include laptop {
+    margin-top: 84px;
+  }
+}
+.explore-info {
+  width: 48%;
+  @include laptop {
+    width: 100%;
+  }
+}
+
+.explore-title {
+  max-width: 660px;
+  @include media(1500px) {
+    font-size: 50px;
+    line-height: 75px;
+    letter-spacing: 5px;
+  }
+  @include laptop {
+    &.underline-title::after {
+      top: 95px;
+    }
+    max-width: none;
+    width: 100%;
+  }
+  @include tablet {
+    font-size: 40px;
+    line-height: 60px;
+    &.underline-title::after {
+      top: 81px;
+    }
+  }
+  @include mobile {
+    font-size: 28px;
+    line-height: 40px;
+    &.underline-title::after {
+      top: 60px;
+    }
+  }
 }
 
 .explore-text {
@@ -20,59 +71,169 @@
   color: var(--font-light);
   max-width: 655px;
   margin-top: 26px;
+  @include laptop {
+    max-width: none;
+    width: 100%;
+    font-size: 20px;
+    line-height: 37px;
+    margin: 0;
+  }
+}
+
+.explore-text-desktop {
+  @include laptop {
+    display: none;
+  }
+}
+
+.explore-text-tablet-hidden {
+  @include tablet {
+    display: none;
+  }
 }
 
 .explore-text span {
   color: #CAAA7D;
 }
 
-.explore-img {
+#slider-comparison {
   margin-top: 15px;
-  margin-left: 62px;
+  width: 50%;
+  margin-left: 25px;
+  @include laptop {
+    max-width: 720px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 58px;
+  }
+  @include tablet {
+    margin-top: -16px;
+    margin-left: 3px;
+  }
+  @include mobile {
+    margin-top: -22px;
+    margin-left: 0;
+  }
+}
+
+.before-after {
   position: relative;
-  height: 700px;
+  display: inline-block;
+  vertical-align: top;
+  user-select: none;
 }
 
-.explore-img-main {
-  position: absolute;
-  width: auto;
-  height: auto;
-  top: 0;
-  overflow: hidden;
-}
-
-.explore-img-main img {
+.before-after .photo img {
   display: block;
-  vertical-align: middle;
+  max-width: 100%;
+  height: auto;
 }
 
-.explore-img-slider {
-  z-index: 9;
-  cursor: ew-resize;
-  width: 29px;
-  height: 29px;
-  background: none;
-  border-radius: 50%;
-  border: 5px solid #fff;
-  position: relative;
+.before-after .photo.before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform: translate(-40%);
+  
+}
+
+.before-after .photo.before img,
+.before-after .photo.before .layer {
+  transform: translate(40%);
+}
+
+.before-after .drag-handler {
+  width: 5px;
+  background-color: transparent;
+  margin: 0 0 0 -4px;
+  position: absolute;
+  left: 61%;
+  top: 0;
+  height: 100%;
+  z-index: 2;
+  @include mobile {
+    margin: 0 0 0 7px;
+  }
   &::before {
     content: '';
     width: 5px;
-    height: 335px;
     background-color: #fff;
     display: block;
     position: absolute;
-    top: -335px;
-    left: 12px;
+    bottom: 0;
+    height: 47%;
+    left: 2px;
+    @include media(1500px) {
+      height: 46.5%;
+    }
+    @include laptop {
+      height: 47%;
+    }
+    @include media(650px) {
+      height: 46%;
+    }
+    @include media(500px) {
+      height: 45%;
+    }
+    @include mobile {
+      width: 2px;
+      left: -8px;
+      height: 45.5%;
+    }
+    @include media(350px) {
+      height: 44%;
+    }
   }
   &::after {
     content: '';
     width: 5px;
-    height: 335px;
     background-color: #fff;
     display: block;
     position: absolute;
-    top: 29px;
-    left: 12px;
+    top: 0;
+    height: 48%;
+    left: 2px;
+    @include media(1500px) {
+      height: 47.5%;
+    }
+    @include laptop {
+      height: 48%;
+    }
+    @include media(650px) {
+      height: 47.5%;
+    }
+    @include media(500px) {
+      height: 46.5%;
+    }
+    @include mobile {
+      width: 2px;
+      left: -8px;
+      height: 50%;
+    }
+  }
+}
+
+.before-after .drag-handler .drag-element {
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  margin: -16px 0 0 0;
+  cursor: pointer;
+  width: 29px;
+  height: 29px;
+  background: transparent;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-sizing: content-box;
+  @include mobile {
+    width: 15px;
+    height: 15px;
+    border: 2px solid #fff;
+    left: -17px;
+    margin: -2px 0 0 0;
   }
 }

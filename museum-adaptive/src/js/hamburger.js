@@ -15,3 +15,8 @@ hamburger.addEventListener('click', toggleActive);
 mainMenu.addEventListener('click', () => {
   if (active) toggleActive();
 });
+window.addEventListener('click', function (e) {
+  if (!menuWrapper.contains(e.target) && !hamburger.contains(e.target) && active)  {
+    toggleActive()
+  }
+})

@@ -4,7 +4,7 @@ if (module.hot) {
 
 import './hamburger';
 // import './progressBar';
-// import './exploreSlider';
+import './exploreSlider';
 // import './gallery';
 // import './rippleButton';
 // import './ticketsPopup';

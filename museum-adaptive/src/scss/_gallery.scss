@@ -1,9 +1,28 @@
 .gallery-section {
   padding-top: 75px;
+  box-sizing: content-box;
+  @include laptop {
+    padding-top: 53px;
+  }
+  @include tablet {
+    padding-top: 25px;
+  }
+  @include mobile {
+    padding-top: 16px;
+  }
 }
 
 .gallery-title {
   margin-bottom: 75px;
+  @include laptop {
+    margin-bottom: 52px;
+  }
+  @include tablet {
+    margin-bottom: 25px;
+  }
+  @include mobile {
+    margin-bottom: 15px;
+  }
 }
 
 .gallery-wrapper {
@@ -11,6 +30,15 @@
   height: 1960px;
   overflow-y: hidden;
   -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 68%, transparent 100%);
+  @include laptop {
+    height: 1265px;
+  }
+  @include tablet {
+    height: 1080px;
+  }
+  @include mobile {
+    height: 636px;
+  }
 }
 
 .gallery-inner-wrapper {
@@ -21,24 +49,46 @@
   grid-auto-flow: dense;
   grid-auto-rows: 1fr;
   overflow: hidden;
+  @include tablet {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    row-gap: 14px;
+  }
+  @include mobile {
+    row-gap: 16px;
+  }
 }
 
 .gallery-item {
   width: 456px;
-  &:nth-child(3n+1) {
-    grid-column-start: 1;
-    top: 50px;
-    position: relative;
-  }
-  &:nth-child(3n+2) {
-    grid-column-start: 2;
-    position: relative;
-  }
+  @media screen and (min-width: 769px) {
+    &:nth-child(3n+1) {
+      grid-column-start: 1;
+      top: 50px;
+      position: relative;
+    }
 
-  &:nth-child(3n+3) {
-    grid-column-start: 3;
-    top: 50px;
-    position: relative;
+    &:nth-child(3n+2) {
+      grid-column-start: 2;
+      position: relative;
+    }
+
+    &:nth-child(3n+3) {
+      grid-column-start: 3;
+      top: 50px;
+      position: relative;
+    }
+  }
+  @include tablet {
+    &:nth-child(2n+1) {
+      grid-column-start: 1;
+      top: 50px;
+      position: relative;
+    }
+    &:nth-child(2n+2) {
+      grid-column-start: 2;
+      position: relative;
+    }
   }
 }
 

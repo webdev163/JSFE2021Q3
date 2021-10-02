@@ -135,6 +135,9 @@
   -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0) 68%, transparent 100%);
   @include tablet {
     -webkit-mask-image: none;
+    margin-bottom: 14px;
+  }
+  @include mobile {
     margin-bottom: 10px;
   }
 }

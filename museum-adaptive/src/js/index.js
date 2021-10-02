@@ -3,9 +3,9 @@ if (module.hot) {
 }
 
 import './hamburger';
-// import './progressBar';
+import './progressBar';
 import './exploreSlider';
-// import './gallery';
+import './gallery';
 // import './rippleButton';
 // import './ticketsPopup';
 

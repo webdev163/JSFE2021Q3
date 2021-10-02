@@ -2,7 +2,9 @@
   <div class="container">
     <h2 class="section-title gold-title underline-title">Buy tickets</h2>
     <div class="tickets-wrapper">
-      <img src="assets/img/tickets-img.jpg" alt="Tickets image" class="tickets-img" width="720" height="550">
+      <div class="tickets-img-wrapper">
+        <img src="assets/img/tickets-img.jpg" alt="Tickets image" class="tickets-img" width="720" height="550">
+      </div>
       <div class="tickets-type">
         <p class="tickets-type-title">Ticket Type</p>
         <label class="radio-label radio-label-first">Permanent exhibition
@@ -20,13 +22,13 @@
       </div>
       <div class="tickets-amount">
         <p class="tickets-amount-title">Amount</p>
-        <p class="tickets-category">Basic 18+</p>
+        <p class="tickets-category category-basic">Basic 18+</p>
         <div class="tickets-counter">
           <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
           <input type="number" min="0" max="20" value="1" readonly class="number">
           <button class="plus-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
         </div>
-        <p class="tickets-category">Senior 65+</p>
+        <p class="tickets-category category-senior">Senior 65+</p>
         <div class="tickets-counter">
           <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
           <input type="number" min="0" max="20" value="1" readonly class="number">

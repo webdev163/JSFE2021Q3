@@ -2,17 +2,71 @@
   padding-top: 75px;
   padding-bottom: 75px;
   z-index: 99;
+  @include laptop {
+    padding-top: 53px;
+  }
+  @include tablet {
+    padding-top: 24px;
+  }
+  @include mobile {
+    padding-top: 16px;
+  }
 }
 
 .tickets-wrapper {
   margin-top: 103px;
   display: flex;
   justify-content: space-between;
+  @include laptop {
+    margin-top: 75px;
+  }
+  @include tablet {
+    margin-top: 48px;
+  }
+  @include media(600px) {
+    flex-direction: column;
+  }
+  @include mobile {
+    margin-top: 37px;
+  }
+}
+
+.tickets-img-wrapper {
+  @include laptop {
+    flex-basis: 103%;
+    height: 440px;
+    & img {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  @include media(900px) {
+    flex-basis: 80%;
+  }
+  @include tablet {
+    flex-basis: 61%;
+    height: 340px;
+  }
+  @include media(650px) {
+    flex-basis: 55%;
+  }
+  @include mobile {
+    height: 200px;
+    & img {
+      height: 54%;
+    }
+  }
 }
 
 .tickets-type {
   margin-right: 185px;
   margin-left: 6px;
+  @include media(1500px) {
+    margin-right: 1%;
+  }
+  @include media(1250px) {
+    display: none;
+  }
 }
 
 .tickets-type-title,
@@ -112,6 +166,45 @@
 
 .tickets-amount {
   text-align: right;
+  @include media(1250px) {
+    margin-left: 8%;
+    flex-basis: 30%;
+    text-align: left;
+  }
+  @include media(900px) {
+    margin-left: 4%;
+  }
+  @include tablet {
+    flex-basis: 30.75%;
+  }
+  @include media(650px) {
+    flex-basis: 36%;
+  }
+  @include media(600px) {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 13px;
+    margin-top: 25px;
+  }
+}
+
+.tickets-amount-title {
+  @include laptop {
+    margin-bottom: 30px;
+  }
+  @include tablet {
+    margin-bottom: 39px;
+  }
+  @include mobile {
+    margin-top: -120px;
+    margin-right: 15px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
 }
 
 .tickets-category {
@@ -124,12 +217,37 @@
   margin-bottom: 13px;
   margin-left: 25px;
   text-align: left;
+  @include laptop {
+    margin-left: 0;
+    margin-top: 29px;
+    margin-bottom: 9px;
+  }
+  @include tablet {
+    margin-top: 25px;
+  }
+  @include mobile {
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    margin-right: 119px;
+    margin-top: 19px;
+    margin-bottom: 15px;
+  }
+}
+
+.category-senior {
+  @include mobile {
+    margin-left: 3px;
+  }
 }
 
 .tickets-counter {
   border: 3px solid #000;
   padding: 3px 10px;
   display: inline-block;
+  @include mobile {
+    margin-left: 3px;
+  }
 }
 
 .tickets-counter button {
@@ -151,6 +269,9 @@
   text-align: center;
   color: var(--font-dark);
   width: 60px;
+  @include laptop {
+    width: 89px;
+  }
 }
 
 .tickets-counter input[type=number]::-webkit-outer-spin-button,
@@ -181,6 +302,14 @@
   padding-right: 0;
   cursor: pointer;
   transition: color 0.3s;
+  @include laptop {
+    padding-left: 0;
+    padding-right: 6px;
+  }
+  @include mobile {
+    padding-left: 4px;
+    padding-right: 2px;
+  }
 }
 
 .plus-button:hover {
@@ -199,6 +328,31 @@
   letter-spacing: 1.65px;
   color: var(--font-dark);
   margin-top: 51px;
+  @include laptop {
+    margin-top: 24px;
+  }
+  @include tablet {
+    margin-top: 38px;
+  }
+  @include mobile {
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: 0;
+    margin-right: 15px;
+  }
+}
+
+.total-text {
+  font-weight: inherit;
+}
+
+.total-price {
+  font-weight: inherit;
+  margin-left: 8%;
+  @include mobile {
+    margin-left: 3px;
+  }
 }
 
 @keyframes scale {
@@ -224,6 +378,18 @@
   transition: background-color .5s;
   transition: color .5s;
   position: relative;
+  @include laptop {
+    margin-top: 70px;
+  }
+  @include tablet {
+    margin-top: 41px;
+  }
+  @include mobile {
+    font-size: 16px;
+    line-height: 0px;
+    padding: 25px 49px;
+    margin-left: 5px;
+  }
 }
 
 .buy-button:hover {

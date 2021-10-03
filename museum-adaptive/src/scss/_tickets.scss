@@ -4,9 +4,11 @@
   z-index: 99;
   @include laptop {
     padding-top: 53px;
+    padding-bottom: 59px;
   }
   @include tablet {
     padding-top: 24px;
+    padding-bottom: 39px;
   }
   @include mobile {
     padding-top: 16px;

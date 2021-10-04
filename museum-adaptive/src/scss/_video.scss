@@ -408,7 +408,10 @@
 }
 
 .iframe-outer-wrapper {
-  flex-basis: 30.6%;
+  flex-basis: 31.5%;
+  @include media(1500px) {
+    flex-basis: 30.6%;
+  }
   @include tablet {
     flex-basis: 48.5%;
     &:nth-child(3n) {
@@ -418,4 +421,38 @@
   @include mobile {
     flex-basis: 47.5%;
   }
+}
+
+.video__btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 68px;
+  height: 48px;
+  border: none;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  display: none;
+  &-shape {
+    fill: #212121;
+    fill-opacity: .8;
+  }
+  &-icon {
+    fill: #fff;
+  }
+}
+
+.iframe-wrapper {
+  &:hover .video__btn-shape {
+    fill: red;
+    fill-opacity: 1;
+  }
+}
+
+.video--enabled {
+  cursor: pointer;
+  .video__btn {
+    display: block;
+  } 
 }

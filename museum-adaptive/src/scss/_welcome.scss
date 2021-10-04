@@ -34,6 +34,9 @@
     &.menu-active {
       opacity: 0;
     }
+    & .welcome-button {
+      pointer-events: none;
+    }
   }
   @include tablet {
     text-align: center;

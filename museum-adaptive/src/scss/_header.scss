@@ -281,18 +281,18 @@
   justify-content: space-between;
 }
 
-.menu-social-links {
+.header-wrapper .menu-social-links {
   .footer-social-list {
     display: none;
     @include tablet {
       display: flex;
       margin: 0 auto;
-      margin-top: 36px;
+      margin-top: 30px;
       width: 340px;
     }
     @include mobile {
       justify-content: center;
-      margin-top: 19px;
+      margin-top: 79px;
       padding-top: 24px;
       border-top: 1px solid rgba(255, 255, 255, 0.5);
       width: auto;

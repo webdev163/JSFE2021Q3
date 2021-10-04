@@ -170,9 +170,9 @@ const icons = (args) => {
 exports.icons = icons;
 
 const images = (args) => {
+  const defaults = isProd ? { img: true, webp: true, svg: true } : { img: true, webp: false, svg: true };
+  const params = { ...defaults, ...args };
   return new Promise((resolve) => {
-    const defaults = isProd ? { img: true, webp: true, svg: true } : { img: true, webp: false, svg: true };
-    const params = { ...defaults, ...args };
     if (params.img) {
       gulp.src([paths.src.img + '**/*.+(jpg|jpeg|png|gif)', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*'])
         .pipe(gulpif(isProd, imagemin([
@@ -181,15 +181,29 @@ const images = (args) => {
           pngquant({ quality: [0.5, 0.6], speed: 3 }),
           imagemin.optipng({ optimizationLevel: 3 }),
         ])))
-        .pipe(gulp.dest(paths.dist.img));
-    }
-    if (params.webp) {}
-    if (params.svg) {
-      gulp.src([paths.src.img + '**/*.svg', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*'])
-        .pipe(imagemin([imagemin.svgo()]))
-        .pipe(gulp.dest(paths.dist.img));
-    }
-    resolve();
+        .pipe(gulp.dest(paths.dist.img))
+        .on('end', resolve);
+    } else resolve();
+  }).then(() => {
+    return new Promise((resolve) => {
+      if (params.webp) {
+        gulp.src([paths.src.img + '**/*.+(jpg|jpeg|png|gif)', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*', paths.src.img_copy + '**/*+(jpg|jpeg|png|gif)'])
+          .pipe(changed(paths.src.img_copy, { extension: '.webp' }))
+          .pipe(imagemin([imageminWebp()]))
+          .pipe(extReplace('.webp'))
+          .pipe(gulp.dest(paths.src.img_copy))
+          .on('end', resolve);
+      } else resolve();
+    }).then(() => {
+      return new Promise((resolve) => {
+        if (params.svg) {
+          gulp.src([paths.src.img + '**/*.svg', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*'])
+            .pipe(imagemin([imagemin.svgo()]))
+            .pipe(gulp.dest(paths.dist.img))
+            .on('end', resolve);
+        } else resolve();
+      });
+    });
   });
 };
 
@@ -205,13 +219,13 @@ const inline = () => {
 exports.inline = inline;
 
 const copy = () => {
-  gulp.src([paths.src.static + '**/*.*', paths.src.static + '**/.*'])
-    .pipe(gulp.dest(paths.dist.static));
-  gulp.src(paths.src.img_copy + '**/*.*')
-    .pipe(gulp.dest(paths.dist.img));
-  gulp.src(paths.src.other + '**/*.*')
-    .pipe(gulp.dest(paths.dist.other));
   return new Promise((resolve) => {
+    gulp.src([paths.src.static + '**/*.*', paths.src.static + '**/.*'])
+      .pipe(gulp.dest(paths.dist.static));
+    gulp.src(paths.src.other + '**/*.*')
+      .pipe(gulp.dest(paths.dist.other));
+    gulp.src(paths.src.img_copy + '**/*.*')
+      .pipe(gulp.dest(paths.dist.img));
     gulp.src(paths.src.fonts + '**/*.+(woff|woff2)')
       .pipe(gulp.dest(paths.dist.fonts));
     gulp.src([paths.src.icons + '*sprite.png', paths.src.icons + '*sprite.svg'])
@@ -223,7 +237,6 @@ const copy = () => {
       .pipe(gulp.dest(paths.dist.icons))
       .on('end', resolve);
   });
-  
 };
 
 exports.copy = copy;
@@ -321,7 +334,7 @@ exports.lint = lint;
 
 const csso = () => {
   return gulp.src(paths.dist.css + '**/*.css')
-    .pipe(postcss([postcssCsso({ restructure: true, forceMediaMerge: true, comments: false })]))
+    .pipe(postcss([postcssCsso({ restructure: false, forceMediaMerge: true, comments: false })]))
     .pipe(gulp.dest(paths.dist.css));
 };
 

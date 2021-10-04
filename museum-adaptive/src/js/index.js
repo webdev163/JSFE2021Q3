@@ -9,6 +9,7 @@ import './gallery';
 import './rippleButton';
 import './ticketsPopup';
 import './youtube';
+import './detect-webp';
 
 // eslint-disable-next-line no-console
 console.log(`

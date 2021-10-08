@@ -1,5 +1,6 @@
 window.addEventListener('load', () => {
   const pictureInnerContainer = document.querySelector('.gallery-inner-wrapper');
+  let animationClass;
 
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -14,7 +15,7 @@ window.addEventListener('load', () => {
 
     const shuffledArr = shuffle(arr);
     shuffledArr.map((el) => {
-      pictureInnerContainer.innerHTML += `<img class="gallery-item gallery-item-${el[1]}" src="assets/img/galery/${el[0]}.jpg" alt="${el[0]}">`;
+      pictureInnerContainer.innerHTML += `<img class="gallery-item gallery-item-${el[1]} hidden" src="assets/img/galery/${el[0]}.jpg" alt="${el[0]}">`;
     });
   }
 

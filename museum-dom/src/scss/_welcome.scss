@@ -1,6 +1,5 @@
 .welcome-section {
   padding-top: 27px;
-  padding-bottom: 55px;
   @include tablet {
     padding-top: 0;
     padding-bottom: 30px;
@@ -34,7 +33,7 @@
     &.menu-active {
       opacity: 0;
     }
-    & .welcome-button {
+    &.menu-active .welcome-button {
       pointer-events: none;
     }
   }
@@ -51,6 +50,8 @@
   margin-top: 124px;
   margin-bottom: 26px;
   width: 598px;
+  pointer-events: none;
+  user-select: none;
   @include media(1250px) {
     margin-top: 24px;
   }
@@ -74,6 +75,8 @@
   letter-spacing: 2px;
   width: 445px;
   margin: 0;
+  pointer-events: none;
+  user-select: none;
   @include media(1250px) {
     font-size: 24px;
     line-height: 28px;
@@ -134,10 +137,14 @@
   }
 }
 
-.welcome-image {
+.welcome-image-wrapper {
   -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1.0) 68%, transparent 100%);
+  max-width: 1000px;
+  margin-right: 0;
+  padding-bottom: 55px;
   @include tablet {
     -webkit-mask-image: none;
+    max-width: 100%;
     margin-bottom: 10px;
   }
   @include mobile {
@@ -154,7 +161,8 @@
   height: 120px;
   position: absolute;
   right: 0;
-  bottom: -55px;
+  bottom: 0;
+  z-index: 999;
   @include media(1100px) {
     width: 100%;
     justify-content: end;
@@ -205,7 +213,7 @@
   }
 }
 
-.slider-pagination {
+.welcome-slider-pagination {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -223,7 +231,7 @@
   }
 }
 
-.slider-pagination-item {
+.welcome-slider-pagination-item {
   cursor: pointer;
   width: 16px;
   height: 16px;
@@ -291,4 +299,17 @@
   @include media(500px) {
     width: 20px;
   }
+}
+
+//swiper
+
+.swiper-horizontal>.swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
+  width: 180px;
+}
+
+.swiper-button-next, .swiper-button-prev {
+  display: none;
 }

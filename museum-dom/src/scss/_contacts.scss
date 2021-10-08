@@ -115,7 +115,7 @@
   }
 }
 
-.contact-img-wrapper {
+.contact-map-wrapper {
   @include media(1250px) {
     width: 69%;
   }
@@ -134,15 +134,9 @@
   }
 }
 
-.contacts-map {
-  object-fit: cover;
-  @include laptop {
-    height: 454px;
-  }
-  @include tablet {
-    height: 476px;
-  }
-  @include mobile {
-    height: 248px;
-  }
+#map {
+  width: 67%;
+  height: 620px;
+  margin-right: auto;
+  margin-left: 14%;
 }

@@ -61,22 +61,31 @@
 
 .gallery-item {
   width: 456px;
+  position: relative;
+  transition-property: transform, opacity;
+  transform: translateY(50px) scale(0.95);
+  opacity: 0;
   @media screen and (min-width: 769px) {
     &:nth-child(3n+1) {
       grid-column-start: 1;
       top: 50px;
       position: relative;
+      transition-delay: .3s;
+      transition-duration: .5s;
     }
 
     &:nth-child(3n+2) {
       grid-column-start: 2;
       position: relative;
+      transition-duration: .5s;
     }
 
     &:nth-child(3n+3) {
       grid-column-start: 3;
       top: 50px;
       position: relative;
+      transition-delay: .6s;
+      transition-duration: .5s;
     }
   }
   @include tablet {
@@ -102,4 +111,9 @@
 
 .gallery-item-vertical {
   grid-row-end: span 5;
+}
+
+.animated {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1);
 }

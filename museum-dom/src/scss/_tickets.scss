@@ -330,6 +330,9 @@
   letter-spacing: 1.65px;
   color: var(--font-dark);
   margin-top: 51px;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
   @include laptop {
     margin-top: 24px;
   }
@@ -347,10 +350,13 @@
 
 .total-text {
   font-weight: inherit;
+  letter-spacing: 0;
 }
 
 .total-price {
   font-weight: inherit;
+  margin-left: 5%;
+  letter-spacing: 0;
   @include media(1500px) {
     margin-left: 8%;
   }

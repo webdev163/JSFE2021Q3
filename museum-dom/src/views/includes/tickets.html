@@ -11,15 +11,15 @@
       <div class="tickets-type">
         <p class="tickets-type-title">Ticket Type</p>
         <label class="radio-label radio-label-first">Permanent exhibition
-          <input type="radio" name="radio">
+          <input type="radio" name="ticket-type" value="permanent" checked>
           <span class="checkmark"></span>
         </label>
         <label class="radio-label">Temporary exhibition
-          <input type="radio" name="radio">
+          <input type="radio" name="ticket-type" value="temporary">
           <span class="checkmark"></span>
         </label>
         <label class="radio-label">Combined Admission
-          <input type="radio" name="radio">
+          <input type="radio" name="ticket-type" value="combined">
           <span class="checkmark"></span>
         </label>
       </div>
@@ -27,17 +27,17 @@
         <p class="tickets-amount-title">Amount</p>
         <p class="tickets-category category-basic">Basic 18+</p>
         <div class="tickets-counter">
-          <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
-          <input type="number" min="0" max="20" value="1" readonly class="number">
-          <button class="plus-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+          <button class="minus-button minus-button-basic" type="button">–</button>
+          <input type="number" min="0" max="20" value="0" readonly class="input-number basic-number">
+          <button class="plus-button plus-button-basic" type="button">+</button>
         </div>
         <p class="tickets-category category-senior">Senior 65+</p>
         <div class="tickets-counter">
-          <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
-          <input type="number" min="0" max="20" value="1" readonly class="number">
-          <button class="plus-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+          <button class="minus-button minus-button-senior" type="button">–</button>
+          <input type="number" min="0" max="20" value="0" readonly class="input-number senior-number">
+          <button class="plus-button plus-button-senior" type="button">+</button>
         </div>
-        <div class="total"><span class="total-text">Total €</span><span class="total-price">220</span></div>
+        <div class="total"><span class="total-text">Total €</span><span class="total-price">0</span></div>
         <button class="buy-button ripple-btn">Buy Now</button>
       </div>
     </div>

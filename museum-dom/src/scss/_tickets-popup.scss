@@ -165,6 +165,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .input-wrapper {
@@ -191,7 +192,6 @@
 
 .input-time {
   justify-content: space-between;
-  flex-basis: 105px;
   background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.491 0a7.5 7.5 0 10.018 15A7.5 7.5 0 007.49 0zm2.91 10.02a.474.474 0 01-.662.11L6.955 8.142V3.936a.474.474 0 11.944 0v3.721l2.387 1.704a.472.472 0 01.119.658H10.4z' fill='%23030303'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 15px 15px;
@@ -207,7 +207,7 @@
   padding-top: 12px !important;
 }
 
-.select-ticket {
+.select-ticket-type {
   padding-top: 8px !important;
 }
 
@@ -253,7 +253,7 @@
   }
 }
 
-.select-ticket {
+.select-ticket-type {
   background-image: url("data:image/svg+xml,%3Csvg width='15' height='15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M8.333 5.417H12.5V3.75H8.333v1.667zm0 5.833H12.5V9.583H8.333v1.667zm5 3.75H1.667C.75 15 0 14.25 0 13.333V1.667C0 .75.75 0 1.667 0h11.666C14.25 0 15 .75 15 1.667v11.666C15 14.25 14.25 15 13.333 15zM2.5 6.667h4.167V2.5H2.5v4.167zm.833-3.334h2.5v2.5h-2.5v-2.5zM2.5 12.5h4.167V8.333H2.5V12.5zm.833-3.333h2.5v2.5h-2.5v-2.5z' fill='%23030303'/%3E%3C/svg%3E"),
   url("data:image/svg+xml,%3Csvg width='17' height='17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.49 0a8.5 8.5 0 10.02 17 8.5 8.5 0 00-.02-17zm.317 11.717L4.118 6.784h9.378l-4.69 4.933z' fill='%23030303'/%3E%3C/svg%3E");
   background-repeat: no-repeat, no-repeat;
@@ -266,13 +266,14 @@
   }
 }
 
-input::-webkit-datetime-edit {
-  max-width: 109px;
+input[type="time"]::-webkit-datetime-edit {
+  max-width: 108px;
+  min-width: 108px;
 }
 
-input[type="time"]::-webkit-datetime-edit {
-  max-width: 129px;
-  margin-right: 25px;
+input[type="date"]::-webkit-datetime-edit {
+  max-width: 108px;
+  min-width: 108px;
 }
 
 input::-webkit-calendar-picker-indicator {
@@ -331,11 +332,6 @@ select {
   box-sizing: border-box;
   -webkit-appearance: none;
   -moz-appearance: none;
-  & option {
-    &:nth-child(2n-1) {
-      background-color: #E7E7E7;
-    }
-  }
 }
 
 .entry-ticket {
@@ -610,7 +606,7 @@ select {
   font-weight: normal;
 }
 
-.total-price {
+.form-total-price {
   font-weight: 500;
 }
 
@@ -950,4 +946,63 @@ select {
   @include mobile {
     margin-top: 67px;
   }
+}
+
+.date-time-input-wrapper {
+  position: relative;
+}
+
+.custom-select {
+  position: absolute;
+  top: 44px;
+  left: 211px;
+  z-index: 9999;
+  background-color: #fff;
+  border: 1px solid #000;
+  font-size: 20px;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  user-select: none;
+  display: none;
+}
+
+.custom-select-item {
+  border: 1px solid #fff;
+  width: 186px;
+  padding-left: 5px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  &:hover {
+    background-color: rgb(245, 245, 245);
+    cursor: pointer;
+    border: 1px solid #ffb662;
+  }
+}
+
+.custom-select-active {
+  display: block;
+}
+
+.error-message {
+  position: absolute;
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 12.5px;
+  color: red;
+  display: none;
+}
+
+.error-name {
+  top: 112px;
+  left: 1px;
+}
+
+.error-email {
+  top: 177px;
+  left: 0;
+}
+
+.error-tel {
+  top: 242px;
+  left: 0;
 }

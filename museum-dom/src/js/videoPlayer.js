@@ -156,37 +156,39 @@ window.addEventListener('load', () => {
   }
 
   function handleKeydownEvents(e) {
-    switch (e.code) {
-      case 'Space':
-      case 'KeyK':
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        keyboardTogglePlay();
-        break;
-      case 'KeyM':
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        muteSound();
-        break;
-      case 'Comma':
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        if (e.shiftKey) {
-          speedChange('slower');
-        }
-        break;
-      case 'Period':
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        if (e.shiftKey) {
-          speedChange('faster');
-        }
-        break;
-      case 'KeyF':
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        handleFullscreenMode();
-        break;
+    if (video.classList.contains('visible')) {
+      switch (e.code) {
+        case 'Space':
+        case 'KeyK':
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          keyboardTogglePlay();
+          break;
+        case 'KeyM':
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          muteSound();
+          break;
+        case 'Comma':
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          if (e.shiftKey) {
+            speedChange('slower');
+          }
+          break;
+        case 'Period':
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          if (e.shiftKey) {
+            speedChange('faster');
+          }
+          break;
+        case 'KeyF':
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          handleFullscreenMode();
+          break;
+      }
     }
   }
 
@@ -197,6 +199,28 @@ window.addEventListener('load', () => {
     }
     this.style.background = `linear-gradient(to right, #710707 0%, #710707 ${value}%, #fff ${value}%, white 100%)`;
   }
+
+  // calculate visibility
+
+  let windowHeight = window.innerHeight;
+
+  function checkPosition() {
+    let positionFromTop = video.getBoundingClientRect().top;
+
+    if (positionFromTop - windowHeight <= -150) {
+      video.classList.add('visible');
+    }
+
+    if (positionFromTop - windowHeight <= -1250) {
+      video.classList.remove('visible');
+    }
+
+    if (positionFromTop - windowHeight > 0) {
+      video.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', checkPosition);
 
   // Event listeners
   video.addEventListener('click', mouseTogglePlay);

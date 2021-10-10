@@ -10,36 +10,60 @@
         <h2 class="popup-title">Booking tickets</h2>
         <p class="popup-subtitle">Tour to Louvre</p>
         <div class="popup-wrapper">
-          <div class="input-wrapper">
-            <input class="input-date placeholder" type="date" required data-value="Date" name="#" id="input-date">
-            <input class="input-time placeholder" type="time" required data-value="Time" name="#" id="input-time">
+          <div class="input-wrapper date-time-input-wrapper">
+            <input class="input-date placeholder" type="date" required data-value="Date" name="date" id="input-date">
+            <input class="input-time placeholder" type="time" required data-value="Time" name="time" id="input-time">
+            <div class="custom-select">
+              <div class="custom-select-item" data-value="09:00">09:00</div>
+              <div class="custom-select-item" data-value="09:30">09:30</div>
+              <div class="custom-select-item" data-value="10:00">10:00</div>
+              <div class="custom-select-item" data-value="10:30">10:30</div>
+              <div class="custom-select-item" data-value="11:00">11:00</div>
+              <div class="custom-select-item" data-value="11:30">11:30</div>
+              <div class="custom-select-item" data-value="12:00">12:00</div>
+              <div class="custom-select-item" data-value="12:30">12:30</div>
+              <div class="custom-select-item" data-value="13:00">13:00</div>
+              <div class="custom-select-item" data-value="13:30">13:30</div>
+              <div class="custom-select-item" data-value="14:00">14:00</div>
+              <div class="custom-select-item" data-value="14:30">14:30</div>
+              <div class="custom-select-item" data-value="15:00">15:00</div>
+              <div class="custom-select-item" data-value="15:30">15:30</div>
+              <div class="custom-select-item" data-value="16:00">16:00</div>
+              <div class="custom-select-item" data-value="16:30">16:30</div>
+              <div class="custom-select-item" data-value="17:00">17:00</div>
+              <div class="custom-select-item" data-value="17:30">17:30</div>
+              <div class="custom-select-item" data-value="18:00">18:00</div>
+            </div>
             <div class="email-icon"></div>
           </div>
-          <input class="input-name" placeholder="Name" type="text" name="#" id="input-name">
-          <input class="input-mail" placeholder="E-mail" type="email" name="#" id="input-mail" style="background-image: none">
+          <input class="input-name" placeholder="Name" type="text" name="name" id="input-name">
+          <div class="error-message error-name">From 3 till 15 english or russian letters of any register and spaces</div>
+          <input class="input-mail" placeholder="E-mail" type="email" name="email" id="input-mail" style="background-image: none">
+          <div class="error-message error-email">(3-15 letters/digits/'-'/'_')@(at least 4 letters).(at least 2 letters)</div>
           <input class="input-tel" placeholder="Phone" type="tel" name="#" id="input-tel">
-          <select class="select-ticket" name="#" id="select-ticket">
-            <option value="" disabled selected hidden>Ticket Type</option>
-            <option>Permanent exhibition</option>
-            <option>Temporary exhibition</option>
-            <option>Combined Admission</option>
+          <div class="error-message error-tel">10 digits, separated by "-" or a space into groups of 2 or 3, or together</div>
+          <select class="select-ticket-type" name="form-ticket-type" id="select-ticket">
+            <option value="default" disabled selected hidden>Ticket Type</option>
+            <option value="permanent">Permanent exhibition</option>
+            <option value="temporary">Temporary exhibition</option>
+            <option value="combined">Combined Admission</option>
           </select>
           <div class="entry-ticket">
             <p class="entry-ticket-title">Entry ticket</p>
             <div class="entry-ticket-wrapper">
               <div class="entry-ticket-type entry-ticket-basic">Basic 18+ (20 €)</div>
               <div class="entry-ticket-counter">
-                <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
-                <input type="number" min="0" max="20" value="1" readonly class="number">
-                <button class="plus-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+                <button class="minus-button minus-button-basic" type="button">–</button>
+                <input type="number" min="0" max="20" value="0" readonly class="input-number form-basic-number">
+                <button class="plus-button plus-button-basic" type="button">+</button>
               </div>
             </div>
             <div class="entry-ticket-wrapper">
               <div class="entry-ticket-type entry-ticket-senior">Senior 65+ (10 €)</div>
               <div class="entry-ticket-counter">
-                <button class="minus-button" type="button" onclick="this.nextElementSibling.stepDown()">–</button>
-                <input type="number" min="0" max="20" value="1" readonly class="number">
-                <button class="plus-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+                <button class="minus-button minus-button-senior" type="button">–</button>
+                <input type="number" min="0" max="20" value="0" readonly class="input-number form-senior-number">
+                <button class="plus-button plus-button-senior" type="button">+</button>
               </div>
             </div>
           </div>
@@ -50,7 +74,7 @@
           <div class="summary-text">
             <h2 class="summary-title">Overview</h2>
             <p class="summary-subtitle">Tour to Louvre</p>
-            <div class="overview-info overview-date">Friday, August 19</div>
+            <div class="overview-info overview-date"></div>
             <div class="overview-info overview-time">16 : 30</div>
             <div class="overview-info overview-type">Temporary exhibition</div>
           </div>
@@ -59,22 +83,22 @@
         <div class="price-wrapper">
           <div class="price-basic-wrapper">
             <div class="price-item">
-              <span class="price-number">2</span>
-              <p class="price-title">Basic (20 €)</p>
+              <span class="price-number form-ticket-basic">2</span>
+              <p class="price-title form-basic-title">Basic (20 €)</p>
             </div>
-            <div class="price-subtotal">40 €</div>
+            <div class="price-subtotal form-basic-subtotal">40 €</div>
           </div>
           <div class="price-senior-wrapper">
             <div class="price-item">
-              <span class="price-number">2</span>
-              <p class="price-title">Senior (10 €)</p>
+              <span class="price-number form-ticket-senior">2</span>
+              <p class="price-title form-senior-title">Senior (10 €)</p>
             </div>
-            <div class="price-subtotal">20 €</div>
+            <div class="price-subtotal form-senior-subtotal">20 €</div>
           </div>
         </div>
         <div class="total-wrapper">
           <span class="total-text">Total:</span>
-          <span class="total-price">60 €</span>
+          <span class="form-total-price">60 €</span>
         </div>
         <div class="card">
           <div class="card-first-side">

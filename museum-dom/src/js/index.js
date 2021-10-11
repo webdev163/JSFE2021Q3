@@ -20,6 +20,7 @@ import './tickets';
 import './customSelect';
 import './validation';
 import './buttonUp';
+import './ticketsSlider';
 
 // eslint-disable-next-line no-console
 console.log(`
@@ -114,6 +115,7 @@ console.log(`
 
 ✔ Любой собственный дополнительный функционал, улучшающий качество проекта:
   - всплывающие сообщения в видеоплеере с информацией о нажатых клавишах;
+  - автоматический слайдер в секции tickets;
   - кнопка прокрутки страницы вверх  +10
 
 Итого: 159 / 160`);

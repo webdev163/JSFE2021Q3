@@ -34,6 +34,8 @@
 }
 
 .tickets-img-wrapper {
+  max-width: 720px;
+  overflow: hidden;
   @include laptop {
     flex-basis: 103%;
     height: 440px;

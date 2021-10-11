@@ -4,6 +4,7 @@ const inputTel = document.querySelector('.input-tel');
 const errorName = document.querySelector('.error-name');
 const errorMail = document.querySelector('.error-email');
 const errorTel = document.querySelector('.error-tel');
+const popupForm = document.querySelector('.popup-form');
 
 let nameValid = false;
 let emailValid = false;
@@ -32,8 +33,11 @@ inputMail.addEventListener('input', () => {
 inputTel.addEventListener('input', () => {
   let regex1 = new RegExp(/^[\d]{2,3}[-\s\0][\d]{2,3}[-\s\0][\d]{2,3}[-\s\0][\d]{2,3}[-\s\0][\d]{2,3}$/);
   let regex2 = new RegExp(/^[\d]{2,3}[-\s\0][\d]{2,3}[-\s\0][\d]{2,3}[-\s\0][\d]{2,3}$/);
-  let regex3 = new RegExp(/^[\d]{10}$/);
-  if ((regex1.test(inputTel.value) && inputTel.value.match(/\d/g).length === 10) || (regex2.test(inputTel.value) && inputTel.value.match(/\d/g).length === 10) || regex3.test(inputTel.value) ) {
+  let regex3 = new RegExp(/^[\d]{2,3}[-\s\0][\d]{2,3}[-\s\0][\d]{2,3}$/);
+  let regex4 = new RegExp(/^[\d]{2,3}[-\s\0][\d]{2,3}$/);
+  let regex5 = new RegExp(/^[\d]{2,3}$/);
+  let regex6 = new RegExp(/^[\d]{2,10}$/);
+  if ((regex1.test(inputTel.value) && inputTel.value.match(/\d/g).length <= 10) || (regex2.test(inputTel.value) && inputTel.value.match(/\d/g).length <= 10) || (regex3.test(inputTel.value) && inputTel.value.match(/\d/g).length <= 10) || (regex4.test(inputTel.value) && inputTel.value.match(/\d/g).length <= 10) || (regex5.test(inputTel.value) && inputTel.value.match(/\d/g).length <= 10) || regex6.test(inputTel.value) ) {
     removeStyles(inputTel, errorTel);
     telValid = true;
   } else {
@@ -52,3 +56,9 @@ function removeStyles (el, msg) {
   el.style.border = '1px solid green';
   msg.style.display = 'none';
 }
+popupForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (nameValid === true && emailValid === true && telValid === true) {
+    popupForm.submit();
+  }
+})

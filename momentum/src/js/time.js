@@ -6,29 +6,27 @@ const inputName = document.querySelector('.name');
 showTime();
 
 function showTime() {
-  time.textContent = new Date().toLocaleTimeString(undefined, { hour12: false });
+  time.textContent = new Date().toLocaleTimeString();
   showDate();
-  getGreeting();
+  greeting.textContent = `Good ${getTimeOfDay()}`;
   setTimeout(showTime, 1000);
 }
 
 function showDate() {
-  date.textContent = new Date().toLocaleDateString('ru-RU', { weekday: 'long', month: 'long', day: 'numeric' });
+  date.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 }
 
-function getGreeting() {
+export function getTimeOfDay() {
   const hours = new Date().getHours();
-  let greetingText = '';
   if (hours < 6) {
-    greetingText = 'night';
+    return 'night';
   } else if (hours >= 6 && hours < 12) {
-    greetingText = 'morning';
+    return 'morning';
   } else if (hours >= 12 && hours < 18) {
-    greetingText = 'day';
+    return 'afternoon';
   } else {
-    greetingText = 'evening';
+    return 'evening';
   }
-  greeting.textContent = `Good ${greetingText}`;
 }
 
 function setLocalStorage() {

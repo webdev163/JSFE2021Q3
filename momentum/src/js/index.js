@@ -3,3 +3,7 @@ if (module.hot) {
 }
 
 import './time';
+import './slider';
+import './weather';
+import './quotes';
+import './audioplayer';

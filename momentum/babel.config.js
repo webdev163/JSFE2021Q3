@@ -5,7 +5,9 @@ module.exports = (api) => {
     ['@babel/preset-env', {}],
   ];
 
-  const plugins = [];
+  const plugins = [
+    ["@babel/transform-runtime"]
+  ];
 
   if (!api.env('development')) {
     plugins.push(['@babel/plugin-proposal-class-properties']);

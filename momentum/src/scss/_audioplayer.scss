@@ -1,0 +1,74 @@
+.track-info {
+  display: flex;
+  align-items: center;  
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  height: 20px;
+}
+
+.current-song {
+  text-align: left;
+}
+
+.track-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.current-time, .full-time {
+  width: 40px;
+}
+
+.player-controls-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.volume-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.volume-button {
+  background-image: url(../img/icons/volume-off.svg);
+  background-image: url(../img/icons/volume.svg);
+  background-size: 20px 18px;
+}
+
+.volume-button-off {
+  background-image: url(../img/icons/volume-off.svg);
+}
+
+.progress {
+  height: 5px;
+  outline: none;
+  -webkit-transition: background 450ms ease-in;
+  transition: background 450ms ease-in;
+  -webkit-appearance: none;
+}
+
+.progress::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  cursor: ew-resize;
+  background: #fff;
+}
+
+.progress-big {
+  background: -webkit-gradient(linear, left top, right top, from(#449bff), color-stop(0%, #449bff), color-stop(0%, #fff), to(#fff));
+  background: linear-gradient(to right, #449bff 0%, #449bff 0%, #fff 0%, #fff 100%);
+  width: 250px;
+  margin-bottom: 15px;
+}
+
+.progress-small {
+  background: -webkit-gradient(linear, left top, right top, from(#449bff), color-stop(100%, #449bff), color-stop(100%, #fff), to(#fff));
+  background: linear-gradient(to right, #449bff 0%, #449bff 100%, #fff 100%, #fff 100%);
+  width: 100px;
+}

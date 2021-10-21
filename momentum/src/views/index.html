@@ -9,11 +9,26 @@
 <body>
   <header class="header">
     <div class="player">
-      <div class="player-controls">
-        <button class="play-prev player-icon"></button>
-        <button class="play player-icon"></button>
-        <button class="play-next player-icon"></button>
+      <div class="player-controls-wrapper">
+        <div class="player-controls">
+          <button class="play-prev player-icon"></button>
+          <button class="play player-icon"></button>
+          <button class="play-next player-icon"></button>
+        </div>
+        <div class="volume-controls">
+          <button class="volume-button player-icon"></button>
+          <input type="range" name="volume" value="1" min="0" max="1" step=".05" class="progress progress-small">
+        </div>
       </div>
+      <div class="track-info">
+        <div class="current-song"></div>
+        <div class="track-time">
+          <div class="current-time">0:00</div>
+          <div class="time-divider"></div>
+          <div class="full-time"></div>
+        </div>
+      </div>
+      <input type="range" name="position" value="0" min="0" max="100" step=".05" class="progress progress-big">
       <ul class="play-list"></ul>
     </div>
     <div class="weather">

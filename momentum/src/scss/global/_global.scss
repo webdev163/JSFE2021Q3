@@ -31,7 +31,6 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 120px;
-  margin-bottom: 28px;
 }
 
 .play-list {
@@ -41,27 +40,49 @@ body {
 .play-item {
   position: relative;
   padding: 5px;
-  padding-left: 20px;
   list-style: none;
-  opacity: .8;
-  cursor: pointer;
-  transition: .3s;
-}
-
-.play-item:hover {
   opacity: 1;
+  transition: .3s;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
 }
 
 .play-item::before {
-  content: "\2713";
-  position: absolute;
-  left: 0;
-  top: 2px;
-  font-weight: 900;
+  content: '';
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin-right: 15px;
+  background-size: 30px 30px;
+  cursor: pointer;
+  z-index: 99;
+  pointer-events: all;
+  opacity: .8;
+  transition: opacity .2s;
+  background-image: url("../img/icons/play.svg");
+  
 }
 
-.item-active::before {
-  color: #C5B358;
+.play-item:hover::before {
+  opacity: 1;
+}
+
+.play-item.item-active::before {
+  content: '';
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin-right: 15px;
+  background-size: 30px 30px;
+  cursor: pointer;
+  z-index: 99;
+  pointer-events: all;
+  background-image: url("../img/icons/pause.svg");
+}
+
+.item-active {
+  color: #10a5fc;
 }
 
 .player-icon,

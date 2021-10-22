@@ -6,8 +6,8 @@ const humidity = document.querySelector('.humidity');
 const weatherError = document.querySelector('.weather-error');
 const inputCity = document.querySelector('.city');
 
-if (localStorage.getItem('weather-city')) {
-  inputCity.value = localStorage.getItem('weather-city');
+if (localStorage.getItem('webdev163-city')) {
+  inputCity.value = localStorage.getItem('webdev163-city');
 } else {
   inputCity.value = 'Minsk';
 }
@@ -33,7 +33,7 @@ async function getWeather() {
     weatherDescription.textContent = data.weather[0].description;
     wind.textContent = `Wind speed: ${Math.floor(data.wind.speed)} m/s`;
     humidity.textContent = `Humidity: ${data.main.humidity}%`;
-    localStorage.setItem('weather-city', inputCity.value);
+    localStorage.setItem('webdev163-city', inputCity.value);
   }
 }
 

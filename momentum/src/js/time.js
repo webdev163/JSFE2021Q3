@@ -1,6 +1,6 @@
 const time = document.querySelector('.time');
 const date = document.querySelector('.date');
-const greeting = document.querySelector('.greeting');
+const greeting = document.querySelector('.greeting-text');
 const inputName = document.querySelector('.name');
 
 showTime();
@@ -30,12 +30,12 @@ export function getTimeOfDay() {
 }
 
 function setLocalStorage() {
-  localStorage.setItem('name', inputName.value);
+  localStorage.setItem('webdev163-name', inputName.value);
 }
 
 function getLocalStorage() {
-  if (localStorage.getItem('name')) {
-    inputName.value = localStorage.getItem('name');
+  if (localStorage.getItem('webdev163-name')) {
+    inputName.value = localStorage.getItem('webdev163-name');
   }
 }
 

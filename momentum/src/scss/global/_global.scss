@@ -16,6 +16,11 @@ body {
   transition: background-image 1s ease-in-out;
 }
 
+.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -56,7 +61,6 @@ body {
   margin-right: 15px;
   background-size: 30px 30px;
   cursor: pointer;
-  z-index: 99;
   pointer-events: all;
   opacity: .8;
   transition: opacity .2s;
@@ -76,7 +80,7 @@ body {
   margin-right: 15px;
   background-size: 30px 30px;
   cursor: pointer;
-  z-index: 99;
+  z-index: 1;
   pointer-events: all;
   background-image: url("../img/icons/pause.svg");
 }
@@ -143,6 +147,8 @@ body {
   width: 180px;
   min-height: 180px;
   text-align: left;
+  opacity: 1;
+  transition: opacity .3s;
 }
 
 .weather-error {
@@ -215,15 +221,21 @@ body {
   font-family: 'Arial-MT';
   font-size: 100px;
   letter-spacing: -4px;
+  opacity: 1;
+  transition: opacity .3s;
+  user-select: none;
 }
 
 .date {
   min-height: 28px;
   font-size: 24px;
   margin-bottom: 20px;
+  opacity: 1;
+  transition: opacity .3s;
+  user-select: none;
 }
 
-.greeting-container {
+.greeting {
   display: flex;
   flex-wrap: wrap;
   justify-content: stretch;
@@ -231,12 +243,15 @@ body {
   min-height: 48px;
   width: 100vw;
   font-size: 40px;
+  opacity: 1;
+  transition: opacity .3s;
 }
 
-.greeting {
+.greeting-text {
   flex: 1;
   padding: 10px;
   text-align: right;
+  user-select: none;
 }
 
 .name {
@@ -270,6 +285,11 @@ body {
 .change-quote {
   margin-bottom: 30px;
   background-image: url("../img/icons/reload.svg");
+}
+
+.quotes {
+  opacity: 1;
+  transition: opacity .3s;
 }
 
 .quote {

@@ -8,7 +8,7 @@
 </head>
 <body>
   <header class="header">
-    <div class="player">
+    <div class="player audio">
       <div class="player-controls-wrapper">
         <div class="player-controls">
           <button class="play-prev player-icon"></button>
@@ -50,17 +50,78 @@
     </div>
     <time class="time"></time>
     <date class="date"></date>
-    <div class="greeting-container">
-      <span class="greeting"></span>
+    <div class="greeting">
+      <span class="greeting-text"></span>
       <input type="text" class="name" />
     </div>
   </main>
   <footer class="footer">
-    <button class="change-quote"></button>
-    <div>
-      <div class="quote"></div>
-      <div class="author"></div>
+    <div class="quotes">
+      <button class="change-quote"></button>
+      <div>
+        <div class="quote"></div>
+        <div class="author"></div>
+      </div>
     </div>
   </footer>
+
+  <div class="settings-icon player-icon"></div>
+
+  <div class="settings-popup active">
+    <div class="popup-close"></div>
+    <div class="popup-language radio">
+      <div class="popup-section-title">Language:</div>
+      <div class="radio-wrapper">
+        <input class="custom-radio language-radio" label="English" type="radio" id="english" name="language-radio" value="english" checked>
+        <input class="custom-radio language-radio" label="Russian" type="radio" id="russian" name="language-radio" value="russian">
+      </div>
+    </div>
+    <div class="popup-photo-source radio">
+      <div class="popup-section-title">Picture source:</div>
+      <div class="radio-wrapper">
+        <input class="custom-radio picture-radio" label="Github" type="radio" id="github" name="picture-source" value="github" checked>
+        <input class="custom-radio picture-radio" label="Unsplash" type="radio" id="unsplash" name="picture-source" value="unsplash">
+        <input class="custom-radio picture-radio" label="Flickr" type="radio" id="flickr" name="picture-source" value="flickr">
+      </div>
+    </div>
+    <div class="input-wrapper">
+      <span class="custom-input-text">Tag</span>
+      <input class="custom-input" type="text" placeholder="nature" name="photo-tag" id="photo-tag" disabled>
+    </div>
+    <div class="app-visibility">
+      <div class="checkbox-wrapper">
+        <label class="label-checkbox" for="checkbox-time">Time</label>
+        <input class="slide-checkbox" type="checkbox" name="time" id="checkbox-time" checked>
+        <label class="custom-checkbox" for="checkbox-time"></label>
+      </div>
+      <div class="checkbox-wrapper">
+        <label class="label-checkbox" for="checkbox-date">Date</label>
+        <input class="slide-checkbox" type="checkbox" name="date" id="checkbox-date" checked>
+        <label class="custom-checkbox" for="checkbox-date"></label>
+      </div>
+      <div class="checkbox-wrapper">
+        <label class="label-checkbox" for="checkbox-greeting">Greeting</label>
+        <input class="slide-checkbox" type="checkbox" name="greeting" id="checkbox-greeting" checked>
+        <label class="custom-checkbox" for="checkbox-greeting"></label>
+      </div>
+      <div class="checkbox-wrapper">
+        <label class="label-checkbox" for="checkbox-quotes">Quotes</label>
+        <input class="slide-checkbox" type="checkbox" name="quotes" id="checkbox-quotes" checked>
+        <label class="custom-checkbox" for="checkbox-quotes"></label>
+      </div>
+      <div class="checkbox-wrapper">
+        <label class="label-checkbox" for="checkbox-weather">Weather</label>
+        <input class="slide-checkbox" type="checkbox" name="weather" id="checkbox-weather" checked>
+        <label class="custom-checkbox" for="checkbox-weather"></label>
+      </div>
+      <div class="checkbox-wrapper">
+        <label class="label-checkbox" for="checkbox-audio">Audio</label>
+        <input class="slide-checkbox" type="checkbox" name="audio" id="checkbox-audio" checked>
+        <label class="custom-checkbox" for="checkbox-audio"></label>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay"></div>
 </body>
 </html>

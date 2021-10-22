@@ -7,3 +7,4 @@ import './slider';
 import './weather';
 import './quotes';
 import './audioplayer';
+import './settings';

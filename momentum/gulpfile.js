@@ -279,6 +279,7 @@ const wds = async () => {
         warnings: true,
         errors: true,
       },
+      logging: 'error',
     },
   };
   webpackConfig.entry.main.splice(0, 1);

@@ -1,4 +1,3 @@
-import { getTimeOfDay } from "./time";
 import { state } from "./settings";
 import { updateState } from "./settings";
 
@@ -15,6 +14,19 @@ updateState();
 
 function getRandomInt(num) {
   return Math.floor(Math.random() * num) + 1;
+}
+
+function getTimeOfDay() {
+  const hours = new Date().getHours();
+  if (hours < 6) {
+    return 'night';
+  } else if (hours >= 6 && hours < 12) {
+    return 'morning';
+  } else if (hours >= 12 && hours < 18) {
+    return 'afternoon';
+  } else {
+    return 'evening';
+  }
 }
 
 function setBackground() {

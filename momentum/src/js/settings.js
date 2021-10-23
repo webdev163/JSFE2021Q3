@@ -1,14 +1,31 @@
+import { showDate } from "./time";
+import { showTime } from "./time";
+import { getQuotes } from "./quotes";
+import { getWeather } from "./weather";
+import { updateDefaultCity } from "./weather";
+
 const settingsIcon = document.querySelector('.settings-icon');
 const settingsPopup = document.querySelector('.settings-popup');
+const pictureSourceTitle = document.querySelector('.picture-source-title');
+const languageTitle = document.querySelector('.language-title');
 const popupClose = document.querySelector('.popup-close');
 const overlay = document.querySelector('#overlay');
 const github = document.querySelector('#github');
 const unsplash = document.querySelector('#unsplash');
 const flickr = document.querySelector('#flickr');
 const photoTag = document.querySelector('#photo-tag');
+const inputName = document.querySelector('.name');
+const labelTime = document.querySelector('label[for="checkbox-time"]');
+const labelDate = document.querySelector('label[for="checkbox-date"]');
+const labelTag = document.querySelector('.custom-input-text');
+const labelGreeting = document.querySelector('label[for="checkbox-greeting"]');
+const labelQuotes = document.querySelector('label[for="checkbox-quotes"]');
+const labelWeather = document.querySelector('label[for="checkbox-weather"]');
+const labelAudio = document.querySelector('label[for="checkbox-audio"]');
 const radioArr = Array.from(document.querySelectorAll('.custom-radio'));
 const checkboxArr = Array.from(document.querySelectorAll('.slide-checkbox'));
 const checkboxList = document.querySelectorAll('.slide-checkbox');
+const languageList = document.querySelectorAll('.language-radio');
 const formArr = radioArr.concat(checkboxArr);
 
 export const state = {
@@ -19,13 +36,10 @@ export const state = {
 }
 
 getLocalstorage();
+updateState();
 updateOpacity();
-
-// const proxyState = new Proxy(state, {
-//   set: function () {
-//     getSlideNext();
-//   }
-// });
+updateSettingsText();
+updateGreetingPlaceholder();
 
 function toggleActive() {
   if (settingsPopup.classList.contains('active')) {
@@ -84,6 +98,11 @@ function updateLocalstorage() {
 function getLocalstorage() {
   if (localStorage.getItem('webdev163-lang')) {
     document.getElementById(localStorage.getItem('webdev163-lang')).checked = true;
+    setTimeout(() => {
+      updateDefaultCity();
+      getQuotes();
+      getWeather();
+    }, 400);
   }
   if (localStorage.getItem('webdev163-photo-source')) {
     document.getElementById(localStorage.getItem('webdev163-photo-source')).checked = true;
@@ -125,6 +144,32 @@ function updateOpacity() {
   })
 }
 
+function updateLang() {
+  showDate();
+  showTime();
+  updateGreetingPlaceholder();
+  updateSettingsText();
+  getQuotes();
+  getWeather();
+  updateDefaultCity();
+}
+
+function updateGreetingPlaceholder() {
+  inputName.placeholder = state.language === 'english' ? '[Enter name]' : '[Введите имя]';
+}
+
+function updateSettingsText() {
+  labelTime.textContent = state.language === 'english' ? 'Time' : 'Время';
+  labelDate.textContent = state.language === 'english' ? 'Date' : 'Дата';
+  labelGreeting.textContent = state.language === 'english' ? 'Greeting' : 'Приветствие';
+  labelQuotes.textContent = state.language === 'english' ? 'Quotes' : 'Цитаты';
+  labelWeather.textContent = state.language === 'english' ? 'Weather' : 'Погода';
+  labelAudio.textContent = state.language === 'english' ? 'Audio' : 'Аудиоплеер';
+  labelTag.textContent = state.language === 'english' ? 'Tag' : 'Тег';
+  pictureSourceTitle.textContent = state.language === 'english' ? 'Picture source:' : 'Источник фото:';
+  languageTitle.textContent = state.language === 'english' ? 'Language:' : 'Язык:';
+}
+
 settingsIcon.addEventListener('click', toggleActive);
 popupClose.addEventListener('click', toggleActive);
 overlay.addEventListener('click', toggleActive);
@@ -136,3 +181,4 @@ photoTag.addEventListener('change', () => {
   localStorage.setItem('webdev163-photo-tag', photoTag.value);
   state.tag = photoTag.value;
 })
+languageList.forEach(el => el.addEventListener('change', updateLang));

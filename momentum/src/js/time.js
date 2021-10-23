@@ -1,31 +1,37 @@
+import { state } from "./settings";
+
 const time = document.querySelector('.time');
 const date = document.querySelector('.date');
 const greeting = document.querySelector('.greeting-text');
 const inputName = document.querySelector('.name');
 
+if (localStorage.getItem('webdev163-name')) {
+  inputName.value = localStorage.getItem('webdev163-name');
+}
+
 showTime();
 
-function showTime() {
-  time.textContent = new Date().toLocaleTimeString();
+export function showTime() {
+  time.textContent = state.language === 'english' ? new Date().toLocaleTimeString('en-US', {hour12: false}) : new Date().toLocaleTimeString('ru-RU');
   showDate();
-  greeting.textContent = `Good ${getTimeOfDay()}`;
+  greeting.textContent = getTimeOfDay();
   setTimeout(showTime, 1000);
 }
 
-function showDate() {
-  date.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+export function showDate() {
+  date.textContent = new Date().toLocaleDateString(state.language === 'english' ? 'en-US' : 'ru-RU', { weekday: 'long', month: 'long', day: 'numeric' });
 }
 
 export function getTimeOfDay() {
   const hours = new Date().getHours();
   if (hours < 6) {
-    return 'night';
+    return state.language === 'english' ? 'Good night' : 'Доброй ночи';
   } else if (hours >= 6 && hours < 12) {
-    return 'morning';
+    return state.language === 'english' ? 'Good morning' : 'Доброе утро';
   } else if (hours >= 12 && hours < 18) {
-    return 'afternoon';
+    return state.language === 'english' ? 'Good afternoon' : 'Добрый день';
   } else {
-    return 'evening';
+    return state.language === 'english' ? 'Good evening' : 'Добрый вечер';
   }
 }
 
@@ -33,12 +39,5 @@ function setLocalStorage() {
   localStorage.setItem('webdev163-name', inputName.value);
 }
 
-function getLocalStorage() {
-  if (localStorage.getItem('webdev163-name')) {
-    inputName.value = localStorage.getItem('webdev163-name');
-  }
-}
-
-window.addEventListener('load', getLocalStorage);
-window.addEventListener('beforeunload', setLocalStorage);
+inputName.addEventListener('change', setLocalStorage);
 

@@ -11,7 +11,7 @@ const checkboxArr = Array.from(document.querySelectorAll('.slide-checkbox'));
 const checkboxList = document.querySelectorAll('.slide-checkbox');
 const formArr = radioArr.concat(checkboxArr);
 
-const state = {
+export const state = {
   language: 'english',
   photoSource: 'github',
   tag: '',
@@ -21,12 +21,9 @@ const state = {
 getLocalstorage();
 updateOpacity();
 
-// const proxyVisibility = new Proxy(state.blocks, {
-//   set: function (key, value) {
-//     console.log(`${key} set to ${value}`);
-//     // target.style.opacity = 0;
-//     // target[key] = value;
-//     return true;
+// const proxyState = new Proxy(state, {
+//   set: function () {
+//     getSlideNext();
 //   }
 // });
 
@@ -45,7 +42,7 @@ function formCalculate() {
   updateState();
 }
 
-function updateState() {
+export function updateState() {
   document.querySelectorAll('.language-radio').forEach(el => {
     if (el.checked) state.language = el.value;
   })
@@ -111,11 +108,9 @@ function getLocalstorage() {
 
 function disableInput() {
   if (unsplash.checked || flickr.checked) {
-    photoTag.placeholder = 'nature';
     photoTag.disabled = false;
   } else {
     photoTag.value = '';
-    photoTag.placeholder = '';
     photoTag.disabled = true;
   }
 }

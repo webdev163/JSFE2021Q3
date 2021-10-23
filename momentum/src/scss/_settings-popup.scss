@@ -25,7 +25,6 @@
 
   &.active {
     left: 20px;
-    backdrop-filter: blur(.2px);
   }
 }
 
@@ -67,7 +66,6 @@
   bottom: 0;
   background-color: transparent;
   z-index: 2;
-  backdrop-filter: blur(3px);
 }
 
 #overlay.active {

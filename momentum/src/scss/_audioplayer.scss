@@ -10,10 +10,22 @@
   margin-bottom: 10px;
   margin-top: 15px;
   height: 20px;
+  @media screen and (max-width: 580px) {
+    flex-direction: column;
+  }
+}
+
+.play-list {
+  @media screen and (max-width: 580px) {
+    display: none;
+  }
 }
 
 .current-song {
   text-align: left;
+  @media screen and (max-width: 580px) {
+    margin-bottom: 5px;
+  }
 }
 
 .track-time {
@@ -30,12 +42,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media screen and (max-width: 580px) {
+    flex-direction: column;
+  }
 }
 
 .volume-controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media screen and (max-width: 580px) {
+    margin-top: 10px;
+  }
 }
 
 .volume-button {
@@ -51,6 +69,7 @@
 .progress {
   height: 5px;
   outline: none;
+  cursor: pointer;
   -webkit-transition: background 450ms ease-in;
   transition: background 450ms ease-in;
   -webkit-appearance: none;
@@ -70,6 +89,10 @@
   background: linear-gradient(to right, #449bff 0%, #449bff 0%, #fff 0%, #fff 100%);
   width: 250px;
   margin-bottom: 15px;
+  @media screen and (max-width: 580px) {
+    max-width: 150px;
+    margin-top: 25px;
+  }
 }
 
 .progress-small {

@@ -269,11 +269,11 @@ const wds = async () => {
     static: {
       directory: path.join(__dirname, './build'),
     },
-    host: 'localhost',
+    host: '0.0.0.0',
     historyApiFallback: true,
     hot: true,
     compress: true,
-    open: true,
+    open: `http://localhost:8080`,
     client: {
       overlay: {
         warnings: true,

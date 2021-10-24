@@ -5,8 +5,132 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="favicon.ico" rel="shortcut icon" />
   <title>Momentum</title>
+  <style>
+    body {
+      margin: 0;
+    }
+  
+    .preloader:not([hidden]) {
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: #ececec;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .lds-roller {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .lds-roller div {
+      animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      transform-origin: 40px 40px;
+    }
+    .lds-roller div:after {
+      content: " ";
+      display: block;
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #47acff;
+      margin: -4px 0 0 -4px;
+    }
+    .lds-roller div:nth-child(1) {
+      animation-delay: -0.036s;
+    }
+    .lds-roller div:nth-child(1):after {
+      top: 63px;
+      left: 63px;
+    }
+    .lds-roller div:nth-child(2) {
+      animation-delay: -0.072s;
+    }
+    .lds-roller div:nth-child(2):after {
+      top: 68px;
+      left: 56px;
+    }
+    .lds-roller div:nth-child(3) {
+      animation-delay: -0.108s;
+    }
+    .lds-roller div:nth-child(3):after {
+      top: 71px;
+      left: 48px;
+    }
+    .lds-roller div:nth-child(4) {
+      animation-delay: -0.144s;
+    }
+    .lds-roller div:nth-child(4):after {
+      top: 72px;
+      left: 40px;
+    }
+    .lds-roller div:nth-child(5) {
+      animation-delay: -0.18s;
+    }
+    .lds-roller div:nth-child(5):after {
+      top: 71px;
+      left: 32px;
+    }
+    .lds-roller div:nth-child(6) {
+      animation-delay: -0.216s;
+    }
+    .lds-roller div:nth-child(6):after {
+      top: 68px;
+      left: 24px;
+    }
+    .lds-roller div:nth-child(7) {
+      animation-delay: -0.252s;
+    }
+    .lds-roller div:nth-child(7):after {
+      top: 63px;
+      left: 17px;
+    }
+    .lds-roller div:nth-child(8) {
+      animation-delay: -0.288s;
+    }
+    .lds-roller div:nth-child(8):after {
+      top: 56px;
+      left: 12px;
+    }
+    @keyframes lds-roller {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  
+    .loaded_hiding .preloader {
+      transition: 0.3s opacity;
+      opacity: 0;
+    }
+  
+    .loaded .preloader {
+      display: none;
+    }
+  </style>
 </head>
 <body>
+  <div class="preloader">
+    <div class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
   <header class="header">
     <div class="player audio">
       <div class="player-controls-wrapper">
@@ -67,7 +191,7 @@
 
   <div class="settings-icon player-icon"></div>
 
-  <div class="settings-popup active">
+  <div class="settings-popup">
     <div class="popup-close"></div>
     <div class="popup-language radio">
       <div class="popup-section-title language-title"></div>
@@ -87,6 +211,7 @@
     <div class="input-wrapper">
       <span class="custom-input-text"></span>
       <input class="custom-input" type="text" name="photo-tag" id="photo-tag" disabled>
+      <button class="tag-btn">OK</button>
     </div>
     <div class="app-visibility">
       <div class="checkbox-wrapper">
@@ -119,9 +244,31 @@
         <input class="slide-checkbox" type="checkbox" name="audio" id="checkbox-audio" checked>
         <label class="custom-checkbox" for="checkbox-audio"></label>
       </div>
+      <div class="checkbox-wrapper">
+        <label class="label-checkbox" for="checkbox-todo"></label>
+        <input class="slide-checkbox" type="checkbox" name="todo" id="checkbox-todo" checked>
+        <label class="custom-checkbox" for="checkbox-todo"></label>
+      </div>
     </div>
   </div>
 
+  <div class="todolist-icon player-icon todo"></div>
+
+  <div class="todolist-wrapper">
+    <div class="todolist-header-wrapper">
+      <div class="todolist-title"></div>
+      <div class="todo-close"></div>
+    </div>
+    <ul id="todo-list"></ul>
+    <div class="todolist-input-wrapper">
+      <input class="new-todo" type="text" name="new-todo" placeholder="New Todo" id="new-todo">
+      <button class="new-todo-btn"></button>
+    </div>
+  </div>
+
+  <div id="preload-001"></div>
+  <div id="preload-002"></div>
+  <div hidden id="spinner"></div>
   <div id="overlay"></div>
 </body>
 </html>

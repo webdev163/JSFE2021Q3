@@ -10,10 +10,10 @@ const pictureSourceTitle = document.querySelector('.picture-source-title');
 const languageTitle = document.querySelector('.language-title');
 const popupClose = document.querySelector('.popup-close');
 const overlay = document.querySelector('#overlay');
-const github = document.querySelector('#github');
 const unsplash = document.querySelector('#unsplash');
 const flickr = document.querySelector('#flickr');
 const photoTag = document.querySelector('#photo-tag');
+const tagBtn = document.querySelector('.tag-btn');
 const inputName = document.querySelector('.name');
 const labelTime = document.querySelector('label[for="checkbox-time"]');
 const labelDate = document.querySelector('label[for="checkbox-date"]');
@@ -22,6 +22,10 @@ const labelGreeting = document.querySelector('label[for="checkbox-greeting"]');
 const labelQuotes = document.querySelector('label[for="checkbox-quotes"]');
 const labelWeather = document.querySelector('label[for="checkbox-weather"]');
 const labelAudio = document.querySelector('label[for="checkbox-audio"]');
+const labelTodo = document.querySelector('label[for="checkbox-todo"]');
+const todolistTitle = document.querySelector('.todolist-title');
+const todolistBtn = document.querySelector('.new-todo-btn');
+const todolistInput = document.querySelector('.new-todo');
 const radioArr = Array.from(document.querySelectorAll('.custom-radio'));
 const checkboxArr = Array.from(document.querySelectorAll('.slide-checkbox'));
 const checkboxList = document.querySelectorAll('.slide-checkbox');
@@ -32,7 +36,7 @@ export const state = {
   language: 'english',
   photoSource: 'github',
   tag: '',
-  blocks: ['time', 'date', 'greeting', 'quotes', 'weather', 'audio']
+  blocks: ['time', 'date', 'greeting', 'quotes', 'weather', 'audio', 'todo']
 }
 
 getLocalstorage();
@@ -128,9 +132,11 @@ function getLocalstorage() {
 function disableInput() {
   if (unsplash.checked || flickr.checked) {
     photoTag.disabled = false;
+    tagBtn.disabled = false;
   } else {
     photoTag.value = '';
     photoTag.disabled = true;
+    tagBtn.disabled = true;
   }
 }
 
@@ -165,9 +171,13 @@ function updateSettingsText() {
   labelQuotes.textContent = state.language === 'english' ? 'Quotes' : 'Цитаты';
   labelWeather.textContent = state.language === 'english' ? 'Weather' : 'Погода';
   labelAudio.textContent = state.language === 'english' ? 'Audio' : 'Аудиоплеер';
+  labelTodo.textContent = state.language === 'english' ? 'Todo' : 'Список дел';
   labelTag.textContent = state.language === 'english' ? 'Tag' : 'Тег';
   pictureSourceTitle.textContent = state.language === 'english' ? 'Picture source:' : 'Источник фото:';
   languageTitle.textContent = state.language === 'english' ? 'Language:' : 'Язык:';
+  todolistTitle.textContent = state.language === 'english' ? 'Todo list:' : 'Список дел:';
+  todolistBtn.textContent = state.language === 'english' ? 'Add' : 'Добавить';
+  todolistInput.placeholder = state.language === 'english' ? 'New todo' : 'Новая задача';
 }
 
 settingsIcon.addEventListener('click', toggleActive);

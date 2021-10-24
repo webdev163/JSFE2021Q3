@@ -3,3 +3,12 @@
 @import "core/**/_*.+(scss|sass|css)";
 @import "global/**/_*.+(scss|sass|css)";
 @import "_*.+(scss|sass|css)";
+
+//preload bg-icons
+#preload-001 {
+  background-image: url('../img/icons/pause.svg');
+}
+
+#preload-002 {
+  background-image: url('../img/icons/volume-off.svg');
+}

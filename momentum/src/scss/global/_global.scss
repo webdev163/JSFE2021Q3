@@ -7,13 +7,16 @@
 body {
   min-width: 480px;
   min-height: 100vh;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   color: #fff;
   text-align: center;
   background: center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
   transition: background-image 1s ease-in-out;
+  @media screen and (max-width: 580px) {
+    min-width: unset;
+  }
 }
 
 .hidden {
@@ -62,6 +65,7 @@ body {
   background-size: 30px 30px;
   cursor: pointer;
   pointer-events: all;
+  z-index: 9;
   opacity: .8;
   transition: opacity .2s;
   background-image: url("../img/icons/play.svg");
@@ -86,7 +90,7 @@ body {
 }
 
 .item-active {
-  color: #10a5fc;
+  color: #fcc510;
 }
 
 .player-icon,
@@ -149,6 +153,12 @@ body {
   text-align: left;
   opacity: 1;
   transition: opacity .3s;
+  @media screen and (max-width: 580px) {
+    width: 40%;
+    padding: 5px;
+    margin-right: 3%;
+    font-size: 13px;
+  }
 }
 
 .weather-error {
@@ -171,6 +181,7 @@ body {
   width: 170px;
   height: 34px;
   padding: 5px;
+  font-family: "Open Sans", sans-serif;
   font-size: 20px;
   line-height: 24px;
   color: #fff;
@@ -178,6 +189,9 @@ body {
   outline: 0;
   border-bottom: 1px solid #fff;
   background-color: transparent;
+  @media screen and (max-width: 580px) {
+    width: 100%;
+  }
 }
 
 .city::placeholder {
@@ -215,6 +229,52 @@ body {
   background-image: url("../img/icons/slider-next.svg");
 }
 
+#spinner:not([hidden]) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 5%;
+  pointer-events: none;
+  @media screen and (max-width: 700px) {
+    align-items: flex-end;
+    margin-top: 0;
+    margin-bottom: 35%;
+  }
+  @media screen and (max-width: 580px) {
+    margin-bottom: 230px;
+  }
+}
+
+#spinner::after {
+  content: "";
+  width: 80px;
+  height: 80px;
+  border: 2px solid #f3f3f3;
+  border-top: 3px solid #47acff;
+  border-radius: 100%;
+  will-change: transform;
+  animation: spin 1s infinite linear;
+  @media screen and (max-width: 580px) {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 .time {
   min-height: 124px;
   margin-bottom: 10px;
@@ -224,6 +284,9 @@ body {
   opacity: 1;
   transition: opacity .3s;
   user-select: none;
+  @media screen and (max-width: 380px) {
+    font-size: 55px !important;
+  }
 }
 
 .date {
@@ -245,6 +308,15 @@ body {
   font-size: 40px;
   opacity: 1;
   transition: opacity .3s;
+  @media screen and (max-width: 768px) {
+    font-size: 35px;
+  }
+  @media screen and (max-width: 580px) {
+    flex-direction: column;
+  }
+  @media screen and (max-width: 380px) {
+    font-size: 25px;
+  }
 }
 
 .greeting-text {
@@ -258,12 +330,24 @@ body {
   flex: 1;
   max-width: 50%;
   padding: 10px;
+  font-family: "Open Sans", sans-serif;
   font-size: 40px;
   text-align: left;
   color: #fff;
   background-color: transparent;
   border: 0;
   outline: 0;
+  @media screen and (max-width: 768px) {
+    font-size: 35px;
+  }
+  @media screen and (max-width: 580px) {
+    font-size: 30px;
+    text-align: center;
+    max-width: unset;
+  }
+  @media screen and (max-width: 380px) {
+    font-size: 22px;
+  }
 }
 
 .name::placeholder {
@@ -290,10 +374,18 @@ body {
 .quotes {
   opacity: 1;
   transition: opacity .3s;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 70px;
+  }
 }
 
 .quote {
   min-height: 32px;
+  @media screen and (max-width: 580px) {
+    margin-bottom: 10px;
+    min-height: unset;
+  }
 }
 
 .author {
@@ -312,11 +404,6 @@ body {
   }
 
   .greeting {
-    padding: 5px;
-  }
-
-  .name {
-    font-size: 32px;
     padding: 5px;
   }
 }

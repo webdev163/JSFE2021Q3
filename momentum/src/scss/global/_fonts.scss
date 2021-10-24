@@ -2,3 +2,12 @@
   font-family: 'Arial-MT';
   src: url("../fonts/Arial-MT.woff");
 }
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+    url('../fonts/open-sans-v26-latin_cyrillic-regular.woff2') format('woff2'),
+    url('../fonts/open-sans-v26-latin_cyrillic-regular.woff') format('woff');
+}

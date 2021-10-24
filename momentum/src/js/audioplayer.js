@@ -23,8 +23,8 @@ function playAudio(action) {
     currentSong.textContent = playlist[playNum].title;
     audio.play();
     setInterval(() => {
-      handleDurationProgressBar();
-    }, 100);
+      audio.duration && handleDurationProgressBar();
+    }, 1000);
   } else {
     audio.pause();
   }

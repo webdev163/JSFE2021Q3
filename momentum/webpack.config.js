@@ -152,6 +152,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'views/index.html',
+      minify: isDev ? false : {
+        collapseWhitespace: true,
+        keepClosingSlash: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
+        minifyCSS: true,
+        minifyJS: true,
+      },
     }),
   ],
 };

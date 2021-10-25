@@ -13,6 +13,8 @@ const overlay = document.querySelector('#overlay');
 const unsplash = document.querySelector('#unsplash');
 const flickr = document.querySelector('#flickr');
 const photoTag = document.querySelector('#photo-tag');
+const radioEnglish = document.querySelector('#english');
+const radioRussian = document.querySelector('#russian');
 const tagBtn = document.querySelector('.tag-btn');
 const inputName = document.querySelector('.name');
 const labelTime = document.querySelector('label[for="checkbox-time"]');
@@ -178,6 +180,8 @@ function updateSettingsText() {
   todolistTitle.textContent = state.language === 'english' ? 'Todo list:' : 'Список дел:';
   todolistBtn.textContent = state.language === 'english' ? 'Add' : 'Добавить';
   todolistInput.placeholder = state.language === 'english' ? 'New todo' : 'Новая задача';
+  radioEnglish.dataset.label = state.language === 'english' ? 'English' : 'Английский';
+  radioRussian.dataset.label = state.language === 'english' ? 'Russian' : 'Русский';
 }
 
 settingsIcon.addEventListener('click', toggleActive);

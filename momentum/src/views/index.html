@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="favicon.ico" rel="shortcut icon" />
   <title>Momentum</title>
+  <link rel="prefetch" href="img/icons/pause.svg" />
+  <link rel="prefetch" href="img/icons/volume-off.svg" />
   <style>
     body {
       margin: 0;
@@ -172,8 +174,8 @@
       <button class="slide-prev slider-icon"></button>
       <button class="slide-next slider-icon"></button>
     </div>
-    <time class="time"></time>
-    <date class="date"></date>
+    <div class="time"></div>
+    <div class="date"></div>
     <div class="greeting">
       <span class="greeting-text"></span>
       <input type="text" class="name"/>
@@ -182,7 +184,7 @@
   <footer class="footer">
     <div class="quotes">
       <button class="change-quote"></button>
-      <div>
+      <div class="quotes-wrapper">
         <div class="quote"></div>
         <div class="author"></div>
       </div>
@@ -196,16 +198,16 @@
     <div class="popup-language radio">
       <div class="popup-section-title language-title"></div>
       <div class="radio-wrapper">
-        <input class="custom-radio language-radio" label="English" type="radio" id="english" name="language-radio" value="english" checked>
-        <input class="custom-radio language-radio" label="Russian" type="radio" id="russian" name="language-radio" value="russian">
+        <input class="custom-radio language-radio" data-label="English" type="radio" id="english" name="language-radio" value="english" checked>
+        <input class="custom-radio language-radio" data-label="Russian" type="radio" id="russian" name="language-radio" value="russian">
       </div>
     </div>
     <div class="popup-photo-source radio">
       <div class="popup-section-title picture-source-title"></div>
       <div class="radio-wrapper">
-        <input class="custom-radio picture-radio" label="Github" type="radio" id="github" name="picture-source" value="github" checked>
-        <input class="custom-radio picture-radio" label="Unsplash" type="radio" id="unsplash" name="picture-source" value="unsplash">
-        <input class="custom-radio picture-radio" label="Flickr" type="radio" id="flickr" name="picture-source" value="flickr">
+        <input class="custom-radio picture-radio" data-label="Github" type="radio" id="github" name="picture-source" value="github" checked>
+        <input class="custom-radio picture-radio" data-label="Unsplash" type="radio" id="unsplash" name="picture-source" value="unsplash">
+        <input class="custom-radio picture-radio" data-label="Flickr" type="radio" id="flickr" name="picture-source" value="flickr">
       </div>
     </div>
     <div class="input-wrapper">
@@ -266,8 +268,6 @@
     </div>
   </div>
 
-  <div id="preload-001"></div>
-  <div id="preload-002"></div>
   <div hidden id="spinner"></div>
   <div id="overlay"></div>
 </body>

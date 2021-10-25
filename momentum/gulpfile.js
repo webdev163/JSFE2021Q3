@@ -273,7 +273,7 @@ const wds = async () => {
     historyApiFallback: true,
     hot: true,
     compress: true,
-    open: `http://localhost:8080`,
+    open: 'http://localhost:8080',
     client: {
       overlay: {
         warnings: true,

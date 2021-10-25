@@ -20,8 +20,8 @@
   color: #121212;
   text-align: left;
   padding: 20px;
-  padding-left: 35px;
-  padding-right: 35px;
+  padding-left: 20px;
+  padding-right: 20px;
   border-radius: 5px;
   opacity: 0;
   pointer-events: none;
@@ -29,6 +29,7 @@
     transition: opacity .3s;
     opacity: 1;
     pointer-events: all;
+    min-height: 120px;
   }
   @media screen and (max-width: 500px) {
     width: 94%;
@@ -74,9 +75,22 @@
 
 #todo-list {
   list-style: none;
-  // max-height: 500px;
-  // overflow-y: scroll;
-  
+  margin-bottom: 40px;
+  max-height: 625px;
+  scrollbar-width: thin;
+  scrollbar-color: #919191 #e4e4e4;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 100px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background-clip: content-box;
+    background-color: #919191;
+  }
 }
 
 .todolist-input-wrapper {
@@ -84,6 +98,16 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 10px;
+  position: absolute;
+  bottom: 15px;
+  left: 35px;
+  width: 290px;
+  @media screen and (max-width: 500px) {
+    width: 86%;
+  }
+  @media screen and (max-width: 400px) {
+    width: 82%;
+  }
 }
 
 .new-todo {
@@ -92,7 +116,7 @@
   flex-grow: 1;
   margin-right: 10px;
   font-family: "Open Sans", sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   max-width: 180px;
   &::placeholder {
     color: #d4d4d4;
@@ -116,6 +140,12 @@
   }
 }
 
+.todolist-item-wrapper {
+  &:not(:last-child) {
+    border-bottom: 1px solid #d4d4d4;
+  }
+}
+
 .todolist-item {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -124,9 +154,10 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  &:not(:last-child) {
-    border-bottom: 1px solid #d4d4d4;
-  }
+  opacity: 1;
+  transition: opacity .3s;
+  margin-right: 10px;
+  margin-left: 23px;
   & .close {
     padding: 5px;
     border-radius: 50%;
@@ -145,6 +176,9 @@
     &:hover {
       background-color: #47acff;
     }
+  }
+  &.deleting {
+    opacity: 0;
   }
 }
 

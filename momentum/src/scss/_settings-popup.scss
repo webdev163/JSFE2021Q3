@@ -154,7 +154,7 @@
 }
 
 .radio input:before {
-  content: attr(label);
+  content: attr(data-label);
   display: inline-block;
   text-align: center;
   width: 100%;

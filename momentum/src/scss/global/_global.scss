@@ -13,6 +13,7 @@ body {
   text-align: center;
   background: center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
+  overflow: hidden;
   transition: background-image 1s ease-in-out;
   @media screen and (max-width: 580px) {
     min-width: unset;
@@ -377,6 +378,14 @@ body {
   @media screen and (max-width: 768px) {
     font-size: 14px;
     margin-bottom: 70px;
+  }
+}
+
+.quotes-wrapper {
+  opacity: 1;
+  transition: opacity 1s;
+  &.quotes-hidden {
+    opacity: 0;
   }
 }
 

@@ -16,20 +16,26 @@ if (localStorage.getItem('webdev163-todolist')) {
   todolist.querySelectorAll('.close').forEach(el => el.addEventListener('click', deleteItem));
 }
 
+checkHeight();
+
 function newElement() {
   const li = document.createElement('li');
+  const liInner = document.createElement('DIV');
   const inputValue = newtodoInput.value;
   const text = document.createElement('DIV');
   text.textContent = inputValue;
   text.addEventListener('click', toggleChecked)
   text.className = 'todolist-item-text';
-  li.className = 'todolist-item';
-  li.appendChild(text);
+  li.className = 'todolist-item-wrapper';
+  liInner.className = 'todolist-item';
+  liInner.appendChild(text);
+  li.appendChild(liInner);
   if (inputValue === '') {
     return 0
   } else {
-    todolist.appendChild(li);
+    todolist.prepend(li);
   }
+  checkHeight();
   newtodoInput.value = '';
 
   const close = document.createElement('DIV');
@@ -39,7 +45,7 @@ function newElement() {
   span.className = 'close-txt';
   span.appendChild(txt);
   close.appendChild(span);
-  li.appendChild(close);
+  liInner.appendChild(close);
   close.addEventListener('click', deleteItem)
   updateLocalstorage();
 }
@@ -54,12 +60,26 @@ function toggleChecked() {
 }
 
 function deleteItem() {
-  this.parentElement.remove();
-  updateLocalstorage();
+  this.parentElement.classList.add('deleting');
+  setTimeout(() => {
+    this.parentElement.parentElement.remove();
+    checkHeight();
+    updateLocalstorage();
+  }, 300);
+}
+
+function checkHeight() {
+  if (todolist.clientHeight > 615) {
+    todolist.style.overflowY = 'scroll';
+  }
+  if (todolist.clientHeight < 605) {
+    todolist.style.overflowY = 'unset';
+  }
 }
 
 function toggleActive() {
   todolistWrapper.classList.toggle('active');
+  checkHeight();
   active === false ? active = true : active = false;
 }
 

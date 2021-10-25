@@ -19,7 +19,7 @@ module.exports = {
   output: {
     filename: () => {
       if (isProd) {
-        return './js/[name].[fullhash].js';
+        return './js/[name].[contenthash].js';
       } else {
         return './js/[name].js';
       }

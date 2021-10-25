@@ -12,7 +12,7 @@ if (localStorage.getItem('webdev163-name')) {
 showTime();
 
 export function showTime() {
-  time.textContent = state.language === 'english' ? new Date().toLocaleTimeString('en-US', {hour12: false}) : new Date().toLocaleTimeString('ru-RU');
+  time.textContent = new Date().toLocaleTimeString('ru-RU');
   showDate();
   greeting.textContent = getTimeOfDay();
   setTimeout(showTime, 1000);

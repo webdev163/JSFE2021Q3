@@ -17,6 +17,7 @@ const audio = new Audio();
 let isPlay = false;
 let playNum = 0;
 let currentSoundLevel;
+let mousedown = false;
 
 function playAudio(action) {
   if(action === 'play') {
@@ -168,6 +169,9 @@ rangesArray.forEach(el => {
     handleProgressBarUpdate(e);
   });
 })
+rangePosition.addEventListener('mousedown', () => mousedown = true);
+rangePosition.addEventListener('mouseup', () => mousedown = false);
+rangePosition.addEventListener('mousemove', (e) => mousedown && changeCurrentTime(e));
 audio.addEventListener('timeupdate', updateCurrentTime)
 rangePosition.addEventListener('click', (e) => changeCurrentTime(e));
 playListContainer.childNodes.forEach(el => el.addEventListener('click', (e) => {

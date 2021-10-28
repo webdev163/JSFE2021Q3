@@ -28,9 +28,18 @@ function handleOpacity() {
   }, 1000);
 }
 
+let degrees = 0;
+changeQuote.style.transform = `rotate(${degrees}deg)`;
+
+function rotateIcon() {
+  degrees += 360;
+  this.style.transform = `rotate(${degrees}deg)`;
+}
+
 setTimeout(() => {
   getQuotes();
 }, 1000);
 
 changeQuote.addEventListener('click', getQuotes);
 changeQuote.addEventListener('click', handleOpacity);
+changeQuote.addEventListener('click', rotateIcon);

@@ -51,9 +51,11 @@ function toggleActive() {
   if (settingsPopup.classList.contains('active')) {
     settingsPopup.classList.remove('active');
     overlay.classList.remove('active');
+    settingsIcon.classList.remove('active');
   } else {
     settingsPopup.classList.add('active');
     overlay.classList.add('active');
+    settingsIcon.classList.add('active');
   }
 }
 

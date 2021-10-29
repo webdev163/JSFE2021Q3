@@ -7,7 +7,7 @@
   bottom: 20px;
   left: 20px;
   cursor: pointer;
-  transition: transform .3s;
+  transition: transform .5s;
   z-index: 9;
   &.active {
     transform: rotate(90deg);

@@ -107,7 +107,11 @@ body {
   outline: 0;
   opacity: .8;
   cursor: pointer;
-  transition: 2s;
+  transition: .3s;
+}
+
+.change-quote {
+  transition: transform 2s;
 }
 
 .player-icon:hover,

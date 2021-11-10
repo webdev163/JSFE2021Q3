@@ -1,0 +1,7 @@
+node_modules/*
+src/js/libs/*
+.eslintrc.js
+babel.config.js
+gulpfile.js
+postcss.config.js
+webpack.config.js

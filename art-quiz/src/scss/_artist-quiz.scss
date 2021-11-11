@@ -1,0 +1,151 @@
+.artists-quiz-title {
+  text-align: center;
+}
+
+.artists-quiz-picture {
+  width: 96%;
+  height: 90vw;
+  max-height: 600px;
+  background-position: 50%;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+.artists-quiz-answers-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 96%;
+  margin: 0 auto;
+}
+
+.artists-quiz-answers-item {
+  flex-basis: 50%;
+  text-align: center;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  &:nth-child(1) {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+  &:nth-child(2) {
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+  }
+  &:nth-child(3) {
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+  }
+  &:nth-child(4) {
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+  }
+  &:hover {
+    background-color: #c4c4c4;
+    cursor: pointer;
+  }
+}
+
+.popup {
+  position: fixed;
+  left: -150%;
+  width: 90%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  background-color: #fff;
+  transition: left .5s;
+  z-index: 999;
+  padding: 10px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-radius: 10px;
+  &.active {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.popup-sign {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.popup-picture {
+  width: 96%;
+  max-width: 400px;
+  height: 90vw;
+  max-height: 400px;
+  background-position: 50%;
+  background-size: cover;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+#overlay.active {
+  display: block;
+}
+
+.popup-info-wrapper {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.button-next {
+  border: none;
+  background: #660033;
+  padding: 14px 50px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: lighten(#660033, 10%);
+  }
+}
+
+.pagination-wrapper {
+  margin: 0 auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 15px;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pagination-item {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #cccccc;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+}
+
+.pagination-correct {
+  background-color: #78ff4f;
+}
+
+.pagination-wrong {
+  background-color: #ff4750;
+}

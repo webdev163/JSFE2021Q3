@@ -3,3 +3,18 @@
 *::after {
   box-sizing: border-box;
 }
+
+body {
+  font-family: Montserrat, sans-serif;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#app {
+  position: relative;
+  left: 0;
+  transition: left .7s;
+}

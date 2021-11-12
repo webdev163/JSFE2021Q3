@@ -145,7 +145,7 @@ const images = (args) => {
     } else { resolve(); }
   }).then(() => {
     return new Promise((resolve) => {
-      if (params.webp) {
+      if (false || params.webp) {
         gulp.src([paths.src.img + '**/*.+(jpg|jpeg|png)', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*', paths.src.img_copy + '**/*+(jpg|jpeg|png)'])
           .pipe(changed(paths.src.img_copy, { extension: '.webp' }))
           .pipe(imagemin([imageminWebp()]))

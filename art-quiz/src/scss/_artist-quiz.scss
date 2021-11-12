@@ -111,16 +111,8 @@
   text-align: center;
 }
 
-.button-next {
-  border: none;
-  background: #660033;
+.button-popup-next {
   padding: 14px 50px;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background-color: lighten(#660033, 10%);
-  }
 }
 
 .pagination-wrapper {
@@ -148,4 +140,48 @@
 
 .pagination-wrong {
   background-color: #ff4750;
+}
+
+.text-results {
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  color: #660033;
+
+}
+
+.congratulation {
+  font-size: 36px;
+  line-height: 44px;
+}
+
+.score-results {
+  font-size: 96px;
+  line-height: 117px;
+  margin-top: 65px;
+  margin-bottom: 50px;
+}
+
+.congratulation-picture-wrapper {
+  width: 207px;
+  height: 172px;
+  margin: 0 auto;
+}
+
+.popup-btn-wrapper {
+  max-width: 325px;
+  margin: 0 auto;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-popup-home {
+  padding: 14px 50px;
+  text-transform: uppercase;
+}
+
+.button-popup-next-quiz {
+  padding: 14px 32px;
+  text-transform: uppercase;
 }

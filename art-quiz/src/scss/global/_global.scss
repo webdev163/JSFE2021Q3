@@ -6,15 +6,35 @@
 
 body {
   font-family: Montserrat, sans-serif;
+  background-color: #c2e0f0;
+}
+
+img {
+  width: 100%;
 }
 
 .container {
   max-width: 1000px;
   margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+
 }
 
 #app {
   position: relative;
   left: 0;
   transition: left .7s;
+}
+
+.btn {
+  border: none;
+  background: #660033;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color .3s;
+  &:hover {
+    background-color: lighten(#660033, 10%);
+  }
 }

@@ -1,4 +1,4 @@
-.main-menu-outer-container {
+.outer-container {
   padding-top: 70px;
   padding-bottom: 60px;
 }
@@ -68,7 +68,7 @@
   line-height: 44px;
   text-align: right;
   text-transform: uppercase;
-  color: #660033;
+  color: $main_color;
   position: absolute;
   right: 0;
   bottom: -90px;

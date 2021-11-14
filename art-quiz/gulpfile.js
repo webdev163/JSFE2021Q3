@@ -145,7 +145,7 @@ const images = (args) => {
     } else { resolve(); }
   }).then(() => {
     return new Promise((resolve) => {
-      if (false || params.webp) {
+      if (false) {
         gulp.src([paths.src.img + '**/*.+(jpg|jpeg|png)', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*', paths.src.img_copy + '**/*+(jpg|jpeg|png)'])
           .pipe(changed(paths.src.img_copy, { extension: '.webp' }))
           .pipe(imagemin([imageminWebp()]))
@@ -196,9 +196,9 @@ const copy = () => {
 exports.copy = copy;
 
 const watch = async () => {
-  gulp.watch([paths.src.img + '**/*.+(jpg|jpeg|png|gif)', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*'], { events: ['add'] }, imgUpdate = () => images({ svg: false, webp: true }));
+  gulp.watch([paths.src.img + '**/*.+(jpg|jpeg|png|gif)', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*'], { events: ['add', 'change'] }, imgUpdate = () => images({ svg: false, webp: true }));
   gulp.watch(paths.src.img_copy + '**/*+(jpg|jpeg|png|gif)', { events: ['add'] }, imgUpdate = () => images({ img: false, svg: false, webp: true }));
-  gulp.watch([paths.src.img + '**/*.svg', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*'], imgUpdate = () => images({ img: false }));
+  gulp.watch([paths.src.img + '**/*.svg', '!' + paths.src.img_inline + '**/*', '!' + paths.src.img_copy + '**/*'], { events: ['add', 'change'] }, imgUpdate = () => images({ img: false }));
   gulp.watch(paths.src.icons + '*sprite.svg', gulp.parallel('copy'));
   gulp.watch(paths.src.fonts + '**/*.ttf', gulp.series('fonts', 'copy'));
   gulp.watch([paths.src.img_copy + '**/*.*', '!' + paths.src.img_copy + '**/*.*+(jpg|jpeg|png|gif)'], { events: ['add'] }, gulp.parallel('copy'));

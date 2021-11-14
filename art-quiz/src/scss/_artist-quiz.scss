@@ -1,5 +1,11 @@
 .artists-quiz-title {
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 37px;
+  text-transform: uppercase;
+  color: $main_color;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .artists-quiz-picture {
@@ -48,140 +54,4 @@
     background-color: #c4c4c4;
     cursor: pointer;
   }
-}
-
-.popup {
-  position: fixed;
-  left: -150%;
-  width: 90%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 500px;
-  background-color: #fff;
-  transition: left .5s;
-  z-index: 999;
-  padding: 10px;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  border-radius: 10px;
-  &.active {
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.popup-sign {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto;
-  margin-bottom: 20px;
-}
-
-.popup-picture {
-  width: 96%;
-  max-width: 400px;
-  height: 90vw;
-  max-height: 400px;
-  background-position: 50%;
-  background-size: cover;
-  margin: 0 auto;
-  border-radius: 5px;
-}
-
-#overlay {
-  position: fixed;
-  display: none;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2;
-}
-
-#overlay.active {
-  display: block;
-}
-
-.popup-info-wrapper {
-  max-width: 400px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.button-popup-next {
-  padding: 14px 50px;
-}
-
-.pagination-wrapper {
-  margin: 0 auto;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  height: 15px;
-  max-width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.pagination-item {
-  width: 15px;
-  height: 15px;
-  border: 1px solid #cccccc;
-  border-radius: 50%;
-  background-color: #f1f1f1;
-}
-
-.pagination-correct {
-  background-color: #78ff4f;
-}
-
-.pagination-wrong {
-  background-color: #ff4750;
-}
-
-.text-results {
-  font-weight: bold;
-  text-align: center;
-  text-transform: uppercase;
-  color: #660033;
-
-}
-
-.congratulation {
-  font-size: 36px;
-  line-height: 44px;
-}
-
-.score-results {
-  font-size: 96px;
-  line-height: 117px;
-  margin-top: 65px;
-  margin-bottom: 50px;
-}
-
-.congratulation-picture-wrapper {
-  width: 207px;
-  height: 172px;
-  margin: 0 auto;
-}
-
-.popup-btn-wrapper {
-  max-width: 325px;
-  margin: 0 auto;
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.button-popup-home {
-  padding: 14px 50px;
-  text-transform: uppercase;
-}
-
-.button-popup-next-quiz {
-  padding: 14px 32px;
-  text-transform: uppercase;
 }

@@ -1,0 +1,35 @@
+.pictures-quiz-title {
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 37px;
+  text-transform: uppercase;
+  color: $main_color;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pictures-quiz-answers-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pictures-quiz-answers-item {
+  width: 48%;
+  height: 300px;
+  background-size: cover;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: filter .3s;
+  @media screen and (max-width: 585px) {
+    width: 100%;
+    margin-bottom: 10px;
+    height: 240px;
+    background-position: 50%;
+  }
+  &:hover {
+    filter: drop-shadow(0 0 10px #ffae00) blur(.5px);
+  }
+}

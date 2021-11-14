@@ -1,0 +1,194 @@
+.settings-title {
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  text-transform: uppercase;
+  color: $main_color;
+  margin-top: -10px;
+}
+
+.volume-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 295px;
+}
+
+.volume-button {
+  background-image: url('../img/volume-off.svg');
+  width: 18px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+}
+
+.settings-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+
+.volume-settings-wrapper {
+  width: 415px;
+  background-color: #fff;
+  padding: 60px 60px 25px;
+  border-radius: 10px;
+  @media screen and (max-width: 900px) {
+    width: 96%;
+    max-width: 500px;
+    margin-bottom: 30px;
+  }
+}
+
+.time-settings-wrapper {
+  width: 415px;
+  background-color: #fff;
+  padding: 60px 60px 25px;
+  border-radius: 10px;
+  @media screen and (max-width: 900px) {
+    width: 96%;
+    max-width: 500px;
+  }
+}
+
+.volume-icon-wrapper {
+  width: 100px;
+  height: 82px;
+  margin: 0 auto;
+  margin-bottom: 70px;
+}
+
+.volume-controls {
+  margin: 0 auto;
+  width: 295px;
+  margin-bottom: 60px;
+  @media screen and (max-width: 900px) {
+    width: 96%;
+    max-width: 295px;
+  }
+}
+
+.volume-title {
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  text-transform: uppercase;
+  color: $main_color;
+}
+
+.time-checkbox-wrapper {
+  margin-bottom: 60px;
+}
+
+.time-icon-wrapper {
+  width: 85px;
+  height: 100px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+.progress {
+  height: 5px;
+  outline: none;
+  cursor: pointer;
+  -webkit-transition: background 450ms ease-in;
+  transition: background 450ms ease-in;
+  -webkit-appearance: none;
+}
+
+.progress::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  -webkit-appearance: none;
+  cursor: ew-resize;
+  background: $main_color;
+}
+
+.progress-small {
+  background: -webkit-gradient(linear, left top, right top, from($main_color), color-stop(100%, $main_color), color-stop(100%, #E5E5E5), to(#E5E5E5));
+  background: linear-gradient(to right, $main_color 0%, $main_color 100%, #E5E5E5 100%, #E5E5E5 100%);
+  width: 270px;
+  @media screen and (max-width: 900px) {
+    width: 85%;
+  }
+}
+
+.slide-checkbox {
+  display: none;
+  +.custom-checkbox {
+    outline: 0;
+    display: block;
+    width: 4em;
+    height: 2em;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    background: #f0f0f0;
+    border-radius: 2em;
+    padding: 2px;
+    transition: all .4s ease;
+    margin: 0 auto;
+    &:after,
+    &:before {
+      position: relative;
+      display: block;
+      content: "";
+      width: 50%;
+      height: 100%;
+    }
+    &:after {
+      left: 0;
+      border-radius: 50%;
+      background: #fff;
+      transition: all .2s ease;
+    }
+    &:before {
+      display: none;
+    }
+  }
+
+  &:checked+.custom-checkbox {
+    background: $main_color;
+  }
+
+  &:checked+.custom-checkbox:after {
+    left: 50%;
+  }
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.label-checkbox {
+  font-size: 21px;
+  user-select: none;
+}
+
+.settings-btn-wrapper {
+  margin: 0 auto;
+  width: 150px;
+}
+
+.save-button {
+  margin-top: 100px;
+  padding: 14px 51px;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  @media screen and (max-width: 900px) {
+    margin-top: 40px;
+  }
+}

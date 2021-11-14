@@ -3,16 +3,17 @@ import { Data } from '../data';
 import { jsonData } from '../index';
 import { Quiz } from '../quiz';
 import { MainPage } from './mainPage';
-import { ArtistCategories } from './artistCategories';
+import { PicturesCategories } from './picturesCategories';
 
-export class ArtistQuiz extends Quiz {
+export class PicturesQuiz extends Quiz {
   async render() {
     const json = await jsonData();
     const imageUrl = await Data.getImage(this.artistNumber)
     const set = new Set()
-    set.add(json[this.artistNumber].author);
+    set.add(imageUrl);
     while (set.size < 4) {
-      set.add(json[this.getRandomInt()].author);
+      const randomImageUrl = await Data.getImage(this.getRandomInt())
+      set.add(randomImageUrl);
     }
 
     const arr = Array.from(set);
@@ -20,17 +21,17 @@ export class ArtistQuiz extends Quiz {
 
     const html = `
       <div class="container">
-        <div class="artists-quiz-title">Кто автор этой картины?</div>
-        <div class="artists-quiz-picture" style='background-image: ${imageUrl};'></div>
-        <div class="pagination-wrapper">${this.generatePagination()}</div>
-        <div class="artists-quiz-answers-wrapper">
-          <div class="artists-quiz-answers-list">
-            <div class="artists-quiz-answers-item">${shuffledArr[0]}</div>
-            <div class="artists-quiz-answers-item">${shuffledArr[1]}</div>
-            <div class="artists-quiz-answers-item">${shuffledArr[2]}</div>
-            <div class="artists-quiz-answers-item">${shuffledArr[3]}</div>
+        <div class="pictures-quiz-title">Какую картину написал ${json[this.artistNumber].author}?</div>
+        <div class="pictures-quiz-picture" style="background-image: ${imageUrl};"></div>
+        <div class="pictures-quiz-answers-wrapper">
+          <div class="pictures-quiz-answers-list">
+            <div class="pictures-quiz-answers-item" style='background-image: ${shuffledArr[0]};'></div>
+            <div class="pictures-quiz-answers-item" style='background-image: ${shuffledArr[1]};'></div>
+            <div class="pictures-quiz-answers-item" style='background-image: ${shuffledArr[2]};'></div>
+            <div class="pictures-quiz-answers-item" style='background-image: ${shuffledArr[3]};'></div>
           </div>
         </div>
+        <div class="pagination-wrapper">${this.generatePagination()}</div>
         <div class="popup">
           <div class="popup-sign"></div>
           <div class="popup-picture" style='background-image: ${imageUrl};'></div>
@@ -45,12 +46,12 @@ export class ArtistQuiz extends Quiz {
       <div id="overlay"></div>
     `
 
-    await Render.render(html).then(() => this.setEventListeners(json));
+    await Render.render(html).then(() => this.setEventListeners(imageUrl));
   }
 
-  setEventListeners(json) {
-    document.querySelector('.artists-quiz-answers-list').addEventListener('click', (e) => {
-      if (e.target.textContent == json[this.artistNumber].author) {
+  setEventListeners(imageUrl) {
+    document.querySelector('.pictures-quiz-answers-list').addEventListener('click', (e) => {
+      if (e.target.style.backgroundImage === imageUrl) {
         this.isCorrect = true;
       } else {
         this.isCorrect = false;
@@ -59,7 +60,10 @@ export class ArtistQuiz extends Quiz {
     });
     document.querySelector('.button-popup-next').addEventListener('click', async () => {
       this.answersArr[this.answersCounter] = this.isCorrect ? 1 : 0;
-      this.removePopup();
+      const popup = document.querySelector('.popup');
+      const overlay = document.querySelector('#overlay');
+      popup.classList.remove('active');
+      overlay.classList.remove('active');
       if (this.answersCounter < 9) {
         this.answersCounter++;
         this.artistNumber++;
@@ -73,11 +77,9 @@ export class ArtistQuiz extends Quiz {
         });
         document.querySelector('.button-popup-next-quiz').addEventListener('click', () => {
           this.removePopup();
-          ArtistCategories.render();
+          PicturesCategories.render();
         });
       }
     });
   }
-
-  
 }

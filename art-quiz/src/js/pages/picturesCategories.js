@@ -3,6 +3,7 @@ import { Categories } from '../categories';
 import { Settings } from './settings';
 import { Data } from '../data';
 import { PicturesQuiz } from './picturesQuiz';
+import { MainPage } from './mainPage';
 
 export class PicturesCategories extends Categories {
   constructor() {
@@ -14,13 +15,11 @@ export class PicturesCategories extends Categories {
       if (e.target.closest('.categories-item')) {
         const clickedCategory = e.target.closest('.categories-item');
         const categoryNumber = clickedCategory.id.slice(9) // slice 'category-'
-        const picturesquiz = new PicturesQuiz(categoryNumber - 1);
+        const picturesquiz = new PicturesQuiz(categoryNumber);
         picturesquiz.render();
       }
     });
-    // document.querySelector('.pictures-quiz-wrapper').addEventListener('click', () => {
-    //   console.log('333');
-    // });
+    document.querySelector('.categories-home-button').addEventListener('click', () => MainPage.render());
     // document.querySelector('.settings-button').addEventListener('click', () => Settings.render());
   }
 
@@ -29,8 +28,8 @@ export class PicturesCategories extends Categories {
     await this.checkLocalStorage().then(async (doneIndexArr = []) => {
       const typesArr = ['Portrait', 'Landscape', 'Still life', 'Impressionism', 'Expressionism', 'Avant-garde', 'Renaissance', 'Surrealism', 'Kitsch', 'Minimalism', 'Surrealism', 'Industrial'];
       for (let i = 0; i < 12; i++) {
-        const imageUrl = await Data.getImage(i * 10);
         const offset = 12;
+        const imageUrl = await Data.getLocalImage(i + offset);
         const isDone = doneIndexArr.includes(i + offset);
         result += `
         <div class="categories-item ${isDone ? "category-done" : ""}" id="category-${i + offset}">
@@ -40,6 +39,7 @@ export class PicturesCategories extends Categories {
             <div class="category-type">${typesArr[i]}</div>
           </div>
           <div class="category-image" style='background-image: ${imageUrl};'></div>
+          <div class="category-score">Score</div>
         </div>
       `
       }
@@ -51,11 +51,15 @@ export class PicturesCategories extends Categories {
     const html = `
       <div class="outer-container">
         <div class="container">
-        <div class="logo-wrapper">
-          <img src="img/logo.png" alt="">
+          <div class="logo-wrapper">
+            <img src="img/logo.png" alt="">
+          </div>
+          <h2 class="categories-title">Categories</h2>
+          <div class="categories-wrapper">
+            <button class="categories-home-button"></button>
+            ${await this.generateCategories()}
+          </div>
         </div>
-        <h2 class="categories-title">Categories</h2>
-        <div class="categories-wrapper">${await this.generateCategories()}</div>
       </div>
     `
 

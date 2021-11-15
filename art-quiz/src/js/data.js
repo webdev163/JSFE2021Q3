@@ -19,4 +19,14 @@ export class Data {
       })
     })
   }
+
+  static async getLocalImage(categoryNum) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = `img/categories/category-${categoryNum}.jpg`;
+      img.addEventListener('load', () => {
+        resolve(`url("${img.src}")`);
+      })
+    })
+  }
 }

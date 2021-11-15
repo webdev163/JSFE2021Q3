@@ -84,8 +84,8 @@ export class Quiz {
       });
   }
 
-  removePopup() {
-    document.querySelector('.popup').classList.remove('active');
-    document.querySelector('#overlay').classList.remove('active');
-  }
+  // removePopup() {
+  //   document.querySelector('.popup').classList.remove('active');
+  //   document.querySelector('#overlay').classList.remove('active');
+  // }
 }

@@ -9,12 +9,13 @@
 }
 
 .artists-quiz-picture {
-  width: 96%;
+  width: 100%;
   height: 90vw;
-  max-height: 600px;
+  max-height: 700px;
   background-position: 50%;
   background-size: cover;
   margin: 0 auto;
+  border-radius: 10px;
 }
 
 .artists-quiz-answers-list {
@@ -22,36 +23,25 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  width: 96%;
+  width: 100%;
   margin: 0 auto;
 }
 
 .artists-quiz-answers-item {
-  flex-basis: 50%;
+  flex-basis:49.5%;
   text-align: center;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 5px;
-  &:nth-child(1) {
-    border-right: 1px solid #000;
-    border-bottom: 1px solid #000;
-  }
-  &:nth-child(2) {
-    border-left: 1px solid #000;
-    border-bottom: 1px solid #000;
-  }
-  &:nth-child(3) {
-    border-top: 1px solid #000;
-    border-right: 1px solid #000;
-  }
-  &:nth-child(4) {
-    border-top: 1px solid #000;
-    border-left: 1px solid #000;
-  }
+  border: 1px solid #9c9c9c;
+  border-radius: 10px;
+  transition: background-color .3s;
+  margin-bottom: 10px;
   &:hover {
-    background-color: #c4c4c4;
+    background-color: #ffebd4;
+    filter: drop-shadow(0 0 10px #ffdb8e);
     cursor: pointer;
   }
 }

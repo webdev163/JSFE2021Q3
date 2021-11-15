@@ -5,25 +5,25 @@ import { Data } from '../data';
 import { ArtistQuiz } from './artistQuiz';
 import { MainPage } from './mainPage';
 
-export class ArtistCategories extends Categories {
+export class CategoryResults {
   constructor() {
     this.localStorageArr = null;
   }
 
   static setEventListeners() {
-    document.querySelector('.categories-wrapper').addEventListener('click', (e) => {
-      if (e.target.closest('.categories-item') && !e.target.classList.contains('category-score')) {
-        const clickedCategory = e.target.closest('.categories-item');
-        const categoryNumber = clickedCategory.id.slice(9) // slice 'category-'
-        const artistquiz = new ArtistQuiz(categoryNumber);
-        artistquiz.render();
-      }
-      if (e.target.classList.contains('category-score')) {
-        const clickedCategory = e.target.closest('.categories-item');
-        const categoryNumber = clickedCategory.id.slice(9) // slice 'category-'
-      }
-    });
-    document.querySelector('.categories-home-button').addEventListener('click', () => MainPage.render());
+    // document.querySelector('.categories-wrapper').addEventListener('click', (e) => {
+    //   if (e.target.closest('.categories-item') && !e.target.classList.contains('category-score')) {
+    //     const clickedCategory = e.target.closest('.categories-item');
+    //     const categoryNumber = clickedCategory.id.slice(9) // slice 'category-'
+    //     const artistquiz = new ArtistQuiz(categoryNumber);
+    //     artistquiz.render();
+    //   }
+    //   if (e.target.classList.contains('category-score')) {
+    //     const clickedCategory = e.target.closest('.categories-item');
+    //     const categoryNumber = clickedCategory.id.slice(9) // slice 'category-'
+    //   }
+    // });
+    // document.querySelector('.categories-home-button').addEventListener('click', () => MainPage.render());
     // document.querySelector('.settings-button').addEventListener('click', () => Settings.render());
   }
 
@@ -48,7 +48,7 @@ export class ArtistCategories extends Categories {
       }
     });
     return result;
-  } 
+  }
 
   static async render() {
     const html = `

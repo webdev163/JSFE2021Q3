@@ -1,6 +1,10 @@
 .outer-container {
   padding-top: 70px;
   padding-bottom: 60px;
+  @media screen and (max-width: 1024px) {
+    padding-top: 25px;
+    padding-bottom: 30px;
+  }
 }
 
 .logo-wrapper {
@@ -22,7 +26,7 @@
 .artist-quiz-wrapper {
   width: 96%;
   max-width: 415px;
-  height: 415px;
+  height: 50vh;
   cursor: pointer;
   background-image: url('../img/main-artists-quiz.jpg');
   background-size: cover;
@@ -44,7 +48,7 @@
 .pictures-quiz-wrapper {
   width: 96%;
   max-width: 415px;
-  height: 415px;
+  height: 50vh;
   cursor: pointer;
   background-image: url('../img/main-pictures-quiz.jpg');
   background-size: cover;

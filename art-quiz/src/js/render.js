@@ -2,12 +2,19 @@ export class Render {
   static render(html) {
     return new Promise((resolve) => {
       const app = document.getElementById('app');
-      app.style.left = '-100%'
+      document.body.classList.remove('loaded');
       setTimeout(() => {
         app.innerHTML = html;
-        app.style.left = '0'
         resolve();
-      }, 700);
+      }, 200);
+    }).then(() => {
+      setTimeout(() => {
+        document.body.classList.add('loaded_hiding');
+        window.setTimeout(function () {
+          document.body.classList.add('loaded');
+          document.body.classList.remove('loaded_hiding');
+        }, 200);
+      }, 200);
     })
   }
 }

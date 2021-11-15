@@ -1,3 +1,24 @@
+.categories-home-button {
+  position: absolute;
+  top: -65px;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  background-color: $main_color;
+  border: none;
+  background-image: url('../img/home.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px 26px;
+  border-radius: 10px;
+  cursor: pointer;
+  opacity: .7;
+  transition: opacity .3s;
+  &:hover {
+    opacity: 1;
+  }
+}
+
 .categories-title {
   font-weight: normal;
   font-size: 36px;
@@ -6,6 +27,7 @@
   text-transform: uppercase;
   color: $main_color;
   margin-top: -20px;
+  margin-bottom: 70px;
 }
 
 .categories-wrapper {
@@ -13,6 +35,7 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .categories-item {
@@ -22,13 +45,14 @@
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
+  position: relative;
   @media screen and (max-width: 900px) {
     width: 31%;
   }
   @media screen and (max-width: 700px) {
     width: 48%;
   }
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 465px) {
     width: 100%;
     margin-bottom: 15px;
   }
@@ -38,6 +62,9 @@
     }
     & .category-number, .category-type {
       color: $main_color;
+    }
+    &:hover .category-score {
+      transform: translateY(0);
     }
   }
 }
@@ -76,8 +103,35 @@
 
 .category-image {
   width: 100%;
-  height: 184px;
-  background-position: 50%;
+  height: 220px;
   background-size: cover;
   filter: grayscale(100%);
+}
+
+.category-score {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #fff;
+  background-color: $main-color;
+  width: 100%;
+  padding: 14px 15px 11px 20%;
+  text-transform: uppercase;
+  transform: translateY(65px);
+  overflow: hidden;
+  transition: transform .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &::after {
+    content: '';
+    background-image: url('../img/star.svg');
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 23px;
+    position: absolute;
+    top: 23%;
+    left: 30%;
+    background-size: contain;
+  }
 }

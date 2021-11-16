@@ -5,9 +5,15 @@ import { PicturesCategories } from './picturesCategories';
 
 export class MainPage {
   static setEventListeners() {
-    document.querySelector('.artist-quiz-wrapper').addEventListener('click', () => ArtistCategories.render());
-    document.querySelector('.pictures-quiz-wrapper').addEventListener('click', () => PicturesCategories.render());
-    document.querySelector('.settings-button').addEventListener('click', () => Settings.render());
+    document
+      .querySelector('.artist-quiz-wrapper')
+      .addEventListener('click', () => ArtistCategories.render());
+    document
+      .querySelector('.pictures-quiz-wrapper')
+      .addEventListener('click', () => PicturesCategories.render());
+    document
+      .querySelector('.settings-button')
+      .addEventListener('click', () => Settings.render());
   }
 
   static async render() {
@@ -31,7 +37,7 @@ export class MainPage {
           <button class="btn settings-button">Settings</button>
         </div>
       </div>
-    `
+    `;
 
     await Render.render(html).then(() => this.setEventListeners());
   }

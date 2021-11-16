@@ -9,8 +9,8 @@ export class ArtistQuiz extends Quiz {
   async render() {
     const json = await jsonData();
     document.body.classList.remove('loaded');
-    const imageUrl = await Data.getImage(this.artistNumber)
-    const set = new Set()
+    const imageUrl = await Data.getImage(this.artistNumber);
+    const set = new Set();
     set.add(json[this.artistNumber].author);
     while (set.size < 4) {
       set.add(json[this.getRandomInt()].author);
@@ -50,43 +50,53 @@ export class ArtistQuiz extends Quiz {
         </div>
         <div id="overlay"></div>
       </div>
-    `
+    `;
 
     await Render.render(html).then(() => this.setEventListeners(json));
   }
 
   setEventListeners(json) {
-    document.querySelector('.home-menu-button').addEventListener('click', () => MainPage.render());
-    document.querySelector('.categories-menu-button').addEventListener('click', () => ArtistCategories.render());
-    document.querySelector('.artists-quiz-answers-list').addEventListener('click', (e) => {
-      if (e.target.textContent == json[this.artistNumber].author) {
-        this.isCorrect = true;
-      } else {
-        this.isCorrect = false;
-      }
-      this.openPopup();
-    });
-    document.querySelector('.button-popup-next').addEventListener('click', async () => {
-      this.answersArr[this.answersCounter] = this.isCorrect ? 1 : 0;
-      // this.removePopup();
-      if (this.answersCounter < 9) {
-        this.answersCounter++;
-        this.artistNumber++;
-        this.render();
-      } else {
-        this.answersCounter++;
-        await this.generateResults();
-        document.querySelector('.button-popup-home').addEventListener('click', () => {
-          // this.removePopup();
-          MainPage.render();
-        });
-        document.querySelector('.button-popup-next-quiz').addEventListener('click', () => {
-          // this.removePopup();
-          ArtistCategories.render();
-        });
-      }
-    });
+    document
+      .querySelector('.home-menu-button')
+      .addEventListener('click', () => MainPage.render());
+    document
+      .querySelector('.categories-menu-button')
+      .addEventListener('click', () => ArtistCategories.render());
+    document
+      .querySelector('.artists-quiz-answers-list')
+      .addEventListener('click', e => {
+        if (e.target.textContent == json[this.artistNumber].author) {
+          this.isCorrect = true;
+        } else {
+          this.isCorrect = false;
+        }
+        this.openPopup();
+      });
+    document
+      .querySelector('.button-popup-next')
+      .addEventListener('click', async () => {
+        this.answersArr[this.answersCounter] = this.isCorrect ? 1 : 0;
+        // this.removePopup();
+        if (this.answersCounter < 9) {
+          this.answersCounter++;
+          this.artistNumber++;
+          this.render();
+        } else {
+          this.answersCounter++;
+          await this.generateResults();
+          document
+            .querySelector('.button-popup-home')
+            .addEventListener('click', () => {
+              // this.removePopup();
+              MainPage.render();
+            });
+          document
+            .querySelector('.button-popup-next-quiz')
+            .addEventListener('click', () => {
+              // this.removePopup();
+              ArtistCategories.render();
+            });
+        }
+      });
   }
-
-  
 }

@@ -1,6 +1,6 @@
 export class Render {
   static render(html) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const app = document.getElementById('app');
       document.body.classList.remove('loaded');
       setTimeout(() => {
@@ -15,6 +15,6 @@ export class Render {
           document.body.classList.remove('loaded_hiding');
         }, 200);
       }, 200);
-    })
+    });
   }
 }

@@ -31,7 +31,7 @@
   background-image: url('../img/main-artists-quiz.jpg');
   background-size: cover;
   position: relative;
-  transition: box-shadow .3s;
+  transition: box-shadow 0.3s;
   border-radius: 5px;
   &:hover {
     box-shadow: 0 20px 25px rgba(112, 112, 112, 0.5);
@@ -53,7 +53,7 @@
   background-image: url('../img/main-pictures-quiz.jpg');
   background-size: cover;
   position: relative;
-  transition: box-shadow .3s;
+  transition: box-shadow 0.3s;
   border-radius: 5px;
   &:hover {
     box-shadow: 0 20px 25px rgba(112, 112, 112, 0.5);
@@ -102,7 +102,7 @@
 }
 
 .settings-button {
-  padding: 14px 10px 14px 53px;
+  padding: 16px 15px 16px 58px;
   text-transform: uppercase;
   font-size: 18px;
   line-height: 22px;
@@ -110,10 +110,11 @@
   &::before {
     content: '';
     background-image: url('../img/settings.svg');
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     position: absolute;
-    top: 3px;
-    left: 3px;
+    background-size: contain;
+    top: 9px;
+    left: 12px;
   }
 }

@@ -27,10 +27,14 @@ export class Quiz {
     const overlay = document.querySelector('#overlay');
     if (this.answersCounter < 10) {
       const sign = document.querySelector('.popup-sign');
-      sign.style.backgroundImage = `url("img/${this.isCorrect ? 'right' : 'wrong'}.png")`;
+      sign.style.backgroundImage = `url("img/${
+        this.isCorrect ? 'right' : 'wrong'
+      }.png")`;
     }
     popup.classList.add('active');
-    overlay.classList.add('active');
+    setTimeout(() => {
+      overlay.classList.add('active');
+    }, 200);
   }
 
   generatePagination() {
@@ -50,11 +54,17 @@ export class Quiz {
   }
 
   async generateResults() {
+    const correctAnswersNum = this.answersArr.filter(el => el === 1).length;
+    const totalAnswersNum = this.answersArr.length;
+    const finalWord =
+      correctAnswersNum < 1
+        ? 'You can do better, try again!'
+        : 'Congratulations!';
     const html = `
       <div class="container">
         <div class="popup">
-          <h2 class="text-results congratulation">Congratulations!</h2>
-          <p class="text-results score-results">${this.answersArr.filter(el => el === 1).length} / ${this.answersArr.length}</p>
+          <h2 class="text-results congratulation">${finalWord}</h2>
+          <p class="text-results score-results">${correctAnswersNum} / ${totalAnswersNum}</p>
           <div class="congratulation-picture-wrapper">
             <img class="congratulation-picture" src="img/goodjob.svg" alt="Good job!">
           </div>
@@ -65,7 +75,7 @@ export class Quiz {
         </div>
       </div>
       <div id="overlay"></div>
-    `
+    `;
     if (localStorage.getItem('webdev163-quiz-results') !== null) {
       const arr = JSON.parse(localStorage.getItem('webdev163-quiz-results'));
       arr[this.quizNumber] = this.answersArr;
@@ -75,13 +85,12 @@ export class Quiz {
       arr[this.quizNumber] = this.answersArr;
       localStorage.setItem('webdev163-quiz-results', JSON.stringify(arr));
     }
-    await Render.render(html)
-      .then(() => {
-        setTimeout(() => {
-          // this.setEventListeners();
-          this.openPopup();
-        }, 200);
-      });
+    await Render.render(html).then(() => {
+      setTimeout(() => {
+        // this.setEventListeners();
+        this.openPopup();
+      }, 200);
+    });
   }
 
   // removePopup() {

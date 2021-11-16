@@ -38,7 +38,7 @@ img {
 #app {
   position: relative;
   left: 0;
-  transition: left .7s;
+  transition: left 0.7s;
 }
 
 .btn {
@@ -47,7 +47,7 @@ img {
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color .3s;
+  transition: background-color 0.3s;
   &:hover {
     background-color: lighten(#660033, 10%);
   }

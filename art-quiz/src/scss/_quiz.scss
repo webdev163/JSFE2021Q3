@@ -6,7 +6,7 @@
   transform: translate(-50%, -50%);
   max-width: 500px;
   background-color: #fff;
-  transition: left .5s;
+  transition: left 0.5s;
   z-index: 999;
   padding: 10px;
   padding-top: 40px;
@@ -48,6 +48,7 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
+  backdrop-filter: blur(3px);
 }
 
 #overlay.active {
@@ -100,7 +101,6 @@
   text-align: center;
   text-transform: uppercase;
   color: $main_color;
-
 }
 
 .congratulation {

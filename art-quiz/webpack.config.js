@@ -152,6 +152,13 @@ module.exports = {
         },
       },
       {
+        test: /\.(?:mp3|wav|ogg|mp4)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/media/[hash][ext][query]',
+        },
+      },
+      {
         test: /\.(woff(2)?|eot|ttf|otf|)$/,
         type: 'asset/resource',
         generator: {

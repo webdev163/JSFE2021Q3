@@ -33,6 +33,9 @@ export default class MainPage {
       </div>
     `;
 
-    await Render.render(html).then(() => this.setEventListeners());
+    await Render.render(html).then(() => {
+      this.setEventListeners();
+      Settings.getLocalStorage();
+    });
   }
 }

@@ -52,7 +52,7 @@ export default class ArtistCategories {
       for (let i = 0; i < 12; i += 1) {
         const isDone = doneIndexArr.includes(i);
         result += `
-        <div class="categories-item ${isDone ? 'category-done' : ''}" id="category-${i}">
+        <div class="categories-item hidden fade-in-${i} ${isDone ? 'category-done' : ''}" id="category-${i}">
           <div class="category-info-wrapper">
             <div class="category-done-number">${
               isDone ? `${this.localStorageArr[i].filter(el => el === 1).length}/10` : ''
@@ -85,7 +85,10 @@ export default class ArtistCategories {
       </div>
     `;
 
-    await Render.render(html).then(() => this.setEventListeners());
+    await Render.render(html).then(() => {
+      this.animateCards();
+      this.setEventListeners();
+    });
   }
 
   static checkLocalStorage() {
@@ -103,5 +106,36 @@ export default class ArtistCategories {
         resolve();
       }
     });
+  }
+
+  static animateCards() {
+    let elements;
+    let windowHeight;
+    const offset = -500;
+
+    function init() {
+      elements = document.querySelectorAll('.hidden');
+      windowHeight = window.innerHeight;
+    }
+
+    function checkPosition() {
+      for (let i = 0; i < elements.length; i += 1) {
+        const element = elements[i];
+        const positionFromTop = !document.fullscreenElement
+          ? elements[i].getBoundingClientRect().top
+          : elements[i].getBoundingClientRect().top + offset;
+
+        if (positionFromTop - windowHeight <= -100) {
+          element.classList.add('animated');
+          element.classList.remove('hidden');
+        }
+      }
+    }
+
+    window.addEventListener('scroll', checkPosition);
+    window.addEventListener('resize', init);
+
+    init();
+    checkPosition();
   }
 }

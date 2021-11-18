@@ -72,12 +72,12 @@ export default class CategoryResults {
     const html = `
       <div class="outer-container">
         <div class="container">
+          <div class="logo-wrapper">
+            <img src="img/logo.png" alt="">
+          </div>
           <div class="menu-btn-wrapper">
             <button class="btn home-menu-button"></button>
             <button class="btn categories-menu-button"></button>
-          </div>
-          <div class="logo-wrapper">
-            <img src="img/logo.png" alt="">
           </div>
           <h2 class="results-title">Score</h2>
           <div class="results-wrapper">

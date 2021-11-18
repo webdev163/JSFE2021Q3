@@ -1,10 +1,11 @@
 import Render from './render';
+import { state } from './pages/settings';
 
 export default class Quiz {
   constructor(quizNumber) {
     this.quizNumber = quizNumber;
     this.artistNumber = quizNumber * 10;
-    this.answersCounter = 0;
+    this.answersCounter = 9;
     this.answersArr = new Array(10).fill(null);
   }
 
@@ -67,6 +68,7 @@ export default class Quiz {
             <button class="btn button-popup-next-quiz">Next quiz</button>
           </div>
         </div>
+        <audio class="audio-end" src="audio/round-end.mp3"></audio>
       </div>
       <div id="overlay"></div>
     `;
@@ -84,5 +86,18 @@ export default class Quiz {
         this.openPopup();
       }, 200);
     });
+  }
+
+  static generateTimer() {
+    let time = state.valueTime;
+    if (time < 10) {
+      time = `0${time}`;
+    }
+    return `
+      <div class="timer">
+        <img class="timer-img" src="img/clock.svg" alt="">
+        <div class="timer-text">00:<span class="timer-seconds">${time}</span></div>
+      </div>
+    `;
   }
 }

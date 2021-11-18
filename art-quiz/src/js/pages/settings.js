@@ -1,16 +1,14 @@
 import Render from '../render';
 import MainPage from './mainPage';
 
-export default class Settings {
-  constructor() {
-    this.state = {
-      isCheckedVolume: 0,
-      isCheckedTime: 0,
-      valueVolume: 100,
-      valueTime: 30,
-    };
-  }
+export const state = {
+  isCheckedVolume: 0,
+  isCheckedTime: 0,
+  valueVolume: 100,
+  valueTime: 30,
+};
 
+export default class Settings {
   static updateVolumeBar() {
     const volumeBar = document.querySelector('.progress-volume');
     const volumeTextDiv = document.querySelector('.volume-controls-current-value');
@@ -18,7 +16,7 @@ export default class Settings {
     const valueInPercents = value * 100;
     volumeBar.style.background = `linear-gradient(to right, #660033 0%, #660033 ${valueInPercents}%, #E5E5E5 ${valueInPercents}%, #E5E5E5 100%)`;
     volumeTextDiv.textContent = Math.floor(valueInPercents);
-    Settings.state.valueVolume = Math.floor(valueInPercents);
+    state.valueVolume = Math.floor(valueInPercents);
   }
 
   static updateTimeBar() {
@@ -32,7 +30,7 @@ export default class Settings {
       stepsNum * valuePerStep
     }%, #E5E5E5 100%)`;
     timeTextDiv.textContent = timeBar.value;
-    Settings.state.valueTime = parseInt(timeBar.value, 10);
+    state.valueTime = parseInt(timeBar.value, 10);
   }
 
   static async render() {
@@ -53,9 +51,9 @@ export default class Settings {
                 <div class="volume-contols-inner-wrapper">
                   <div class="volume-controls">
                     <input type="range" name="volume" value="${
-                      Settings.state.valueVolume / 100
+                      state.valueVolume / 100
                     }" min="0" max="1" step=".01" class="progress progress-volume">
-                    <span class="volume-controls-current-value">${Settings.state.valueVolume}</span>
+                    <span class="volume-controls-current-value">${state.valueVolume}</span>
                   </div>
                   <div class="volume-descr">(percents)</div>
                 </div>
@@ -63,7 +61,7 @@ export default class Settings {
               <div class="volume-checkbox-wrapper">
                 <label class="label-checkbox" for="checkbox-volume"></label>
                 <input class="slide-checkbox slide-checkbox-volume" type="checkbox" name="checkbox-volume" id="checkbox-volume" ${
-                  Settings.state.isCheckedVolume === 1 ? 'checked' : ''
+                  state.isCheckedVolume === 1 ? 'checked' : ''
                 }>
                 <label class="custom-checkbox" for="checkbox-volume"></label>
               </div>
@@ -77,9 +75,9 @@ export default class Settings {
                 <div class="time-contols-inner-wrapper">
                   <div class="time-controls">
                     <input type="range" name="time" value="${
-                      Settings.state.valueTime
+                      state.valueTime
                     }" min="5" max="30" step="5" class="progress progress-time">
-                    <span class="time-controls-current-value">${Settings.state.valueTime}</span>
+                    <span class="time-controls-current-value">${state.valueTime}</span>
                   </div>
                   <div class="time-descr">(seconds per answer)</div>
                 </div>
@@ -87,7 +85,7 @@ export default class Settings {
               <div class="time-checkbox-wrapper">
                 <label class="label-checkbox" for="checkbox-time"></label>
                 <input class="slide-checkbox slide-checkbox-time" type="checkbox" name="checkbox-time" id="checkbox-time" ${
-                  Settings.state.isCheckedTime === 1 ? 'checked' : ''
+                  state.isCheckedTime === 1 ? 'checked' : ''
                 }>
                 <label class="custom-checkbox" for="checkbox-time"></label>
               </div>
@@ -128,10 +126,10 @@ export default class Settings {
     const controlsInnerDiv = document.querySelector('.volume-contols-inner-wrapper');
     if (isChecked) {
       controlsInnerDiv.classList.add('controls-enabled');
-      Settings.state.isCheckedVolume = 1;
+      state.isCheckedVolume = 1;
     } else {
       controlsInnerDiv.classList.remove('controls-enabled');
-      Settings.state.isCheckedVolume = 0;
+      state.isCheckedVolume = 0;
     }
   }
 
@@ -140,21 +138,25 @@ export default class Settings {
     const controlsInnerDiv = document.querySelector('.time-contols-inner-wrapper');
     if (isChecked) {
       controlsInnerDiv.classList.add('controls-enabled');
-      Settings.state.isCheckedTime = 1;
+      state.isCheckedTime = 1;
     } else {
       controlsInnerDiv.classList.remove('controls-enabled');
-      Settings.state.isCheckedTime = 0;
+      state.isCheckedTime = 0;
     }
   }
 
   static updateLocalStorage() {
-    localStorage.setItem('webdev163-quiz-settings', JSON.stringify(Settings.state));
+    localStorage.setItem('webdev163-quiz-settings', JSON.stringify(state));
   }
 
   static getLocalStorage() {
     return new Promise(resolve => {
       if (localStorage.getItem('webdev163-quiz-settings')) {
-        Settings.state = JSON.parse(localStorage.getItem('webdev163-quiz-settings'));
+        const newState = JSON.parse(localStorage.getItem('webdev163-quiz-settings'));
+        state.isCheckedVolume = newState.isCheckedVolume;
+        state.isCheckedTime = newState.isCheckedTime;
+        state.valueVolume = newState.valueVolume;
+        state.valueTime = newState.valueTime;
       }
       resolve();
     });

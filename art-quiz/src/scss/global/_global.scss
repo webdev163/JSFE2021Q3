@@ -52,3 +52,23 @@ img {
     background-color: lighten(#660033, 10%);
   }
 }
+
+::backdrop {
+  background-color: #c2e0f0;
+}
+
+body:fullscreen {
+  overflow-y: scroll !important;
+}
+
+body:-ms-fullscreen {
+  overflow-y: scroll !important;
+}
+
+body:-webkit-full-screen {
+  overflow-y: scroll !important;
+}
+
+body:-moz-full-screen {
+  overflow-y: scroll !important;
+}

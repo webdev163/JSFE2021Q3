@@ -146,3 +146,96 @@
   padding: 14px 32px;
   text-transform: uppercase;
 }
+
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.timer-img {
+  width: 40px;
+  height: 47px;
+}
+
+.timer-text {
+  font-family: ArialMT, sans-serif;
+  margin-left: 10px;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 44px;
+  text-transform: uppercase;
+  color: $main_color;
+  margin-top: 5px;
+}
+
+.right-answer {
+  background-color: #8be675;
+  &:hover {
+    background-color: #8be675;
+  }
+}
+
+.wrong-answer {
+  background-color: #df948f;
+  &:hover {
+    background-color: #df948f;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translate3d(0, 40px, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.animated {
+  animation-name: fadeInUp;
+  animation-duration: 2s;
+  animation-fill-mode: both;
+}
+
+.fade-in-1 {
+  animation-delay: 100ms;
+}
+.fade-in-2 {
+  animation-delay: 200ms;
+}
+.fade-in-3 {
+  animation-delay: 300ms;
+}
+.fade-in-4 {
+  animation-delay: 400ms;
+}
+.fade-in-5 {
+  animation-delay: 500ms;
+}
+.fade-in-6 {
+  animation-delay: 600ms;
+}
+.fade-in-7 {
+  animation-delay: 700ms;
+}
+.fade-in-8 {
+  animation-delay: 100ms;
+}
+.fade-in-9 {
+  animation-delay: 200ms;
+}
+.fade-in-10 {
+  animation-delay: 300ms;
+}
+.fade-in-11 {
+  animation-delay: 400ms;
+}

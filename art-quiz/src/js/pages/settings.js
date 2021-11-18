@@ -1,12 +1,14 @@
-import { Render } from '../render';
-import { MainPage } from './mainPage';
+import Render from '../render';
+import MainPage from './mainPage';
 
-export class Settings {
-  static state = {
-    isCheckedVolume: 0,
-    isCheckedTime: 0,
-    valueVolume: 100,
-    valueTime: 30,
+export default class Settings {
+  constructor() {
+    this.state = {
+      isCheckedVolume: 0,
+      isCheckedTime: 0,
+      valueVolume: 100,
+      valueTime: 30,
+    };
   }
 
   static updateVolumeBar() {
@@ -23,12 +25,14 @@ export class Settings {
     const timeBar = document.querySelector('.progress-time');
     const timeTextDiv = document.querySelector('.time-controls-current-value');
     const { value } = timeBar;
-    const step = 5
+    const step = 5;
     const valuePerStep = 20;
     const stepsNum = value / step - 1;
-    timeBar.style.background = `linear-gradient(to right, #660033 0%, #660033 ${stepsNum * valuePerStep}%, #E5E5E5 ${stepsNum * valuePerStep}%, #E5E5E5 100%)`;
+    timeBar.style.background = `linear-gradient(to right, #660033 0%, #660033 ${stepsNum * valuePerStep}%, #E5E5E5 ${
+      stepsNum * valuePerStep
+    }%, #E5E5E5 100%)`;
     timeTextDiv.textContent = timeBar.value;
-    Settings.state.valueTime = parseInt(timeBar.value);
+    Settings.state.valueTime = parseInt(timeBar.value, 10);
   }
 
   static async render() {
@@ -48,7 +52,9 @@ export class Settings {
               <div class="volume-contols-outer-wrapper">
                 <div class="volume-contols-inner-wrapper">
                   <div class="volume-controls">
-                    <input type="range" name="volume" value="${Settings.state.valueVolume / 100}" min="0" max="1" step=".01" class="progress progress-volume">
+                    <input type="range" name="volume" value="${
+                      Settings.state.valueVolume / 100
+                    }" min="0" max="1" step=".01" class="progress progress-volume">
                     <span class="volume-controls-current-value">${Settings.state.valueVolume}</span>
                   </div>
                   <div class="volume-descr">(percents)</div>
@@ -56,7 +62,9 @@ export class Settings {
               </div>
               <div class="volume-checkbox-wrapper">
                 <label class="label-checkbox" for="checkbox-volume"></label>
-                <input class="slide-checkbox slide-checkbox-volume" type="checkbox" name="checkbox-volume" id="checkbox-volume" ${Settings.state.isCheckedVolume === 1 ? 'checked' : ''}>
+                <input class="slide-checkbox slide-checkbox-volume" type="checkbox" name="checkbox-volume" id="checkbox-volume" ${
+                  Settings.state.isCheckedVolume === 1 ? 'checked' : ''
+                }>
                 <label class="custom-checkbox" for="checkbox-volume"></label>
               </div>
               <h3 class="volume-title">Volume</h3>
@@ -68,7 +76,9 @@ export class Settings {
               <div class="time-contols-outer-wrapper">
                 <div class="time-contols-inner-wrapper">
                   <div class="time-controls">
-                    <input type="range" name="time" value="${Settings.state.valueTime}" min="5" max="30" step="5" class="progress progress-time">
+                    <input type="range" name="time" value="${
+                      Settings.state.valueTime
+                    }" min="5" max="30" step="5" class="progress progress-time">
                     <span class="time-controls-current-value">${Settings.state.valueTime}</span>
                   </div>
                   <div class="time-descr">(seconds per answer)</div>
@@ -76,7 +86,9 @@ export class Settings {
               </div>
               <div class="time-checkbox-wrapper">
                 <label class="label-checkbox" for="checkbox-time"></label>
-                <input class="slide-checkbox slide-checkbox-time" type="checkbox" name="checkbox-time" id="checkbox-time" ${Settings.state.isCheckedTime === 1 ? 'checked' : ''}>
+                <input class="slide-checkbox slide-checkbox-time" type="checkbox" name="checkbox-time" id="checkbox-time" ${
+                  Settings.state.isCheckedTime === 1 ? 'checked' : ''
+                }>
                 <label class="custom-checkbox" for="checkbox-time"></label>
               </div>
               <h3 class="volume-title">Time game</h3>
@@ -121,7 +133,7 @@ export class Settings {
       controlsInnerDiv.classList.remove('controls-enabled');
       Settings.state.isCheckedVolume = 0;
     }
-  } 
+  }
 
   static updateTimeInterface() {
     const isChecked = document.querySelector('.slide-checkbox-time').checked;
@@ -140,12 +152,11 @@ export class Settings {
   }
 
   static getLocalStorage() {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (localStorage.getItem('webdev163-quiz-settings')) {
         Settings.state = JSON.parse(localStorage.getItem('webdev163-quiz-settings'));
-        console.log(this.state);
       }
       resolve();
-    })
+    });
   }
 }

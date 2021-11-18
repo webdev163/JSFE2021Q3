@@ -1,8 +1,6 @@
-import { Render } from './render';
-import { Data } from './data';
-import { jsonData } from './index';
+import Render from './render';
 
-export class Quiz {
+export default class Quiz {
   constructor(quizNumber) {
     this.quizNumber = quizNumber;
     this.artistNumber = quizNumber * 10;
@@ -10,16 +8,17 @@ export class Quiz {
     this.answersArr = new Array(10).fill(null);
   }
 
-  getRandomInt() {
+  static getRandomInt() {
     return Math.floor(Math.random() * 239) + 1;
   }
 
-  shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
+  static shuffle(array) {
+    const arr = array;
+    for (let i = arr.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-    return array;
+    return arr;
   }
 
   openPopup() {
@@ -27,9 +26,7 @@ export class Quiz {
     const overlay = document.querySelector('#overlay');
     if (this.answersCounter < 10) {
       const sign = document.querySelector('.popup-sign');
-      sign.style.backgroundImage = `url("img/${
-        this.isCorrect ? 'right' : 'wrong'
-      }.png")`;
+      sign.style.backgroundImage = `url("img/${this.isCorrect ? 'right' : 'wrong'}.png")`;
     }
     popup.classList.add('active');
     setTimeout(() => {
@@ -39,8 +36,8 @@ export class Quiz {
 
   generatePagination() {
     let result = '';
-    for (let i = 0; i < 10; i++) {
-      const html = '';
+    for (let i = 0; i < 10; i += 1) {
+      let html = '';
       if (this.answersArr[i] === 1) {
         html = `<div class="pagination-item pagination-correct" id="dot-${i}"></div>`;
       } else if (this.answersArr[i] === 0) {
@@ -56,10 +53,7 @@ export class Quiz {
   async generateResults() {
     const correctAnswersNum = this.answersArr.filter(el => el === 1).length;
     const totalAnswersNum = this.answersArr.length;
-    const finalWord =
-      correctAnswersNum < 1
-        ? 'You can do better, try again!'
-        : 'Congratulations!';
+    const finalWord = correctAnswersNum < 1 ? 'You can do better, try again!' : 'Congratulations!';
     const html = `
       <div class="container">
         <div class="popup">
@@ -87,14 +81,8 @@ export class Quiz {
     }
     await Render.render(html).then(() => {
       setTimeout(() => {
-        // this.setEventListeners();
         this.openPopup();
       }, 200);
     });
   }
-
-  // removePopup() {
-  //   document.querySelector('.popup').classList.remove('active');
-  //   document.querySelector('#overlay').classList.remove('active');
-  // }
 }

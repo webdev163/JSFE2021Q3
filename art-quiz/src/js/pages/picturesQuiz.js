@@ -1,24 +1,27 @@
-import { Render } from '../render';
-import { Data } from '../data';
-import { jsonData } from '../index';
-import { Quiz } from '../quiz';
-import { MainPage } from './mainPage';
-import { PicturesCategories } from './picturesCategories';
+import Render from '../render';
+import Data from '../data';
+import Quiz from '../quiz';
+import MainPage from './mainPage';
+import PicturesCategories from './picturesCategories';
 
-export class PicturesQuiz extends Quiz {
+export default class PicturesQuiz extends Quiz {
   async render() {
-    const json = await jsonData();
+    const json = await Data.getJson();
     document.body.classList.remove('loaded');
     const imageUrl = await Data.getImage(this.artistNumber);
     const set = new Set();
     set.add(imageUrl);
+    const randomImagesArr = await Promise.all(
+      new Array(10).fill(null).map(() => {
+        return Data.getImage(Quiz.getRandomInt());
+      }),
+    );
     while (set.size < 4) {
-      const randomImageUrl = await Data.getImage(this.getRandomInt());
-      set.add(randomImageUrl);
+      set.add(randomImagesArr.pop());
     }
 
     const arr = Array.from(set);
-    const shuffledArr = this.shuffle(arr);
+    const shuffledArr = Quiz.shuffle(arr);
 
     const html = `
       <div class="outer-container">
@@ -27,24 +30,14 @@ export class PicturesQuiz extends Quiz {
             <button class="btn home-menu-button"></button>
             <button class="btn categories-menu-button"></button>
           </div>
-          <div class="pictures-quiz-title">Какую картину написал ${
-            json[this.artistNumber].author
-          }?</div>
+          <div class="pictures-quiz-title">Какую картину написал ${json[this.artistNumber].author}?</div>
           <div class="pictures-quiz-picture" style="background-image: ${imageUrl};"></div>
           <div class="pictures-quiz-answers-wrapper">
             <div class="pictures-quiz-answers-list">
-              <div class="pictures-quiz-answers-item" style='background-image: ${
-                shuffledArr[0]
-              };'></div>
-              <div class="pictures-quiz-answers-item" style='background-image: ${
-                shuffledArr[1]
-              };'></div>
-              <div class="pictures-quiz-answers-item" style='background-image: ${
-                shuffledArr[2]
-              };'></div>
-              <div class="pictures-quiz-answers-item" style='background-image: ${
-                shuffledArr[3]
-              };'></div>
+              <div class="pictures-quiz-answers-item" style='background-image: ${shuffledArr[0]};'></div>
+              <div class="pictures-quiz-answers-item" style='background-image: ${shuffledArr[1]};'></div>
+              <div class="pictures-quiz-answers-item" style='background-image: ${shuffledArr[2]};'></div>
+              <div class="pictures-quiz-answers-item" style='background-image: ${shuffledArr[3]};'></div>
             </div>
           </div>
           <div class="pagination-wrapper">${this.generatePagination()}</div>
@@ -67,50 +60,32 @@ export class PicturesQuiz extends Quiz {
   }
 
   setEventListeners(imageUrl) {
-    document
-      .querySelector('.home-menu-button')
-      .addEventListener('click', () => MainPage.render());
-    document
-      .querySelector('.categories-menu-button')
-      .addEventListener('click', () => PicturesCategories.render());
-    document
-      .querySelector('.pictures-quiz-answers-list')
-      .addEventListener('click', e => {
-        if (e.target.style.backgroundImage === imageUrl) {
-          this.isCorrect = true;
-        } else {
-          this.isCorrect = false;
-        }
-        this.openPopup();
-      });
-    document
-      .querySelector('.button-popup-next')
-      .addEventListener('click', async () => {
-        this.answersArr[this.answersCounter] = this.isCorrect ? 1 : 0;
-        // const popup = document.querySelector('.popup');
-        // const overlay = document.querySelector('#overlay');
-        // popup.classList.remove('active');
-        // overlay.classList.remove('active');
-        if (this.answersCounter < 9) {
-          this.answersCounter++;
-          this.artistNumber++;
-          this.render();
-        } else {
-          this.answersCounter++;
-          await this.generateResults();
-          document
-            .querySelector('.button-popup-home')
-            .addEventListener('click', () => {
-              // this.removePopup();
-              MainPage.render();
-            });
-          document
-            .querySelector('.button-popup-next-quiz')
-            .addEventListener('click', () => {
-              // this.removePopup();
-              PicturesCategories.render();
-            });
-        }
-      });
+    document.querySelector('.home-menu-button').addEventListener('click', () => MainPage.render());
+    document.querySelector('.categories-menu-button').addEventListener('click', () => PicturesCategories.render());
+    document.querySelector('.pictures-quiz-answers-list').addEventListener('click', e => {
+      if (e.target.style.backgroundImage === imageUrl) {
+        this.isCorrect = true;
+      } else {
+        this.isCorrect = false;
+      }
+      this.openPopup();
+    });
+    document.querySelector('.button-popup-next').addEventListener('click', async () => {
+      this.answersArr[this.answersCounter] = this.isCorrect ? 1 : 0;
+      if (this.answersCounter < 9) {
+        this.answersCounter += 1;
+        this.artistNumber += 1;
+        this.render();
+      } else {
+        this.answersCounter += 1;
+        await this.generateResults();
+        document.querySelector('.button-popup-home').addEventListener('click', () => {
+          MainPage.render();
+        });
+        document.querySelector('.button-popup-next-quiz').addEventListener('click', () => {
+          PicturesCategories.render();
+        });
+      }
+    });
   }
 }

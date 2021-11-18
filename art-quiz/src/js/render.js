@@ -1,4 +1,4 @@
-export class Render {
+export default class Render {
   static render(html) {
     return new Promise(resolve => {
       const app = document.getElementById('app');
@@ -10,7 +10,7 @@ export class Render {
     }).then(() => {
       setTimeout(() => {
         document.body.classList.add('loaded_hiding');
-        window.setTimeout(function () {
+        window.setTimeout(() => {
           document.body.classList.add('loaded');
           document.body.classList.remove('loaded_hiding');
         }, 200);

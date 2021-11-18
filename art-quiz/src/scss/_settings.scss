@@ -63,7 +63,8 @@
   margin-bottom: 70px;
 }
 
-.volume-controls, .time-controls {
+.volume-controls,
+.time-controls {
   margin: 0 auto;
   width: 295px;
   margin-bottom: 5px;
@@ -77,7 +78,8 @@
   }
 }
 
-.volume-descr, .time-descr {
+.volume-descr,
+.time-descr {
   text-align: center;
   margin-bottom: 15px;
   font-size: 16px;
@@ -118,7 +120,8 @@
   background: $main_color;
 }
 
-.progress-volume, .progress-time {
+.progress-volume,
+.progress-time {
   background: -webkit-gradient(
     linear,
     left top,
@@ -128,13 +131,7 @@
     color-stop(100%, #e5e5e5),
     to(#e5e5e5)
   );
-  background: linear-gradient(
-    to right,
-    $main_color 0%,
-    $main_color 100%,
-    #e5e5e5 100%,
-    #e5e5e5 100%
-  );
+  background: linear-gradient(to right, $main_color 0%, $main_color 100%, #e5e5e5 100%, #e5e5e5 100%);
   width: 85%;
   // &.progress-disabled {
   //   background: -webkit-gradient(linear,
@@ -228,7 +225,8 @@
   }
 }
 
-.time-controls-current-value, .volume-controls-current-value {
+.time-controls-current-value,
+.volume-controls-current-value {
   font-weight: normal;
   font-size: 24px;
   line-height: 28px;
@@ -246,7 +244,7 @@
 .volume-contols-inner-wrapper {
   transform: translateY(50px);
   opacity: 0;
-  transition: transform .2s, opacity .2s;
+  transition: transform 0.2s, opacity 0.2s;
   pointer-events: none;
   &.controls-enabled {
     transform: translateY(0);
@@ -258,7 +256,7 @@
 .time-contols-inner-wrapper {
   transform: translateY(50px);
   opacity: 0;
-  transition: transform .2s, opacity .2s;
+  transition: transform 0.2s, opacity 0.2s;
   pointer-events: none;
   &.controls-enabled {
     opacity: 1;

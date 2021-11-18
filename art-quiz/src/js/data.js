@@ -1,8 +1,4 @@
-export class Data {
-  constructor() {
-    // this.container = document.querySelector('.artists-quiz-picture');
-  }
-
+export default class Data {
   static async getJson() {
     const url = `https://raw.githubusercontent.com/webdev163/image-data/master/data.json`;
     const res = await fetch(url);

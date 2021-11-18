@@ -1,19 +1,13 @@
-import { Render } from '../render';
-import { Settings } from './settings';
-import { ArtistCategories } from './artistCategories';
-import { PicturesCategories } from './picturesCategories';
+import Render from '../render';
+import Settings from './settings';
+import ArtistCategories from './artistCategories';
+import PicturesCategories from './picturesCategories';
 
-export class MainPage {
+export default class MainPage {
   static setEventListeners() {
-    document
-      .querySelector('.artist-quiz-wrapper')
-      .addEventListener('click', () => ArtistCategories.render());
-    document
-      .querySelector('.pictures-quiz-wrapper')
-      .addEventListener('click', () => PicturesCategories.render());
-    document
-      .querySelector('.settings-button')
-      .addEventListener('click', () => Settings.render());
+    document.querySelector('.artist-quiz-wrapper').addEventListener('click', () => ArtistCategories.render());
+    document.querySelector('.pictures-quiz-wrapper').addEventListener('click', () => PicturesCategories.render());
+    document.querySelector('.settings-button').addEventListener('click', () => Settings.render());
   }
 
   static async render() {

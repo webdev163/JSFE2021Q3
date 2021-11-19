@@ -57,19 +57,19 @@ export default class Quiz {
     let finalWord = correctAnswersNum < 1 ? 'You can do better, try again!' : 'Congratulations!';
     switch (correctAnswersNum) {
       case 0:
+      case 1:
         finalWord = 'You can do better, try again!';
         break;
-      case 1:
       case 2:
       case 3:
+      case 4:
         finalWord = 'Not bad, try again to improve!';
         break;
-      case 4:
       case 5:
       case 6:
+      case 7:
         finalWord = 'Congratulations, nice shot!';
         break;
-      case 7:
       case 8:
       case 9:
         finalWord = 'Very well, it looks like you are an art lover!';
@@ -113,7 +113,7 @@ export default class Quiz {
 
   static generateTimer() {
     let time = `00:${state.valueTime}`;
-    if (time < 10) {
+    if (state.valueTime < 10) {
       time = `00:0${state.valueTime}`;
     }
     return `

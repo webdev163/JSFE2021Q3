@@ -134,6 +134,7 @@ export default class ArtistQuiz extends Quiz {
       this.isCorrect = false;
     }
     clearInterval(this.interval);
+    clearInterval(this.timerProgressInterval);
     this.openPopup();
   }
 
@@ -142,15 +143,23 @@ export default class ArtistQuiz extends Quiz {
     const initialTime = time;
     const timer = document.querySelector('.timer-text');
     const progress = document.querySelector('.progress-timer');
-    this.interval = setInterval(() => {
-      time -= 1;
-      const currentProgressWidth = (time / initialTime) * 100;
+    const startTime = new Date().getTime();
+    const endTime = startTime + time * 1000;
+    this.timerProgressInterval = setInterval(() => {
+      let currentProgressWidth = (endTime - new Date().getTime()) / 1000;
+      currentProgressWidth = (currentProgressWidth / initialTime) * 100;
       progress.style.width = `${currentProgressWidth}%`;
       if (currentProgressWidth < 50 && currentProgressWidth >= 25) {
         progress.style.backgroundColor = 'yellow';
       } else if (currentProgressWidth < 25) {
         progress.style.backgroundColor = 'red';
       }
+      if (currentProgressWidth < 0) {
+        clearInterval(this.timerProgressInterval);
+      }
+    }, 100);
+    this.interval = setInterval(() => {
+      time -= 1;
       if (time < 10) {
         timer.textContent = `00:0${time}`;
       } else {
@@ -158,6 +167,7 @@ export default class ArtistQuiz extends Quiz {
       }
       if (time === 0) {
         clearInterval(this.interval);
+        progress.style.width = '0%';
         this.isCorrect = false;
         if (state.isCheckedVolume === 1) {
           const audio = document.querySelector('.audio-wrong');

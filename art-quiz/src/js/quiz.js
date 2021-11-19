@@ -5,7 +5,7 @@ export default class Quiz {
   constructor(quizNumber) {
     this.quizNumber = quizNumber;
     this.artistNumber = quizNumber * 10;
-    this.answersCounter = 9;
+    this.answersCounter = 0;
     this.answersArr = new Array(10).fill(null);
   }
 
@@ -54,7 +54,30 @@ export default class Quiz {
   async generateResults() {
     const correctAnswersNum = this.answersArr.filter(el => el === 1).length;
     const totalAnswersNum = this.answersArr.length;
-    const finalWord = correctAnswersNum < 1 ? 'You can do better, try again!' : 'Congratulations!';
+    let finalWord = correctAnswersNum < 1 ? 'You can do better, try again!' : 'Congratulations!';
+    switch (correctAnswersNum) {
+      case 0:
+        finalWord = 'You can do better, try again!';
+        break;
+      case 1:
+      case 2:
+      case 3:
+        finalWord = 'Not bad, try again to improve!';
+        break;
+      case 4:
+      case 5:
+      case 6:
+        finalWord = 'Congratulations, nice shot!';
+        break;
+      case 7:
+      case 8:
+      case 9:
+        finalWord = 'Very well, it looks like you are an art lover!';
+        break;
+      default:
+        finalWord = 'You are an art professional, congratulations!';
+        break;
+    }
     const html = `
       <div class="container">
         <div class="popup">
@@ -89,14 +112,14 @@ export default class Quiz {
   }
 
   static generateTimer() {
-    let time = state.valueTime;
+    let time = `00:${state.valueTime}`;
     if (time < 10) {
-      time = `0${time}`;
+      time = `00:0${state.valueTime}`;
     }
     return `
       <div class="timer">
         <img class="timer-img" src="img/clock.svg" alt="">
-        <div class="timer-text">00:<span class="timer-seconds">${time}</span></div>
+        <div class="timer-text">${time}</div>
       </div>
     `;
   }

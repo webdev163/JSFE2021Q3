@@ -34,6 +34,7 @@ export default class PicturesQuiz extends Quiz {
             ${state.isCheckedTime === 1 ? Quiz.generateTimer() : ''}
             <button class="btn categories-menu-button"></button>
           </div>
+          ${state.isCheckedTime === 1 ? '<div class="progress-timer"></div>' : ''}
           <div class="pictures-quiz-picture" style="background-image: ${imageUrl};"></div>
           <div class="pictures-quiz-answers-wrapper">
             <div class="pictures-quiz-answers-list">
@@ -51,6 +52,22 @@ export default class PicturesQuiz extends Quiz {
               <h2 class="popup-name">${json[this.artistNumber].name}</h2>
               <p class="popup-author">${json[this.artistNumber].author}</p>
               <p class="popup-year">${json[this.artistNumber].year}</p>
+              <button class="btn button-popup-download" onclick="fetch('https://raw.githubusercontent.com/webdev163/image-data/master/full/${
+                this.artistNumber
+              }full.jpg')
+                .then(resp => resp.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = name;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                })">
+                Download
+              </button>
               <button class="btn button-popup-next">Next</button>
             </div>
           </div>
@@ -112,6 +129,7 @@ export default class PicturesQuiz extends Quiz {
       }
       this.isCorrect = true;
     } else {
+      if (!e.target.classList.contains('pictures-quiz-answers-item')) return;
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-wrong');
         audio.volume = state.valueVolume / 100;
@@ -125,13 +143,22 @@ export default class PicturesQuiz extends Quiz {
 
   runTimer() {
     let time = state.valueTime;
-    const timer = document.querySelector('.timer-seconds');
+    const initialTime = time;
+    const timer = document.querySelector('.timer-text');
+    const progress = document.querySelector('.progress-timer');
     this.interval = setInterval(() => {
       time -= 1;
+      const currentProgressWidth = (time / initialTime) * 100;
+      progress.style.width = `${currentProgressWidth}%`;
+      if (currentProgressWidth < 50 && currentProgressWidth >= 25) {
+        progress.style.backgroundColor = 'yellow';
+      } else if (currentProgressWidth < 25) {
+        progress.style.backgroundColor = 'red';
+      }
       if (time < 10) {
-        timer.textContent = `0${time}`;
+        timer.textContent = `00:0${time}`;
       } else {
-        timer.textContent = time;
+        timer.textContent = `00:${time}`;
       }
       if (time === 0) {
         clearInterval(this.interval);

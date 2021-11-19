@@ -63,6 +63,11 @@
 
 .button-popup-next {
   padding: 14px 50px;
+  margin-left: 15px;
+}
+
+.button-popup-download {
+  padding: 14px 27.5px;
 }
 
 .pagination-wrapper {
@@ -168,6 +173,7 @@
   text-transform: uppercase;
   color: $main_color;
   margin-top: 5px;
+  width: 90px;
 }
 
 .right-answer {
@@ -238,4 +244,15 @@
 }
 .fade-in-11 {
   animation-delay: 400ms;
+}
+
+.progress-timer {
+  width: 100%;
+  height: 3px;
+  background-color: $main-color;
+  filter: drop-shadow(0 0 1px $main-color);
+  margin-bottom: 15px;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: width .3s ease-in-out;
 }

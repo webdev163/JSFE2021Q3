@@ -79,7 +79,7 @@ export default class PicturesCategories {
           </div>
           <h2 class="categories-title">Categories</h2>
           <div class="categories-wrapper">
-            <button class="categories-home-button"></button>
+            <button class="btn categories-home-button"></button>
             ${await this.generateCategories()}
           </div>
         </div>

@@ -6,6 +6,9 @@
   color: $main_color;
   text-align: center;
   margin-bottom: 20px;
+  @media screen and (max-width: 415px) {
+    margin-top: 40px;
+  }
 }
 
 .artists-quiz-picture {

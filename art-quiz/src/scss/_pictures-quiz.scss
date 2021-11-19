@@ -47,6 +47,9 @@
   color: $main_color;
   text-align: center;
   margin-bottom: 20px;
+  @media screen and (max-width: 1000px) {
+    margin-top: 40px;
+  }
 }
 
 .pictures-quiz-answers-list {

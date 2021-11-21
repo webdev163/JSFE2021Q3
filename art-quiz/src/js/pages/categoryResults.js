@@ -49,8 +49,8 @@ export default class CategoryResults {
       const imageId = categoryNum * 10 + i;
       const isDone = resultsArr[i] === 1;
       result += `
-      <div class="categories-item ${isDone ? 'item-done' : ''}" id="item-${imageId}"">
-        <div class="item-mark";'></div>
+      <div class="categories-item ${isDone ? 'item-done' : ''}" id="item-${imageId}">
+        <div class="item-mark"></div>
         <div class="category-info-wrapper">
           <div class="category-type">${type}</div>
         </div>

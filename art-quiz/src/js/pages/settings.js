@@ -46,8 +46,8 @@ export default class Settings {
               <div class="volume-icon-wrapper">
                 <img class="volume-icon" src="img/volume.svg" alt="Volume icon">
               </div>
-              <div class="volume-contols-outer-wrapper">
-                <div class="volume-contols-inner-wrapper">
+              <div class="volume-controls-outer-wrapper">
+                <div class="volume-controls-inner-wrapper">
                   <div class="volume-controls">
                     <input type="range" name="volume" value="${
                       state.valueVolume / 100
@@ -70,8 +70,8 @@ export default class Settings {
               <div class="time-icon-wrapper">
                 <img class="time-icon" src="img/clock.svg" alt="Time icon">
               </div>
-              <div class="time-contols-outer-wrapper">
-                <div class="time-contols-inner-wrapper">
+              <div class="time-controls-outer-wrapper">
+                <div class="time-controls-inner-wrapper">
                   <div class="time-controls">
                     <input type="range" name="time" value="${
                       state.valueTime
@@ -108,10 +108,13 @@ export default class Settings {
   }
 
   static setEventListeners() {
-    document.querySelector('.progress-volume').addEventListener('change', this.updateVolumeBar);
-    document.querySelector('.progress-volume').addEventListener('mousemove', this.updateVolumeBar);
-    document.querySelector('.progress-time').addEventListener('change', this.updateTimeBar);
-    document.querySelector('.progress-time').addEventListener('mousemove', this.updateTimeBar);
+    const progressVolume = document.querySelector('.progress-volume');
+    const progressTime = document.querySelector('.progress-time');
+
+    progressVolume.addEventListener('change', this.updateVolumeBar);
+    progressVolume.addEventListener('mousemove', this.updateVolumeBar);
+    progressTime.addEventListener('change', this.updateTimeBar);
+    progressTime.addEventListener('mousemove', this.updateTimeBar);
     document.querySelector('.slide-checkbox-volume').addEventListener('change', this.updateVolumeInterface);
     document.querySelector('.slide-checkbox-time').addEventListener('change', this.updateTimeInterface);
     document.querySelector('.save-button').addEventListener('click', () => {
@@ -122,7 +125,7 @@ export default class Settings {
 
   static updateVolumeInterface() {
     const isChecked = document.querySelector('.slide-checkbox-volume').checked;
-    const controlsInnerDiv = document.querySelector('.volume-contols-inner-wrapper');
+    const controlsInnerDiv = document.querySelector('.volume-controls-inner-wrapper');
     if (isChecked) {
       controlsInnerDiv.classList.add('controls-enabled');
       state.isCheckedVolume = 1;
@@ -134,7 +137,7 @@ export default class Settings {
 
   static updateTimeInterface() {
     const isChecked = document.querySelector('.slide-checkbox-time').checked;
-    const controlsInnerDiv = document.querySelector('.time-contols-inner-wrapper');
+    const controlsInnerDiv = document.querySelector('.time-controls-inner-wrapper');
     if (isChecked) {
       controlsInnerDiv.classList.add('controls-enabled');
       state.isCheckedTime = 1;
@@ -152,10 +155,7 @@ export default class Settings {
     return new Promise(resolve => {
       if (localStorage.getItem('webdev163-quiz-settings')) {
         const newState = JSON.parse(localStorage.getItem('webdev163-quiz-settings'));
-        state.isCheckedVolume = newState.isCheckedVolume;
-        state.isCheckedTime = newState.isCheckedTime;
-        state.valueVolume = newState.valueVolume;
-        state.valueTime = newState.valueTime;
+        Object.assign(state, newState);
       }
       resolve();
     });

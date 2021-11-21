@@ -6,7 +6,7 @@ export default class Quiz {
     this.quizNumber = quizNumber;
     this.quizType = quizNumber < 12 ? 'artist' : 'picture';
     this.artistNumber = quizNumber * 10;
-    this.answersCounter = 9;
+    this.answersCounter = 0;
     this.answersArr = new Array(10).fill(null);
   }
 

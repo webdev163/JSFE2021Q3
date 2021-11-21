@@ -3,10 +3,11 @@ import MainPage from './pages/mainPage';
 import Settings from './pages/settings';
 import './router';
 
-MainPage.render();
-Settings.getLocalStorage();
-
-export default async () => {
+const getData = async () => {
   const result = await Data.getJson();
   return result;
 };
+
+MainPage.render();
+Settings.getLocalStorage();
+export default getData();

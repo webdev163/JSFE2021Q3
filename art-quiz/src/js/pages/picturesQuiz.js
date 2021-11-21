@@ -5,6 +5,7 @@ import { state } from './settings';
 
 export default class PicturesQuiz extends Quiz {
   async render() {
+    document.body.classList.remove('loaded');
     const generateAnswersArr = await this.generateAnswers();
     const json = generateAnswersArr[0];
     const imageUrl = generateAnswersArr[1];
@@ -77,7 +78,6 @@ export default class PicturesQuiz extends Quiz {
 
   async generateAnswers() {
     const json = await Data.getJson();
-    document.body.classList.remove('loaded');
     const imageUrl = await Data.getImage(this.artistNumber);
     const imageNumbersArr = [this.artistNumber];
     const set = new Set();

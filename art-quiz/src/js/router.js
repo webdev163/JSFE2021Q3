@@ -22,20 +22,11 @@ document.addEventListener('render-pictures-categories', () => {
   PicturesCategories.render();
 });
 
-document.addEventListener('render-pictures-categories', () => {
-  PicturesCategories.render();
-});
-
 document.addEventListener('render-category-results', e => {
   CategoryResults.render(e.detail);
 });
 
-document.addEventListener('render-artist-quiz', e => {
-  const artistquiz = new ArtistQuiz(e.detail);
-  artistquiz.render();
-});
-
-document.addEventListener('render-pictures-quiz', e => {
-  const picturesquiz = new PicturesQuiz(e.detail);
-  picturesquiz.render();
+document.addEventListener('render-quiz', e => {
+  const quiz = e.detail < 12 ? new ArtistQuiz(e.detail) : new PicturesQuiz(e.detail);
+  quiz.render();
 });

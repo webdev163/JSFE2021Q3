@@ -1,5 +1,4 @@
 import Render from '../render';
-import MainPage from './mainPage';
 
 export const state = {
   isCheckedVolume: 0,
@@ -117,7 +116,7 @@ export default class Settings {
     document.querySelector('.slide-checkbox-time').addEventListener('change', this.updateTimeInterface);
     document.querySelector('.save-button').addEventListener('click', () => {
       this.updateLocalStorage();
-      MainPage.render();
+      document.dispatchEvent(new Event('render-main'));
     });
   }
 

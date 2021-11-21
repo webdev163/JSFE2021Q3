@@ -260,3 +260,11 @@
   overflow: hidden;
   transition: width .3s ease-in-out;
 }
+
+.container-results ~ .fullscreen-icon-wrapper {
+  display: none;
+}
+
+.container-results ~ footer {
+  display: none;
+}

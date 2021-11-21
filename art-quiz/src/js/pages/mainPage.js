@@ -1,13 +1,16 @@
 import Render from '../render';
-import Settings from './settings';
-import ArtistCategories from './artistCategories';
-import PicturesCategories from './picturesCategories';
 
 export default class MainPage {
   static setEventListeners() {
-    document.querySelector('.artist-quiz-wrapper').addEventListener('click', () => ArtistCategories.render());
-    document.querySelector('.pictures-quiz-wrapper').addEventListener('click', () => PicturesCategories.render());
-    document.querySelector('.settings-button').addEventListener('click', () => Settings.render());
+    document.querySelector('.artist-quiz-wrapper').addEventListener('click', () => {
+      document.dispatchEvent(new Event('render-artist-categories'));
+    });
+    document.querySelector('.pictures-quiz-wrapper').addEventListener('click', () => {
+      document.dispatchEvent(new Event('render-pictures-categories'));
+    });
+    document.querySelector('.settings-button').addEventListener('click', () => {
+      document.dispatchEvent(new Event('render-settings'));
+    });
   }
 
   static async render() {
@@ -35,7 +38,6 @@ export default class MainPage {
 
     await Render.render(html).then(() => {
       this.setEventListeners();
-      Settings.getLocalStorage();
     });
   }
 }

@@ -1,17 +1,16 @@
 import Render from '../render';
 import Data from '../data';
-import MainPage from './mainPage';
-import PicturesCategories from './picturesCategories';
-import ArtistCategories from './artistCategories';
 
 export default class CategoryResults {
   static setEventListeners(categoryNum) {
-    document.querySelector('.home-menu-button').addEventListener('click', () => MainPage.render());
+    document.querySelector('.home-menu-button').addEventListener('click', () => {
+      document.dispatchEvent(new Event('render-main'));
+    });
     document.querySelector('.categories-menu-button').addEventListener('click', () => {
       if (categoryNum < 12) {
-        ArtistCategories.render();
+        document.dispatchEvent(new Event('render-artist-categories'));
       } else {
-        PicturesCategories.render();
+        document.dispatchEvent(new Event('render-pictures-categories'));
       }
     });
     document.querySelector('.results-wrapper').addEventListener('click', e => {

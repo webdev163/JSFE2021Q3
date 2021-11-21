@@ -1,35 +1,35 @@
 import Render from '../render';
 import Data from '../data';
-import ArtistQuiz from './artistquiz';
-import MainPage from './mainPage';
-import CategoryResults from './categoryResults';
+import Category from '../category';
 
-export default class ArtistCategories {
-  constructor() {
-    this.localStorageArr = null;
-  }
-
+export default class ArtistCategories extends Category {
   static setEventListeners() {
     document.querySelector('.categories-wrapper').addEventListener('click', e => {
       if (e.target.closest('.categories-item') && !e.target.classList.contains('category-score')) {
         const clickedCategory = e.target.closest('.categories-item');
         const categoryNumber = clickedCategory.id.slice(9); // slice 'category-'
-        const artistquiz = new ArtistQuiz(categoryNumber);
-        artistquiz.render();
+        const event = new CustomEvent('render-artist-quiz', {
+          detail: categoryNumber,
+        });
+        document.dispatchEvent(event);
       }
       if (e.target.classList.contains('category-score')) {
         const clickedCategory = e.target.closest('.categories-item');
         const categoryNumber = clickedCategory.id.slice(9); // slice 'category-'
-        CategoryResults.render(categoryNumber);
+        const event = new CustomEvent('render-category-results', {
+          detail: categoryNumber,
+        });
+        document.dispatchEvent(event);
       }
     });
-    document.querySelector('.categories-home-button').addEventListener('click', () => MainPage.render());
-    // document.querySelector('.settings-button').addEventListener('click', () => Settings.render());
+    document.querySelector('.categories-home-button').addEventListener('click', () => {
+      document.dispatchEvent(new Event('render-main'));
+    });
   }
 
   static async generateCategories() {
     let result = '';
-    await this.checkLocalStorage().then(async (doneIndexArr = []) => {
+    await this.checkLocalStorage(1).then(async (doneIndexArr = []) => {
       const typesArr = [
         'Portrait',
         'Landscape',
@@ -89,53 +89,5 @@ export default class ArtistCategories {
       this.animateCards();
       this.setEventListeners();
     });
-  }
-
-  static checkLocalStorage() {
-    return new Promise(resolve => {
-      if (localStorage.getItem('webdev163-quiz-results') !== null) {
-        this.localStorageArr = JSON.parse(localStorage.getItem('webdev163-quiz-results'));
-        const doneIndexArr = [];
-        for (let i = 0; i < 12; i += 1) {
-          if (this.localStorageArr[i] !== null) {
-            doneIndexArr.push(i);
-          }
-        }
-        resolve(doneIndexArr);
-      } else {
-        resolve();
-      }
-    });
-  }
-
-  static animateCards() {
-    let elements;
-    let windowHeight;
-    const offset = -500;
-
-    function init() {
-      elements = document.querySelectorAll('.hidden');
-      windowHeight = window.innerHeight;
-    }
-
-    function checkPosition() {
-      for (let i = 0; i < elements.length; i += 1) {
-        const element = elements[i];
-        const positionFromTop = !document.fullscreenElement
-          ? elements[i].getBoundingClientRect().top
-          : elements[i].getBoundingClientRect().top + offset;
-
-        if (positionFromTop - windowHeight <= -100) {
-          element.classList.add('animated');
-          element.classList.remove('hidden');
-        }
-      }
-    }
-
-    window.addEventListener('scroll', checkPosition);
-    window.addEventListener('resize', init);
-
-    init();
-    checkPosition();
   }
 }

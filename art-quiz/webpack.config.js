@@ -4,6 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
@@ -211,6 +212,11 @@ module.exports = {
         },
         mode: 'write-references',
       },
+    }),
+    new CircularDependencyPlugin({
+      failOnError: true,
+      allowAsyncCycles: false,
+      cwd: process.cwd(),
     }),
   ],
 };

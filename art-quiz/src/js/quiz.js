@@ -4,8 +4,9 @@ import { state } from './pages/settings';
 export default class Quiz {
   constructor(quizNumber) {
     this.quizNumber = quizNumber;
+    this.quizType = quizNumber < 12 ? 'artist' : 'picture';
     this.artistNumber = quizNumber * 10;
-    this.answersCounter = 0;
+    this.answersCounter = 9;
     this.answersArr = new Array(10).fill(null);
   }
 
@@ -79,7 +80,7 @@ export default class Quiz {
         break;
     }
     const html = `
-      <div class="container">
+      <div class="container container-results">
         <div class="popup">
           <h2 class="text-results congratulation">${finalWord}</h2>
           <p class="text-results score-results">${correctAnswersNum} / ${totalAnswersNum}</p>
@@ -122,5 +123,90 @@ export default class Quiz {
         <div class="timer-text">${time}</div>
       </div>
     `;
+  }
+
+  runTimer() {
+    let time = state.valueTime;
+    const initialTime = time;
+    const timer = document.querySelector('.timer-text');
+    const progress = document.querySelector('.progress-timer');
+    const startTime = new Date().getTime();
+    const endTime = startTime + time * 1000;
+
+    this.timerProgressInterval = setInterval(() => {
+      let currentProgressWidth = (endTime - new Date().getTime()) / 1000;
+      currentProgressWidth = (currentProgressWidth / initialTime) * 100;
+      progress.style.width = `${currentProgressWidth}%`;
+      if (currentProgressWidth < 50 && currentProgressWidth >= 25) {
+        progress.style.backgroundColor = 'yellow';
+      } else if (currentProgressWidth < 25) {
+        progress.style.backgroundColor = 'red';
+      }
+      if (currentProgressWidth < 0) {
+        clearInterval(this.timerProgressInterval);
+      }
+    }, 100);
+
+    this.clockInterval = setInterval(() => {
+      time -= 1;
+      if (time < 10) {
+        timer.textContent = `00:0${time}`;
+      } else {
+        timer.textContent = `00:${time}`;
+      }
+      if (time === 0) {
+        clearInterval(this.clockInterval);
+        progress.style.width = '0%';
+        this.isCorrect = false;
+        if (state.isCheckedVolume === 1) {
+          const audio = document.querySelector('.audio-wrong');
+          audio.volume = state.valueVolume / 100;
+          audio.play();
+        }
+        this.openPopup();
+      }
+    }, 1000);
+  }
+
+  async checkGameEnd() {
+    this.answersArr[this.answersCounter] = this.isCorrect ? 1 : 0;
+    if (this.answersCounter < 9) {
+      this.answersCounter += 1;
+      this.artistNumber += 1;
+      this.render();
+    } else {
+      this.answersCounter += 1;
+      await this.generateResults();
+      if (state.isCheckedVolume === 1) {
+        const audio = document.querySelector('.audio-end');
+        audio.volume = state.valueVolume / 100;
+        audio.play();
+      }
+      document.querySelector('.button-popup-home').addEventListener('click', () => {
+        document.dispatchEvent(new Event('render-main'));
+      });
+      document.querySelector('.button-popup-next-quiz').addEventListener('click', () => {
+        if (this.quizNumber < 12) {
+          document.dispatchEvent(new Event('render-artist-categories'));
+        } else {
+          document.dispatchEvent(new Event('render-pictures-categories'));
+        }
+      });
+    }
+  }
+
+  downloadImageFunc() {
+    return `fetch('https://raw.githubusercontent.com/webdev163/image-data/master/full/${this.artistNumber}full.jpg')
+      .then(resp => resp.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      })`;
   }
 }

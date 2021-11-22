@@ -1,15 +1,13 @@
 import Render from '../render';
 import Data from '../data';
-import Quiz from '../quiz';
+import Quiz from '../components/quiz';
 import { state } from './settings';
 
 export default class ArtistQuiz extends Quiz {
   async render() {
     document.body.classList.remove('loaded');
-    const generateAnswersArr = await this.generateAnswers();
-    const json = generateAnswersArr[0];
-    const imageUrl = generateAnswersArr[1];
-    const shuffledArr = generateAnswersArr[2];
+    const generateAnswersObj = await this.generateAnswers();
+    const { json, imageUrl, shuffledArr } = generateAnswersObj;
 
     const html = `
       <div class="outer-container">
@@ -68,7 +66,9 @@ export default class ArtistQuiz extends Quiz {
       clearInterval(this.clockInterval);
       document.dispatchEvent(new Event('render-artist-categories'));
     });
-    document.querySelector('.artists-quiz-answers-list').addEventListener('click', e => this.checkAnswer(e, json));
+    document.querySelector('.artists-quiz-answers-list').addEventListener('click', e => {
+      this.checkAnswer(e, json);
+    });
     document.querySelector('.button-popup-next').addEventListener('click', () => {
       this.checkGameEnd();
     });
@@ -85,14 +85,15 @@ export default class ArtistQuiz extends Quiz {
 
     const arr = Array.from(set);
     const shuffledArr = Quiz.shuffle(arr);
-    return [json, imageUrl, shuffledArr];
+    return { json, imageUrl, shuffledArr };
   }
 
   checkAnswer(e, json) {
     if (e.target.textContent === json[this.artistNumber].author) {
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-correct');
-        audio.volume = state.valueVolume / 100;
+        const volumeInPercents = 100;
+        audio.volume = state.valueVolume / volumeInPercents;
         audio.play();
       }
       e.target.classList.add('right-answer');
@@ -101,7 +102,8 @@ export default class ArtistQuiz extends Quiz {
       if (!e.target.classList.contains('artists-quiz-answers-item')) return;
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-wrong');
-        audio.volume = state.valueVolume / 100;
+        const volumeInPercents = 100;
+        audio.volume = state.valueVolume / volumeInPercents;
         audio.play();
       }
       e.target.classList.add('wrong-answer');

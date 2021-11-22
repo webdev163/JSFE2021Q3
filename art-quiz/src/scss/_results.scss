@@ -53,6 +53,12 @@
   &.active .item-info-wrapper {
     transform: translateY(0);
   }
+  @media screen and (max-width: 900px) {
+    margin-left: 2.3%;
+  }
+  @media screen and (max-width: 700px) {
+    margin-left: 2%;
+  }
 }
 
 .item-mark {

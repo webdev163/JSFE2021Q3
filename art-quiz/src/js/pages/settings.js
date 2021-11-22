@@ -24,9 +24,10 @@ export default class Settings {
     const { value } = timeBar;
     const step = 5;
     const valuePerStep = 20;
-    const stepsNum = value / step - 1;
-    timeBar.style.background = `linear-gradient(to right, #660033 0%, #660033 ${stepsNum * valuePerStep}%, #E5E5E5 ${
-      stepsNum * valuePerStep
+    const offset = 1;
+    const stepNum = value / step - offset;
+    timeBar.style.background = `linear-gradient(to right, #660033 0%, #660033 ${stepNum * valuePerStep}%, #E5E5E5 ${
+      stepNum * valuePerStep
     }%, #E5E5E5 100%)`;
     timeTextDiv.textContent = timeBar.value;
     state.valueTime = parseInt(timeBar.value, 10);

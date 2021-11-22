@@ -15,6 +15,12 @@
   }
 }
 
+@media (hover: none) {
+  .fullscreen-icon {
+    display: none;
+  }
+}
+
 .footer-container {
   width: 92%;
   margin: 0 auto;

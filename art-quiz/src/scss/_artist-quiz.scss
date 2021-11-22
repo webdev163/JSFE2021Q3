@@ -6,8 +6,10 @@
   color: $main_color;
   text-align: center;
   margin-bottom: 20px;
-  @media screen and (max-width: 415px) {
+  @media screen and (max-width: 600px) {
+    font-size: 22px;
     margin-top: 40px;
+    line-height: 25px;
   }
 }
 
@@ -41,11 +43,14 @@
   border: 1px solid #9c9c9c;
   border-radius: 10px;
   background-color: #e8f6ff;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, filter 0.3s;
   margin-bottom: 10px;
   &:hover {
     background-color: #ffebd4;
     filter: drop-shadow(0 0 10px #ffdb8e);
     cursor: pointer;
+  }
+  @media screen and (max-width: 450px) {
+    flex-basis: 100%;
   }
 }

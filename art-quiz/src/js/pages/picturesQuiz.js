@@ -1,20 +1,20 @@
 import Render from '../render';
 import Data from '../data';
-import Quiz from '../quiz';
+import Quiz from '../components/quiz';
 import { state } from './settings';
 
 export default class PicturesQuiz extends Quiz {
   async render() {
     document.body.classList.remove('loaded');
-    const generateAnswersArr = await this.generateAnswers();
-    const json = generateAnswersArr[0];
-    const imageUrl = generateAnswersArr[1];
-    const shuffledArr = generateAnswersArr[2];
+    const generateAnswersObj = await this.generateAnswers();
+    const { json, imageUrl, shuffledArr } = generateAnswersObj;
 
     const html = `
       <div class="outer-container">
         <div class="container">
-          <div class="pictures-quiz-title">Какую картину написал ${json[this.artistNumber].author}?</div>
+          <div class="pictures-quiz-title">Какую картину написал <span class="author-selected">${
+            json[this.artistNumber].author
+          }</span>?</div>
           <div class="menu-btn-wrapper">
             <button class="btn home-menu-button"></button>
             ${state.isCheckedTime === 1 ? Quiz.generateTimer() : ''}
@@ -93,14 +93,15 @@ export default class PicturesQuiz extends Quiz {
 
     const urlsArr = await Promise.all(imageNumbersArr.map(el => Data.getImage(el)));
     const shuffledArr = Quiz.shuffle(urlsArr);
-    return [json, imageUrl, shuffledArr];
+    return { json, imageUrl, shuffledArr };
   }
 
   checkAnswer(e, imageUrl) {
     if (e.target.style.backgroundImage === imageUrl) {
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-correct');
-        audio.volume = state.valueVolume / 100;
+        const volumeInPercents = 100;
+        audio.volume = state.valueVolume / volumeInPercents;
         audio.play();
       }
       this.isCorrect = true;
@@ -108,7 +109,8 @@ export default class PicturesQuiz extends Quiz {
       if (!e.target.classList.contains('pictures-quiz-answers-item')) return;
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-wrong');
-        audio.volume = state.valueVolume / 100;
+        const volumeInPercents = 100;
+        audio.volume = state.valueVolume / volumeInPercents;
         audio.play();
       }
       this.isCorrect = false;

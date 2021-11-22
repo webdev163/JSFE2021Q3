@@ -17,6 +17,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  @media screen and (max-width: 500px) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }
 
 .popup-sign {
@@ -35,6 +39,9 @@
   background-size: cover;
   margin: 0 auto;
   border-radius: 5px;
+  @media screen and (max-width: 500px) {
+    height: 70vw;
+  }
 }
 
 #overlay {
@@ -129,6 +136,10 @@
   @media screen and (max-width: 600px) {
     font-size: 36px;
     line-height: 44px;
+  }
+  @media screen and (max-width: 500px) {
+    margin-top: 35px;
+    margin-bottom: 30px;
   }
 }
 

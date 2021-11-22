@@ -7,7 +7,8 @@ export default class CategoryResults {
       document.dispatchEvent(new Event('render-main'));
     });
     document.querySelector('.categories-menu-button').addEventListener('click', () => {
-      if (categoryNum < 12) {
+      const offset = 12;
+      if (categoryNum < offset) {
         document.dispatchEvent(new Event('render-artist-categories'));
       } else {
         document.dispatchEvent(new Event('render-pictures-categories'));
@@ -40,13 +41,14 @@ export default class CategoryResults {
       'Industrial',
     ];
     const type = categoryNum < typesArr.length ? typesArr[categoryNum] : typesArr[categoryNum - typesArr.length];
+    const roundsInGame = 10;
     const imagesArr = await Promise.all(
-      new Array(10).fill(null).map((el, idx) => {
-        return Data.getImage(categoryNum * 10 + idx);
+      new Array(roundsInGame).fill(null).map((el, idx) => {
+        return Data.getImage(categoryNum * roundsInGame + idx);
       }),
     );
-    for (let i = 0; i < 10; i += 1) {
-      const imageId = categoryNum * 10 + i;
+    for (let i = 0; i < roundsInGame; i += 1) {
+      const imageId = categoryNum * roundsInGame + i;
       const isDone = resultsArr[i] === 1;
       result += `
       <div class="categories-item ${isDone ? 'item-done' : ''}" id="item-${imageId}">

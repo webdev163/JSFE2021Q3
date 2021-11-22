@@ -1,5 +1,5 @@
 import Render from '../render';
-import Category from '../category';
+import Category from '../components/category';
 
 export default class PicturesCategories extends Category {
   static async render() {

@@ -1,17 +1,19 @@
-import Render from './render';
-import { state } from './pages/settings';
+import Render from '../render';
+import { state } from '../pages/settings';
 
 export default class Quiz {
   constructor(quizNumber) {
     this.quizNumber = quizNumber;
+    this.roundsInGame = 10;
     this.quizType = quizNumber < 12 ? 'artist' : 'picture';
-    this.artistNumber = quizNumber * 10;
+    this.artistNumber = quizNumber * this.roundsInGame;
     this.answersCounter = 0;
-    this.answersArr = new Array(10).fill(null);
+    this.answersArr = new Array(this.roundsInGame).fill(null);
   }
 
   static getRandomInt() {
-    return Math.floor(Math.random() * 239) + 1;
+    const totalImagesCount = 239;
+    return Math.floor(Math.random() * totalImagesCount) + 1;
   }
 
   static shuffle(array) {
@@ -26,7 +28,7 @@ export default class Quiz {
   openPopup() {
     const popup = document.querySelector('.popup');
     const overlay = document.querySelector('#overlay');
-    if (this.answersCounter < 10) {
+    if (this.answersCounter < this.roundsInGame) {
       const sign = document.querySelector('.popup-sign');
       sign.style.backgroundImage = `url("img/${this.isCorrect ? 'right' : 'wrong'}.png")`;
     }
@@ -38,7 +40,7 @@ export default class Quiz {
 
   generatePagination() {
     let result = '';
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < this.roundsInGame; i += 1) {
       let html = '';
       if (this.answersArr[i] === 1) {
         html = `<div class="pagination-item pagination-correct" id="dot-${i}"></div>`;
@@ -55,7 +57,7 @@ export default class Quiz {
   async generateResults() {
     const correctAnswersNum = this.answersArr.filter(el => el === 1).length;
     const totalAnswersNum = this.answersArr.length;
-    let finalWord = correctAnswersNum < 1 ? 'You can do better, try again!' : 'Congratulations!';
+    let finalWord;
     switch (correctAnswersNum) {
       case 0:
       case 1:
@@ -101,7 +103,8 @@ export default class Quiz {
       arr[this.quizNumber] = this.answersArr;
       localStorage.setItem('webdev163-quiz-results', JSON.stringify(arr));
     } else {
-      const arr = new Array(24).fill(null);
+      const totalCategoriesCount = 24;
+      const arr = new Array(totalCategoriesCount).fill(null);
       arr[this.quizNumber] = this.answersArr;
       localStorage.setItem('webdev163-quiz-results', JSON.stringify(arr));
     }
@@ -131,11 +134,13 @@ export default class Quiz {
     const timer = document.querySelector('.timer-text');
     const progress = document.querySelector('.progress-timer');
     const startTime = new Date().getTime();
-    const endTime = startTime + time * 1000;
+    const timeInMs = time * 1000;
+    const endTime = startTime + timeInMs;
 
     this.timerProgressInterval = setInterval(() => {
-      let currentProgressWidth = (endTime - new Date().getTime()) / 1000;
-      currentProgressWidth = (currentProgressWidth / initialTime) * 100;
+      const currentTime = endTime - new Date().getTime();
+      const currentTimeInSeconds = currentTime / 1000;
+      const currentProgressWidth = (currentTimeInSeconds / initialTime) * 100;
       progress.style.width = `${currentProgressWidth}%`;
       if (currentProgressWidth < 50 && currentProgressWidth >= 25) {
         progress.style.backgroundColor = 'yellow';
@@ -160,7 +165,8 @@ export default class Quiz {
         this.isCorrect = false;
         if (state.isCheckedVolume === 1) {
           const audio = document.querySelector('.audio-wrong');
-          audio.volume = state.valueVolume / 100;
+          const volumeInPercents = 100;
+          audio.volume = state.valueVolume / volumeInPercents;
           audio.play();
         }
         this.openPopup();
@@ -179,14 +185,16 @@ export default class Quiz {
       await this.generateResults();
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-end');
-        audio.volume = state.valueVolume / 100;
+        const volumeInPercents = 100;
+        audio.volume = state.valueVolume / volumeInPercents;
         audio.play();
       }
       document.querySelector('.button-popup-home').addEventListener('click', () => {
         document.dispatchEvent(new Event('render-main'));
       });
       document.querySelector('.button-popup-next-quiz').addEventListener('click', () => {
-        if (this.quizNumber < 12) {
+        const offset = 12;
+        if (this.quizNumber < offset) {
           document.dispatchEvent(new Event('render-artist-categories'));
         } else {
           document.dispatchEvent(new Event('render-pictures-categories'));

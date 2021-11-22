@@ -43,6 +43,9 @@
     height: 320px;
     margin-bottom: 50px;
   }
+  @media screen and (max-width: 500px) {
+    margin-bottom: 20px;
+  }
 }
 
 .pictures-quiz-wrapper {
@@ -99,6 +102,9 @@
     margin-top: 80px;
     margin-bottom: 20px;
   }
+  @media screen and (max-width: 500px) {
+    margin-top: 50px;
+  }
 }
 
 .settings-button {
@@ -116,5 +122,10 @@
     background-size: contain;
     top: 9px;
     left: 12px;
+    transform: rotate(0deg);
+    transition: transform .5s;
+  }
+  &:hover::before {
+    transform: rotate(90deg);
   }
 }

@@ -1,4 +1,4 @@
-import Data from './data';
+import Data from '../data';
 
 export default class Category {
   constructor() {
@@ -8,7 +8,8 @@ export default class Category {
   static animateCards() {
     let elements;
     let windowHeight;
-    const offset = -500;
+    const offset = -100;
+    const fullscreenOffset = -500;
 
     const init = () => {
       elements = document.querySelectorAll('.hidden');
@@ -20,9 +21,9 @@ export default class Category {
         const element = elements[i];
         const positionFromTop = !document.fullscreenElement
           ? elements[i].getBoundingClientRect().top
-          : elements[i].getBoundingClientRect().top + offset;
+          : elements[i].getBoundingClientRect().top + fullscreenOffset;
 
-        if (positionFromTop - windowHeight <= -100) {
+        if (positionFromTop - windowHeight <= offset) {
           element.classList.add('animated');
           element.classList.remove('hidden');
         }
@@ -42,7 +43,8 @@ export default class Category {
       if (localStorage.getItem('webdev163-quiz-results') !== null) {
         this.localStorageArr = JSON.parse(localStorage.getItem('webdev163-quiz-results'));
         const doneIndexArr = [];
-        for (let i = 0; i < 12; i += 1) {
+        const categoriesInGame = 12;
+        for (let i = 0; i < categoriesInGame; i += 1) {
           if (this.localStorageArr[i + offset] !== null) {
             doneIndexArr.push(i + offset);
           }
@@ -72,12 +74,13 @@ export default class Category {
         'Industrial',
       ];
       const offset = type === 'artist' ? 0 : 12;
+      const categoriesInGame = 12;
       const imagesArr = await Promise.all(
-        new Array(12).fill(null).map((el, idx) => {
+        new Array(categoriesInGame).fill(null).map((el, idx) => {
           return Data.getLocalImage(idx + offset);
         }),
       );
-      for (let i = 0; i < 12; i += 1) {
+      for (let i = 0; i < categoriesInGame; i += 1) {
         const isDone = doneIndexArr.includes(i + offset);
         result += `
         <div class="categories-item hidden fade-in-${i} ${isDone ? 'category-done' : ''}" id="category-${i + offset}">

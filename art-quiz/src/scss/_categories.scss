@@ -65,6 +65,12 @@
   }
 }
 
+@media (hover: none) {
+  .categories-item.category-done .category-score {
+    transform: translateY(0);
+  }
+}
+
 .category-info-wrapper {
   padding: 10px;
   position: relative;

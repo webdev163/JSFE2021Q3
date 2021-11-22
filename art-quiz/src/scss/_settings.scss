@@ -43,6 +43,9 @@
     max-width: 500px;
     margin-bottom: 30px;
   }
+  @media screen and (max-width: 500px) {
+    padding: 40px 20px 25px;
+  }
 }
 
 .time-settings-wrapper {
@@ -54,6 +57,9 @@
     width: 96%;
     max-width: 500px;
   }
+  @media screen and (max-width: 500px) {
+    padding: 40px 20px 25px;
+  }
 }
 
 .volume-icon-wrapper {
@@ -61,6 +67,9 @@
   height: 82px;
   margin: 0 auto;
   margin-bottom: 70px;
+  @media screen and (max-width: 500px) {
+    margin-bottom: 40px;
+  }
 }
 
 .volume-controls,
@@ -93,6 +102,9 @@
   text-align: center;
   text-transform: uppercase;
   color: $main_color;
+  @media screen and (max-width: 500px) {
+    margin-bottom: 0;
+  }
 }
 
 .time-icon-wrapper {
@@ -100,6 +112,9 @@
   height: 100px;
   margin: 0 auto;
   margin-bottom: 50px;
+  @media screen and (max-width: 500px) {
+    margin-bottom: 20px;
+  }
 }
 
 .progress {

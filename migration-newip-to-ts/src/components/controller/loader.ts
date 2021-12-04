@@ -29,10 +29,10 @@ class Loader {
   }
 
   makeUrl(options: Record<string, never>, endpoint: string) {
-    const urlOptions = { ...this.options, ...options };
+    const urlOptions: { [prop: string]: string } = { ...this.options, ...options };
     let url = `${this.baseLink}${endpoint}?`;
 
-    Object.keys(urlOptions).forEach((key) => {
+    Object.keys(urlOptions).forEach((key: string) => {
       url += `${key}=${urlOptions[key]}&`;
     });
 
@@ -42,9 +42,9 @@ class Loader {
   load(method: string, endpoint: string, callback: (data: ISources) => void, options = {}) {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
-      .then((res) => res.json())
-      .then((data) => callback(data))
-      .catch((err) => console.error(err));
+      .then((res: Response) => res.json())
+      .then((data: ISources) => callback(data))
+      .catch((err: Error) => console.error(err));
   }
 }
 

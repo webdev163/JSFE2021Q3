@@ -1,10 +1,12 @@
+// Interfaces
+
 export interface IData {
   status: string;
   totalResults: number;
   articles: IArticlesObj[];
 }
 
-export interface ISources extends IData {
+export interface ISources {
   status: string;
   sources: ISourcesObj[];
 }
@@ -28,4 +30,23 @@ export interface ISourcesObj {
   language: string;
   name: string;
   url: string;
+}
+
+// Types
+
+export type CallbackFunctionGeneric<T> = (data: T) => void;
+
+export type PartialOptions = {
+  sources: string
+}
+
+// Enums
+
+export enum HttpStatusCode {
+  OK = 200,
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  FORBIDDEN = 403,
+  NOT_FOUND = 404,
+  INTERNAL_SERVER_ERROR = 500,
 }

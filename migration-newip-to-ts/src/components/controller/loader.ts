@@ -11,7 +11,7 @@ class Loader {
 
   protected getResp<ISources>(
     { endpoint, options = {} }: { endpoint: string; options?: Partial<PartialOptions> },
-    callback: CallbackFunctionGeneric<ISources> = () => {
+    callback: CallbackFunctionGeneric<ISources> = (): void => {
       console.error('No callback for GET response');
     }
   ): void {
@@ -39,7 +39,12 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  private load<ISources>(method: string, endpoint: string, callback: CallbackFunctionGeneric<ISources>, options = {}): void {
+  private load<ISources>(
+    method: string,
+    endpoint: string,
+    callback: CallbackFunctionGeneric<ISources>,
+    options = {}
+  ): void {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res: Response) => res.json())

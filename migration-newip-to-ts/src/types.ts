@@ -37,8 +37,8 @@ export interface ISourcesObj {
 export type CallbackFunctionGeneric<T> = (data: T) => void;
 
 export type PartialOptions = {
-  sources: string
-}
+  sources: string;
+};
 
 // Enums
 

@@ -1,6 +1,6 @@
 import './news.css';
 import { IArticlesObj } from '../../../types';
-import '../../../img/no-image-placeholder.svg'
+import '../../../img/no-image-placeholder.svg';
 
 class News {
   public draw(data: IArticlesObj[]): void {
@@ -9,19 +9,20 @@ class News {
     const fragment: DocumentFragment = document.createDocumentFragment();
     const newsItemTemp: HTMLTemplateElement = document.querySelector('#newsItemTemp') as HTMLTemplateElement;
 
-    news.forEach((item: IArticlesObj, idx: number) => {
+    news.forEach((item: IArticlesObj, idx: number): void => {
       const newsClone: HTMLElement = newsItemTemp.content.cloneNode(true) as HTMLElement;
 
       if (idx % 2) (newsClone.querySelector('.news__item') as HTMLElement).classList.add('alt');
 
-      const newsMetaPhoto = newsClone.querySelector('.news__meta-photo')
+      const newsMetaPhoto = newsClone.querySelector('.news__meta-photo');
 
-      if (item.urlToImage !== "null") {
+      if (item.urlToImage !== null && item.urlToImage !== 'null') {
         (newsMetaPhoto as HTMLElement).style.backgroundImage = `url(${item.urlToImage})`;
       } else {
         (newsMetaPhoto as HTMLElement).style.backgroundImage = 'url(img/no-image-placeholder.svg)';
+        (newsMetaPhoto as HTMLElement).setAttribute('data-no-image', 'true');
       }
-      
+
       (newsClone.querySelector('.news__meta-author') as HTMLElement).textContent =
         item.author || item.source.name || '';
       (newsClone.querySelector('.news__meta-date') as HTMLElement).textContent =

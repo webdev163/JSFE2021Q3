@@ -18,6 +18,13 @@ const baseConfig = {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
             },
+            {
+                test: /\.svg$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'img/[name][ext][query]',
+                },
+            },
         ],
     },
     resolve: {

@@ -1,5 +1,6 @@
 import './news.css';
 import { IArticlesObj } from '../../../types';
+import '../../../img/no-image-placeholder.svg'
 
 class News {
   public draw(data: IArticlesObj[]): void {
@@ -13,9 +14,14 @@ class News {
 
       if (idx % 2) (newsClone.querySelector('.news__item') as HTMLElement).classList.add('alt');
 
-      (newsClone.querySelector('.news__meta-photo') as HTMLElement).style.backgroundImage = `url(${
-        item.urlToImage || 'img/news_placeholder.jpg'
-      })`;
+      const newsMetaPhoto = newsClone.querySelector('.news__meta-photo')
+
+      if (item.urlToImage !== "null") {
+        (newsMetaPhoto as HTMLElement).style.backgroundImage = `url(${item.urlToImage})`;
+      } else {
+        (newsMetaPhoto as HTMLElement).style.backgroundImage = 'url(img/no-image-placeholder.svg)';
+      }
+      
       (newsClone.querySelector('.news__meta-author') as HTMLElement).textContent =
         item.author || item.source.name || '';
       (newsClone.querySelector('.news__meta-date') as HTMLElement).textContent =

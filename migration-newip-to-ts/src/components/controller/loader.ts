@@ -2,9 +2,9 @@ import { CallbackFunctionGeneric, HttpStatusCode, PartialOptions } from '../../t
 
 class Loader {
   baseLink: string;
-  options: object;
+  options: Readonly<object>;
 
-  constructor(baseLink: string, options: object) {
+  constructor(baseLink: string, options: Readonly<object>) {
     this.baseLink = baseLink;
     this.options = options;
   }

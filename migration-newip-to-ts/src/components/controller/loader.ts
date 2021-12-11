@@ -9,9 +9,9 @@ class Loader {
     this.options = options;
   }
 
-  protected getResp<ISources>(
+  protected getResp<SourcesInterface>(
     { endpoint, options = {} }: { endpoint: string; options?: Partial<PartialOptions> },
-    callback: CallbackFunctionGeneric<ISources> = (): void => {
+    callback: CallbackFunctionGeneric<SourcesInterface> = (): void => {
       console.error('No callback for GET response');
     }
   ): void {
@@ -39,16 +39,16 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  private load<ISources>(
+  private load<SourcesInterface>(
     method: string,
     endpoint: string,
-    callback: CallbackFunctionGeneric<ISources>,
+    callback: CallbackFunctionGeneric<SourcesInterface>,
     options = {}
   ): void {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res: Response) => res.json())
-      .then((data: ISources) => callback(data))
+      .then((data: SourcesInterface) => callback(data))
       .catch((err: Error) => console.error(err));
   }
 }

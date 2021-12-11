@@ -1,17 +1,17 @@
 // Interfaces
 
-export interface IData {
+export interface ArticlesInterface {
   status: string;
   totalResults: number;
-  articles: IArticlesObj[];
+  articles: ArticlesObjInterface[];
 }
 
-export interface ISources {
+export interface SourcesInterface {
   status: string;
-  sources: ISourcesObj[];
+  sources: SourcesObjInterface[];
 }
 
-export interface IArticlesObj {
+export interface ArticlesObjInterface {
   author: string;
   content: string;
   description: string;
@@ -22,7 +22,7 @@ export interface IArticlesObj {
   urlToImage: string;
 }
 
-export interface ISourcesObj {
+export interface SourcesObjInterface {
   category: string;
   country: string;
   description: string;

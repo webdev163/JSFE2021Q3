@@ -1,15 +1,16 @@
 import './news.css';
-import { IArticlesObj } from '../../../types';
+import { ArticlesObjInterface } from '../../../types';
 import '../../../img/no-image-placeholder.svg';
 
 class News {
-  public draw(data: IArticlesObj[]): void {
-    const news: IArticlesObj[] = data.length >= 10 ? data.filter((_item: IArticlesObj, idx: number) => idx < 10) : data;
+  public draw(data: ArticlesObjInterface[]): void {
+    const news: ArticlesObjInterface[] =
+      data.length >= 10 ? data.filter((_item: ArticlesObjInterface, idx: number) => idx < 10) : data;
 
     const fragment: DocumentFragment = document.createDocumentFragment();
     const newsItemTemp: HTMLTemplateElement = document.querySelector('#newsItemTemp') as HTMLTemplateElement;
 
-    news.forEach((item: IArticlesObj, idx: number): void => {
+    news.forEach((item: ArticlesObjInterface, idx: number): void => {
       const newsClone: HTMLElement = newsItemTemp.content.cloneNode(true) as HTMLElement;
 
       if (idx % 2) (newsClone.querySelector('.news__item') as HTMLElement).classList.add('alt');

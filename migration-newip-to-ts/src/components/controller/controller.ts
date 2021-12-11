@@ -2,7 +2,7 @@ import AppLoader from './appLoader';
 import { CallbackFunctionGeneric } from '../../types';
 
 class AppController extends AppLoader {
-  public getSources<ISources>(callback: CallbackFunctionGeneric<ISources>): void {
+  public getSources<SourcesInterface>(callback: CallbackFunctionGeneric<SourcesInterface>): void {
     super.getResp(
       {
         endpoint: 'sources',
@@ -11,7 +11,7 @@ class AppController extends AppLoader {
     );
   }
 
-  public getNews<IData>(e: Event, callback: CallbackFunctionGeneric<IData>): void {
+  public getNews<ArticlesInterface>(e: Event, callback: CallbackFunctionGeneric<ArticlesInterface>): void {
     let target: HTMLElement = e.target as HTMLElement;
     const newsContainer: HTMLElement = e.currentTarget as HTMLElement;
 

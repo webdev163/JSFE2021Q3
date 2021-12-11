@@ -1,6 +1,6 @@
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
-import { IData, ISources } from '../../types';
+import { ArticlesInterface, SourcesInterface } from '../../types';
 
 class App {
   controller: AppController;
@@ -13,13 +13,13 @@ class App {
 
   public start(): void {
     (document.querySelector('.sources') as HTMLElement).addEventListener('click', (e: Event): void => {
-      this.controller.getNews(e, (data: IData): void => this.view.drawNews(data));
+      this.controller.getNews(e, (data: ArticlesInterface): void => this.view.drawNews(data));
       this.togglePopup();
     });
     (document.querySelector('.hamburger') as HTMLElement).addEventListener('click', (): void => {
       this.togglePopup();
     });
-    this.controller.getSources((data: ISources) => this.view.drawSources(data));
+    this.controller.getSources((data: SourcesInterface) => this.view.drawSources(data));
     this.togglePopup();
   }
 

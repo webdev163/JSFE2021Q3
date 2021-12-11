@@ -1,8 +1,11 @@
 const path = require('path');
+const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const baseConfig = {
     entry: path.resolve(__dirname, './src/index.ts'),
@@ -55,6 +58,9 @@ const baseConfig = {
                 mode: 'write-references',
             },
         }),
+        new webpack.DefinePlugin({
+            'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
+        })
     ],
 };
 

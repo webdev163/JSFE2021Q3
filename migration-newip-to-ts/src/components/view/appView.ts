@@ -1,6 +1,6 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import { IData, ISources, IArticlesObj, ISourcesObj } from '../../types';
+import { ArticlesInterface, SourcesInterface, ArticlesObjInterface, SourcesObjInterface } from '../../types';
 
 export class AppView {
   news: News;
@@ -11,13 +11,13 @@ export class AppView {
     this.sources = new Sources();
   }
 
-  public drawNews(data: IData): void {
-    const values: IArticlesObj[] = data?.articles ? data?.articles : [];
+  public drawNews(data: ArticlesInterface): void {
+    const values: ArticlesObjInterface[] = data?.articles ? data?.articles : [];
     this.news.draw(values);
   }
 
-  public drawSources(data: Pick<ISources, 'status' | 'sources'>): void {
-    const values: ISourcesObj[] = data?.sources ? data?.sources : [];
+  public drawSources(data: Pick<SourcesInterface, 'status' | 'sources'>): void {
+    const values: SourcesObjInterface[] = data?.sources ? data?.sources : [];
     this.sources.draw(values);
   }
 }

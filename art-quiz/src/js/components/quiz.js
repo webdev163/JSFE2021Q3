@@ -1,19 +1,20 @@
 import Render from '../render';
 import { state } from '../pages/settings';
+import Constants from '../constants';
 
 export default class Quiz {
   constructor(quizNumber) {
     this.quizNumber = quizNumber;
-    this.roundsInGame = 10;
-    this.quizType = quizNumber < 12 ? 'artist' : 'picture';
+    this.roundsInGame = Constants.ROUNDS_IN_GAME_COUNT;
+    this.quizType =
+      quizNumber < Constants.CATEGORIES_IN_GAME_COUNT ? Constants.QUIZ_TYPES.artist : Constants.QUIZ_TYPES.pictures;
     this.artistNumber = quizNumber * this.roundsInGame;
     this.answersCounter = 0;
     this.answersArr = new Array(this.roundsInGame).fill(null);
   }
 
   static getRandomInt() {
-    const totalImagesCount = 239;
-    return Math.floor(Math.random() * totalImagesCount) + 1;
+    return Math.floor(Math.random() * Constants.TOTAL_IMAGES_COUNT) + 1;
   }
 
   static shuffle(array) {
@@ -103,8 +104,7 @@ export default class Quiz {
       arr[this.quizNumber] = this.answersArr;
       localStorage.setItem('webdev163-quiz-results', JSON.stringify(arr));
     } else {
-      const totalCategoriesCount = 24;
-      const arr = new Array(totalCategoriesCount).fill(null);
+      const arr = new Array(Constants.TOTAL_CATEGORIES_COUNT).fill(null);
       arr[this.quizNumber] = this.answersArr;
       localStorage.setItem('webdev163-quiz-results', JSON.stringify(arr));
     }
@@ -117,7 +117,7 @@ export default class Quiz {
 
   static generateTimer() {
     let time = `00:${state.valueTime}`;
-    if (state.valueTime < 10) {
+    if (state.valueTime < Constants.LEAST_DOUBLE_DIGIT_NUMBER) {
       time = `00:0${state.valueTime}`;
     }
     return `
@@ -134,17 +134,20 @@ export default class Quiz {
     const timer = document.querySelector('.timer-text');
     const progress = document.querySelector('.progress-timer');
     const startTime = new Date().getTime();
-    const timeInMs = time * 1000;
+    const timeInMs = time * Constants.MILLISECONDS_IN_SECOND;
     const endTime = startTime + timeInMs;
 
     this.timerProgressInterval = setInterval(() => {
       const currentTime = endTime - new Date().getTime();
-      const currentTimeInSeconds = currentTime / 1000;
-      const currentProgressWidth = (currentTimeInSeconds / initialTime) * 100;
+      const currentTimeInSeconds = currentTime / Constants.MILLISECONDS_IN_SECOND;
+      const currentProgressWidth = (currentTimeInSeconds / initialTime) * Constants.VALUE_IN_PERCENTS_FACTOR;
       progress.style.width = `${currentProgressWidth}%`;
-      if (currentProgressWidth < 50 && currentProgressWidth >= 25) {
+      if (
+        currentProgressWidth < Constants.YELLOW_TIMER_LINE_IN_PERCENTS &&
+        currentProgressWidth >= Constants.RED_TIMER_LINE_IN_PERCENTS
+      ) {
         progress.style.backgroundColor = 'yellow';
-      } else if (currentProgressWidth < 25) {
+      } else if (currentProgressWidth < Constants.RED_TIMER_LINE_IN_PERCENTS) {
         progress.style.backgroundColor = 'red';
       }
       if (currentProgressWidth < 0) {
@@ -154,7 +157,7 @@ export default class Quiz {
 
     this.clockInterval = setInterval(() => {
       time -= 1;
-      if (time < 10) {
+      if (time < Constants.LEAST_DOUBLE_DIGIT_NUMBER) {
         timer.textContent = `00:0${time}`;
       } else {
         timer.textContent = `00:${time}`;
@@ -165,8 +168,7 @@ export default class Quiz {
         this.isCorrect = false;
         if (state.isCheckedVolume === 1) {
           const audio = document.querySelector('.audio-wrong');
-          const volumeInPercents = 100;
-          audio.volume = state.valueVolume / volumeInPercents;
+          audio.volume = state.valueVolume / Constants.VALUE_IN_PERCENTS_FACTOR;
           audio.play();
         }
         this.openPopup();
@@ -185,16 +187,14 @@ export default class Quiz {
       await this.generateResults();
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-end');
-        const volumeInPercents = 100;
-        audio.volume = state.valueVolume / volumeInPercents;
+        audio.volume = state.valueVolume / Constants.VALUE_IN_PERCENTS_FACTOR;
         audio.play();
       }
       document.querySelector('.button-popup-home').addEventListener('click', () => {
         document.dispatchEvent(new Event('render-main'));
       });
       document.querySelector('.button-popup-next-quiz').addEventListener('click', () => {
-        const offset = 12;
-        if (this.quizNumber < offset) {
+        if (this.quizNumber < Constants.CATEGORIES_IN_GAME_COUNT) {
           document.dispatchEvent(new Event('render-artist-categories'));
         } else {
           document.dispatchEvent(new Event('render-pictures-categories'));

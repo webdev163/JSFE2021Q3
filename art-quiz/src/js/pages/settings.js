@@ -1,3 +1,4 @@
+import Constants from '../constants';
 import Render from '../render';
 
 export const state = {
@@ -12,7 +13,7 @@ export default class Settings {
     const volumeBar = document.querySelector('.progress-volume');
     const volumeTextDiv = document.querySelector('.volume-controls-current-value');
     const { value } = volumeBar;
-    const valueInPercents = value * 100;
+    const valueInPercents = value * Constants.VALUE_IN_PERCENTS_FACTOR;
     volumeBar.style.background = `linear-gradient(to right, #660033 0%, #660033 ${valueInPercents}%, #E5E5E5 ${valueInPercents}%, #E5E5E5 100%)`;
     volumeTextDiv.textContent = Math.floor(valueInPercents);
     state.valueVolume = Math.floor(valueInPercents);
@@ -51,7 +52,7 @@ export default class Settings {
                 <div class="volume-controls-inner-wrapper">
                   <div class="volume-controls">
                     <input type="range" name="volume" value="${
-                      state.valueVolume / 100
+                      state.valueVolume / Constants.VALUE_IN_PERCENTS_FACTOR
                     }" min="0" max="1" step=".01" class="progress progress-volume">
                     <span class="volume-controls-current-value">${state.valueVolume}</span>
                   </div>

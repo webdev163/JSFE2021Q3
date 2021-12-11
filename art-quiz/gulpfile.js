@@ -121,7 +121,6 @@ const icons = (args) => {
         .pipe(svgSprite({ mode: { symbol: { sprite: '../sprite.svg', example: { dest: '../_sprite-preview.html' } } } }))
         .pipe(gulp.dest(paths.src.icons));
     }
-    if (params.png) {}
     resolve();
   });
 };
@@ -265,13 +264,6 @@ exports.csso = csso;
 
 const wds = async () => {
   const options = {
-    // onBeforeSetupMiddleware(wdsServer) {
-    //   gulp.watch([
-    //     watchFiles,
-    //   ]).on('all', () => {
-    //     wdsServer.sendMessage(wdsServer.webSocketServer.clients, 'content-changed');
-    //   });
-    // },
     watchFiles: ['./src/views/**/*.html'],
     static: {
       directory: path.join(__dirname, './build'),

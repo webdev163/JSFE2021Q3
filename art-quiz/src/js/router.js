@@ -5,6 +5,7 @@ import CategoryResults from './pages/categoryResults';
 import ArtistCategories from './pages/artistCategories';
 import Settings from './pages/settings';
 import PicturesQuiz from './pages/picturesquiz';
+import Constants from './constants';
 
 document.addEventListener('render-main', () => {
   MainPage.render();
@@ -27,6 +28,6 @@ document.addEventListener('render-category-results', e => {
 });
 
 document.addEventListener('render-quiz', e => {
-  const quiz = e.detail < 12 ? new ArtistQuiz(e.detail) : new PicturesQuiz(e.detail);
+  const quiz = e.detail < Constants.CATEGORIES_IN_GAME_COUNT ? new ArtistQuiz(e.detail) : new PicturesQuiz(e.detail);
   quiz.render();
 });

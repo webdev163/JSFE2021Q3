@@ -1,15 +1,14 @@
 import Data from '../data';
+import Constants from '../constants';
 
 export default class Category {
   constructor() {
-    this.localStorageArr = null;
+    this.quizResultsArr = null;
   }
 
   static animateCards() {
     let elements;
     let windowHeight;
-    const offset = -100;
-    const fullscreenOffset = -500;
 
     const init = () => {
       elements = document.querySelectorAll('.hidden');
@@ -21,9 +20,9 @@ export default class Category {
         const element = elements[i];
         const positionFromTop = !document.fullscreenElement
           ? elements[i].getBoundingClientRect().top
-          : elements[i].getBoundingClientRect().top + fullscreenOffset;
+          : elements[i].getBoundingClientRect().top + Constants.CARDS_ANIMATION_FULLSCREEN_OFFSET;
 
-        if (positionFromTop - windowHeight <= offset) {
+        if (positionFromTop - windowHeight <= Constants.CARDS_ANIMATION_OFFSET) {
           element.classList.add('animated');
           element.classList.remove('hidden');
         }
@@ -38,15 +37,15 @@ export default class Category {
   }
 
   static checkLocalStorage(type) {
-    const offset = type === 'artist' ? 0 : 11;
+    const offset = type === Constants.QUIZ_TYPES.artist ? 0 : 11;
     return new Promise(resolve => {
       if (localStorage.getItem('webdev163-quiz-results') !== null) {
-        this.localStorageArr = JSON.parse(localStorage.getItem('webdev163-quiz-results'));
+        this.quizResultsArr = JSON.parse(localStorage.getItem('webdev163-quiz-results'));
         const doneIndexArr = [];
-        const categoriesInGame = 12;
-        for (let i = 0; i < categoriesInGame; i += 1) {
-          if (this.localStorageArr[i + offset] !== null) {
-            doneIndexArr.push(i + offset);
+        for (let i = 0; i < Constants.CATEGORIES_IN_GAME_COUNT; i += 1) {
+          const currentCategoryNum = i + offset;
+          if (this.quizResultsArr[currentCategoryNum] !== null) {
+            doneIndexArr.push(currentCategoryNum);
           }
         }
         resolve(doneIndexArr);
@@ -59,37 +58,23 @@ export default class Category {
   static async generateCategories(type) {
     let result = '';
     await this.checkLocalStorage(type).then(async (doneIndexArr = []) => {
-      const typesArr = [
-        'Portrait',
-        'Landscape',
-        'Still life',
-        'Impressionism',
-        'Expressionism',
-        'Avant-garde',
-        'Renaissance',
-        'Surrealism',
-        'Kitsch',
-        'Minimalism',
-        'Surrealism',
-        'Industrial',
-      ];
-      const offset = type === 'artist' ? 0 : 12;
-      const categoriesInGame = 12;
+      const offset = type === Constants.QUIZ_TYPES.artist ? 0 : 12;
       const imagesArr = await Promise.all(
-        new Array(categoriesInGame).fill(null).map((el, idx) => {
+        new Array(Constants.CATEGORIES_IN_GAME_COUNT).fill(null).map((el, idx) => {
           return Data.getLocalImage(idx + offset);
         }),
       );
-      for (let i = 0; i < categoriesInGame; i += 1) {
-        const isDone = doneIndexArr.includes(i + offset);
+      for (let i = 0; i < Constants.CATEGORIES_IN_GAME_COUNT; i += 1) {
+        const currentCategoryNum = i + offset;
+        const isDone = doneIndexArr.includes(currentCategoryNum);
         result += `
         <div class="categories-item hidden fade-in-${i} ${isDone ? 'category-done' : ''}" id="category-${i + offset}">
           <div class="category-info-wrapper">
             <div class="category-done-number">${
-              isDone ? `${this.localStorageArr[i + offset].filter(el => el === 1).length}/10` : ''
+              isDone ? `${this.quizResultsArr[currentCategoryNum].filter(el => el === 1).length}/10` : ''
             }</div>
             <div class="category-number">${i + 1}</div>
-            <div class="category-type">${typesArr[i]}</div>
+            <div class="category-type">${Constants.ART_TYPES[i]}</div>
           </div>
           <div class="category-image" style='background-image: ${imagesArr[i]};'></div>
           <div class="category-score">Score</div>

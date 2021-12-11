@@ -32,7 +32,6 @@ module.exports = {
   devtool: isProd ? false : 'inline-source-map',
   optimization: {
     minimize: isProd,
-    // runtimeChunk: 'single',
     usedExports: true,
     minimizer: [new TerserPlugin({
       terserOptions: {
@@ -52,11 +51,6 @@ module.exports = {
           name: 'vendor',
           enforce: true,
         },
-        // commons: {
-        //     name: 'commons',
-        //     chunks: 'initial',
-        //     minChunks: 2,
-        // },
       },
     },
   },
@@ -170,7 +164,6 @@ module.exports = {
   },
 
   plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       filename: (pathData) => {
         if (isProd) {

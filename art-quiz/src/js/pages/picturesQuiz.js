@@ -2,6 +2,7 @@ import Render from '../render';
 import Data from '../data';
 import Quiz from '../components/quiz';
 import { state } from './settings';
+import Constants from '../constants';
 
 export default class PicturesQuiz extends Quiz {
   async render() {
@@ -100,8 +101,7 @@ export default class PicturesQuiz extends Quiz {
     if (e.target.style.backgroundImage === imageUrl) {
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-correct');
-        const volumeInPercents = 100;
-        audio.volume = state.valueVolume / volumeInPercents;
+        audio.volume = state.valueVolume / Constants.VALUE_IN_PERCENTS_FACTOR;
         audio.play();
       }
       this.isCorrect = true;
@@ -109,8 +109,7 @@ export default class PicturesQuiz extends Quiz {
       if (!e.target.classList.contains('pictures-quiz-answers-item')) return;
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-wrong');
-        const volumeInPercents = 100;
-        audio.volume = state.valueVolume / volumeInPercents;
+        audio.volume = state.valueVolume / Constants.VALUE_IN_PERCENTS_FACTOR;
         audio.play();
       }
       this.isCorrect = false;

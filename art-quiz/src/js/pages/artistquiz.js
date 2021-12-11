@@ -2,6 +2,7 @@ import Render from '../render';
 import Data from '../data';
 import Quiz from '../components/quiz';
 import { state } from './settings';
+import Constants from '../constants';
 
 export default class ArtistQuiz extends Quiz {
   async render() {
@@ -92,8 +93,7 @@ export default class ArtistQuiz extends Quiz {
     if (e.target.textContent === json[this.artistNumber].author) {
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-correct');
-        const volumeInPercents = 100;
-        audio.volume = state.valueVolume / volumeInPercents;
+        audio.volume = state.valueVolume / Constants.VALUE_IN_PERCENTS_FACTOR;
         audio.play();
       }
       e.target.classList.add('right-answer');
@@ -102,8 +102,7 @@ export default class ArtistQuiz extends Quiz {
       if (!e.target.classList.contains('artists-quiz-answers-item')) return;
       if (state.isCheckedVolume === 1) {
         const audio = document.querySelector('.audio-wrong');
-        const volumeInPercents = 100;
-        audio.volume = state.valueVolume / volumeInPercents;
+        audio.volume = state.valueVolume / Constants.VALUE_IN_PERCENTS_FACTOR;
         audio.play();
       }
       e.target.classList.add('wrong-answer');

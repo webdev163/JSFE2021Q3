@@ -1,5 +1,6 @@
 import Render from '../render';
 import Category from '../components/category';
+import Constants from '../constants';
 
 export default class PicturesCategories extends Category {
   static async render() {
@@ -12,7 +13,7 @@ export default class PicturesCategories extends Category {
           <h2 class="categories-title">Categories</h2>
           <div class="categories-wrapper">
             <button class="btn categories-home-button"></button>
-            ${await this.generateCategories('pictures')}
+            ${await this.generateCategories(Constants.QUIZ_TYPES.pictures)}
           </div>
         </div>
       </div>

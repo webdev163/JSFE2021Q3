@@ -1,0 +1,105 @@
+<div class="container">
+  <main class="filters-main">
+    <div class="controls-wrapper">
+      <div class="sort-wrapper">
+        <h2 class="sort-title">Сортировать</h2>
+        <select class="sort-select">
+          <option value="alphabet-sort">От А до Я</option>
+          <option value="alphabet-sort-reverse">От Я до А</option>
+          <option value="count-sort">По возрастанию</option>
+          <option value="count-sort-reverse">По убыванию</option>
+        </select>
+        <div class="custom-dropdown">
+          <div class="custom-dropdown-item" data-value="alphabet-sort">От А до Я</div>
+          <div class="custom-dropdown-item" data-value="alphabet-sort-reverse">От Я до А</div>
+          <div class="custom-dropdown-item" data-value="count-sort">По возрастанию</div>
+          <div class="custom-dropdown-item" data-value="count-sort-reverse">По убыванию</div>
+        </div>
+      </div>
+
+      <div class="shape-controls-wrapper">
+        <h2 class="shape-controls-title">Форма</h2>
+        <div class="shape-controls-inner">
+          <div class="shape-content">
+            <button class="shape-btn shape-bell-btn"></button>
+            <p class="shape-text">Колокол</p>
+          </div>
+          <div class="shape-content">
+            <button class="shape-btn shape-ball-btn"></button>
+            <p class="shape-text">Шар</p>
+          </div>
+          <div class="shape-content">
+            <button class="shape-btn shape-cone-btn"></button>
+            <p class="shape-text">Шишка</p>
+          </div>
+          <div class="shape-content">
+            <button class="shape-btn shape-snowflake-btn"></button>
+            <p class="shape-text">Снежинка</p>
+          </div>
+          <div class="shape-content">
+            <button class="shape-btn shape-statuette-btn"></button>
+            <p class="shape-text">Фигурка</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="color-controls-wrapper">
+        <h2 class="color-controls-title">Цвет</h2>
+        <div class="color-controls-inner">
+          <label class="checkbox-wrapper">
+            <input class="color-controls-item" type="checkbox" name="color" id="color-white" value="white" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="checkbox-wrapper">
+            <input class="color-controls-item" type="checkbox" name="color" id="color-yellow" value="yellow" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="checkbox-wrapper">
+            <input class="color-controls-item" type="checkbox" name="color" id="color-red" value="red" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="checkbox-wrapper">
+            <input class="color-controls-item" type="checkbox" name="color" id="color-blue" value="blue" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="checkbox-wrapper">
+            <input class="color-controls-item" type="checkbox" name="color" id="color-green" value="green" />
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="size-controls-wrapper">
+        <h2 class="size-controls-title">Размер</h2>
+        <div class="size-controls-inner">
+          <label class="checkbox-wrapper checkbox-size">Большой
+            <input class="size-controls-item" type="checkbox" name="size" id="size-big" value="white" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="checkbox-wrapper checkbox-size">Средний
+            <input class="size-controls-item" type="checkbox" name="size" id="size-middle" value="yellow" />
+            <span class="checkmark"></span>
+          </label>
+          <label class="checkbox-wrapper checkbox-size">Маленький
+            <input class="size-controls-item" type="checkbox" name="size" id="size-small" value="red" />
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="favorite-controls-wrapper">
+        <label class="checkbox-wrapper checkbox-size">Только любимые
+          <input class="size-controls-item" type="checkbox" name="favorite" id="favorite" />
+          <span class="checkmark"></span>
+        </label>
+      </div>
+
+      <button type="button" class="reset-button btn">Сбросить фильтры</button>
+    </div>
+    <div class="null-flex-item"></div>
+    <div class="grid-wrapper">
+      <h1 class="filters-title">Игрушки</h1>
+      <div class="cards-wrapper"></div>
+    </div>
+  </main>
+</div>

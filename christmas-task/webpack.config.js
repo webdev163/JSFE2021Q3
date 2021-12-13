@@ -5,8 +5,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const svgToMiniDataURI = require('mini-svg-data-uri');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const isProd = process.env.NODE_ENV === 'production';
 const isDev = !isProd;
@@ -28,7 +31,6 @@ module.exports = {
   devtool: isProd ? false : 'inline-source-map',
   optimization: {
     minimize: isProd,
-    // runtimeChunk: 'single',
     usedExports: true,
     minimizer: [new TerserPlugin({
       terserOptions: {
@@ -48,11 +50,6 @@ module.exports = {
           name: 'vendor',
           enforce: true,
         },
-        // commons: {
-        //     name: 'commons',
-        //     chunks: 'initial',
-        //     minChunks: 2,
-        // },
       },
     },
   },
@@ -195,21 +192,21 @@ module.exports = {
         minifyJS: true,
       },
     }),
-    new ForkTsCheckerWebpackPlugin({
-      logger: {
-        infrastructure: 'silent',
-        issues: 'webpack-infrastructure',
-        devServer: true,
-      },
-      typescript: {
-        configFile: '../tsconfig.json',
-        diagnosticOptions: {
-          semantic: true,
-          syntactic: true,
-        },
-        mode: 'write-references',
-      },
-    }),
+    // new ForkTsCheckerWebpackPlugin({
+    //   logger: {
+    //     infrastructure: 'silent',
+    //     issues: 'webpack-infrastructure',
+    //     devServer: true,
+    //   },
+    //   typescript: {
+    //     configFile: '../tsconfig.json',
+    //     diagnosticOptions: {
+    //       semantic: true,
+    //       syntactic: true,
+    //     },
+    //     mode: 'write-references',
+    //   },
+    // }),
   ],
 };
 

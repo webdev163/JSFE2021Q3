@@ -3,3 +3,33 @@
 *::after {
   box-sizing: border-box;
 }
+
+img {
+  max-width: 100%;
+}
+
+body {
+  font-family: "Steppe", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  background-color: $main-color;
+  color: $text-color;
+}
+
+.container {
+  padding-left: 5%;
+  padding-right: 5%;
+  margin: 0 auto;
+}
+
+.btn {
+  background-color: #3B5757;
+  border-radius: 30px;
+  border: 1px solid lighten(#3B5757, 20%);
+  color: $text-color;
+  cursor: pointer;
+  transition: background-color .3s;
+  &:hover {
+    background-color: lighten(#3B5757, 10%);
+  }
+}

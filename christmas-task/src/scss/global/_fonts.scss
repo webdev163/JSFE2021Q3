@@ -1,13 +1,20 @@
-// @font-face {
-//   font-family: "Poppins Light";
-//   font-style: normal;
-//   font-weight: 300;
-//   font-display: swap;
-//   src: url("../fonts/poppins-v15-latin-300.woff2") format("woff2"), url("../fonts/poppins-v15-latin-300.woff") format("woff");
-// }
+/* neucha-regular - latin_cyrillic */
+@font-face {
+  font-family: 'Neucha';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local(''),
+    url('../assets/fonts/neucha-v12-latin_cyrillic-regular.woff2') format('woff2'),
+    url('../assets/fonts/neucha-v12-latin_cyrillic-regular.woff') format('woff');
+}
 
-// @mixin light {
-//   font-family: "Poppins Light", sans-serif;
-//   font-style: normal;
-//   font-weight: 300;
-// }
+/* steppe */
+@font-face {
+  font-family: 'Steppe';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/steppe.woff2') format('woff2'),
+    url('../assets/fonts/steppe.woff') format('woff');
+}

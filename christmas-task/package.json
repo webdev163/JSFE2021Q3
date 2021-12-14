@@ -81,7 +81,8 @@
     "webpack-dev-server": "^4.3.0"
   },
   "dependencies": {
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "nouislider": "^15.5.0"
   },
   "browserslist": [
     "> 0.25%",

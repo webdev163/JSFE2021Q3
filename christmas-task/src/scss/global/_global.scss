@@ -16,9 +16,16 @@ body {
   color: $text-color;
 }
 
+h2 {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+}
+
 .container {
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 2%;
+  padding-right: 2%;
   margin: 0 auto;
 }
 

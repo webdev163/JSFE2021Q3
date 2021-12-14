@@ -1,0 +1,48 @@
+.slider-values-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 98%;
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 30px;
+}
+
+#count-slider-wrapper,
+#year-slider-wrapper {
+  height: 10px;
+  cursor: pointer;
+  width: 96%;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border: 1px solid lighten(#3B5757, 20%);
+}
+
+#count-slider-wrapper .noUi-connect,
+#year-slider-wrapper .noUi-connect {
+  background: #3B5757;
+}
+
+#count-slider-wrapper .noUi-handle,
+#year-slider-wrapper .noUi-handle {
+  height: 18px;
+  width: 18px;
+  top: -5px;
+  right: -9px;
+  border-radius: 9px;
+  cursor: e-resize;
+  &::before {
+    display: none;
+  }
+  &::after {
+    display: none;
+  }
+}
+
+.count-slider-outer,
+.year-slider-outer {
+  @media screen and (max-width: 1250px) {
+    max-width: 500px;
+  }
+}

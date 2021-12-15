@@ -160,11 +160,21 @@
   border-radius: 10px;
   padding: 18px 16px;
   cursor: pointer;
+  transition: filter .3s;
   @media screen and (max-width: 1915px) {
     flex-basis: 22%;
   }
   @media screen and (max-width: 1640px) {
     flex-basis: 30%;
+  }
+  &.chosen {
+    filter: sepia(100%);
+    &:hover {
+      filter: sepia(100%);
+    }
+  }
+  &:hover {
+    filter: brightness(115%);
   }
 }
 
@@ -454,13 +464,18 @@
   }
 }
 
-.reset-button {
+.reset-button,
+.reset-button-ls {
   margin-top: 10px;
   padding: 7px 20px;
   margin-bottom: 10px;
   @media screen and (max-width: 1000px) {
     max-width: 500px;
   }
+}
+
+.reset-button-ls {
+  margin-left: 10px;
 }
 
 .favorite-controls-wrapper {

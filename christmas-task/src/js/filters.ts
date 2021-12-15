@@ -6,6 +6,7 @@ export class Filters {
   constructor() {
     this.initArr = data;
     this.state = {
+      query: '',
       sort: 'alphabet-sort',
       shape: [],
       color: [],
@@ -16,24 +17,36 @@ export class Filters {
       minYear: 1940,
       maxYear: 2020,
     }
+    this.chosenArr = [];
   }
 
   sortText(arr) {
     return arr.sort((a, b) => a.name.localeCompare(b.name));
   }
 
-  sortNums(arr) {
-    return arr.sort((a, b) => a.count - b.count);
+  sortYear(arr) {
+    return arr.sort((a, b) => a.year - b.year);
   }
 
   resetFilters() {
-    document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
-    document.querySelectorAll('.shape-btn').forEach(el => el.classList.remove('active'));
+    (document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>).forEach(el => el.checked = false);
+    (document.querySelectorAll('.shape-btn') as NodeListOf<HTMLElement>).forEach(el => el.classList.remove('active'));
+    (document.querySelector('.search-input') as HTMLInputElement).value = '';
+    (document.querySelector('.clear-btn') as HTMLElement).classList.remove('active');
+    (document.querySelector('.search-input') as HTMLElement).classList.remove('active');
+    this.state.query = '';
     this.state.shape = [];
     this.state.color = [];
     this.state.size = [];
     this.state.favorite = false;
     document.dispatchEvent(new Event('reset-sliders'));
+  }
+
+  search(arr) {
+    if (this.state.query) {
+      arr = arr.filter(el => el.name.toLowerCase().includes(this.state.query.toLowerCase()));
+    }
+    this.color(arr);
   }
 
   color(arr) {
@@ -74,11 +87,11 @@ export class Filters {
       case 'alphabet-sort-reverse':
         arr = this.sortText(arr).reverse();
         break;
-      case 'count-sort':
-        arr = this.sortNums(arr);
+      case 'year-sort':
+        arr = this.sortYear(arr);
         break;
-      case 'count-sort-reverse':
-        arr = this.sortNums(arr).reverse();
+      case 'year-sort-reverse':
+        arr = this.sortYear(arr).reverse();
         break;
       default:
         arr = this.sortText(arr);
@@ -90,13 +103,24 @@ export class Filters {
   generateCards(arr = this.initArr) {
     const cardsWrapper = document.querySelector('.cards-wrapper');
     if (cardsWrapper.innerHTML) cardsWrapper.innerHTML = '';
-    if (!arr.length) cardsWrapper.innerHTML = '<h2 class="no-overlap-title">Извините, совпадений не найдено</h2>';
+    if (!arr.length) cardsWrapper.innerHTML = '<p class="no-overlap-title">Извините, совпадений не найдено</p>';
+    let state = [];
+    if (localStorage.getItem('webdev163-chosen') !== null) {
+      state = JSON.parse(localStorage.getItem('webdev163-chosen'));
+      (document.querySelector('.toys-count-num') as HTMLElement).textContent = state.length;
+      this.chosenArr = state;
+    }
     arr = arr.map(el => {
       const div = document.createElement('div');
       div.className = 'card-item';
+      div.dataset.num = el.num;
+      if (state.includes(el.num)) {
+        div.classList.add('chosen');
+      }
       div.innerHTML = this.getCardHtml(el);
       cardsWrapper.append(div);
     });
+    
   }
 
   getCardHtml({ num, name, count, year, shape, color, size, favorite }) {

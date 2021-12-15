@@ -140,23 +140,12 @@ const images = (args) => {
     } else { resolve(); }
   }).then(() => {
     return new Promise((resolve) => {
-      if (params.webp) {
-        gulp.src([paths.src.img + '**/*.+(jpg|jpeg|png)', '!' + paths.src.img_copy + '**/*', paths.src.img_copy + '**/*+(jpg|jpeg|png)'])
-          .pipe(changed(paths.src.img_copy, { extension: '.webp' }))
-          .pipe(imagemin([imageminWebp()]))
-          .pipe(extReplace('.webp'))
-          .pipe(gulp.dest(paths.src.img_copy))
+      if (params.svg) {
+        gulp.src([paths.src.img + '**/*.svg', '!' + paths.src.img_copy + '**/*'])
+          .pipe(imagemin([imagemin.svgo()]))
+          .pipe(gulp.dest(paths.dist.img))
           .on('end', resolve);
       } else { resolve(); }
-    }).then(() => {
-      return new Promise((resolve) => {
-        if (params.svg) {
-          gulp.src([paths.src.img + '**/*.svg', '!' + paths.src.img_copy + '**/*'])
-            .pipe(imagemin([imagemin.svgo()]))
-            .pipe(gulp.dest(paths.dist.img))
-            .on('end', resolve);
-        } else { resolve(); }
-      });
     });
   });
 };

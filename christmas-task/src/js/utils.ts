@@ -36,13 +36,26 @@ export default class Utils {
     const yearSliderOutputMin = document.getElementById('year-slider-value-min');
     const yearSliderOutputMax = document.getElementById('year-slider-value-max');
 
+    let minCount = 1;
+    let maxCount = 12;
+    let minYear = 1940;
+    let maxYear = 2020;
+
+    if (localStorage.getItem('webdev163-filters') !== null) {
+      const filtersPreviousState = JSON.parse(localStorage.getItem('webdev163-filters'));
+      minCount = filtersPreviousState.minCount;
+      maxCount = filtersPreviousState.maxCount;
+      minYear = filtersPreviousState.minYear;
+      maxYear = filtersPreviousState.maxYear;
+    }
+
     noUiSlider.create(countSlider, {
       range: {
         min: 1,
         max: 12,
       },
       step: 1,
-      start: [1, 12],
+      start: [minCount, maxCount],
       format: {
         to: (v) => parseFloat(v).toFixed(0),
         from: (v) => parseFloat(v).toFixed(0)
@@ -62,7 +75,7 @@ export default class Utils {
         max: 2020,
       },
       step: 10,
-      start: [1940, 2020],
+      start: [minYear, maxYear],
       format: {
         to: (v) => parseFloat(v).toFixed(0),
         from: (v) => parseFloat(v).toFixed(0)
@@ -77,8 +90,10 @@ export default class Utils {
     });
 
     document.addEventListener('reset-sliders', () => {
-      countSlider.noUiSlider.reset();
-      yearSlider.noUiSlider.reset();
+      console.log('123');
+      
+      countSlider.noUiSlider.set([1, 12]);
+      yearSlider.noUiSlider.set([1940, 2020]);
     });
   }
 }

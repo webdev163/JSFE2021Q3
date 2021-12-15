@@ -77,20 +77,12 @@ module.exports = {
         },
       },
       {
-        test: /\.s?(c|(?<=s)a)ss$/,
-        use: [
-          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              url: false,
-              modules: {
-                auto: /\.module\.\w+$/,
-                localIdentName: '[local]_[hash:base64:5]',
-              },
-            },
-          },
-          ...isProd ? ['postcss-loader'] : [],
+        test: /\.css$/,
+        use: [...cssLoaders()],
+      },
+      {
+        test: /\.s[ac]ss$/,
+        use: [...cssLoaders(),
           'sass-loader',
           {
             loader: 'sass-resources-loader',
@@ -231,4 +223,21 @@ if (!isDev) {
       ],
     },
   );
+}
+
+function cssLoaders() {
+  return [
+    isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+    {
+      loader: 'css-loader',
+      options: {
+        url: false,
+        modules: {
+          auto: /\.module\.\w+$/,
+          localIdentName: '[local]_[hash:base64:5]',
+        },
+      },
+    },
+    ...isProd ? ['postcss-loader'] : [],
+  ]
 }

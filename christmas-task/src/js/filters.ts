@@ -1,8 +1,11 @@
 import { data } from './data';
-
-import Constants from './constants';
+import { ToyInterface, ToysDataType, StateInterface } from './types';
 
 export class Filters {
+  initArr: ToysDataType;
+  state: StateInterface;
+  chosenArr: string[];
+
   constructor() {
     this.initArr = data;
     this.state = {
@@ -16,20 +19,22 @@ export class Filters {
       maxCount: 12,
       minYear: 1940,
       maxYear: 2020,
-    }
+    };
     this.chosenArr = [];
   }
 
-  sortText(arr) {
+  sortText(arr: ToysDataType): ToysDataType {
     return arr.sort((a, b) => a.name.localeCompare(b.name));
   }
 
-  sortYear(arr) {
-    return arr.sort((a, b) => a.year - b.year);
+  sortYear(arr: ToysDataType): ToysDataType {
+    return arr.sort((a: ToyInterface, b: ToyInterface) => Number(a.year) - Number(b.year));
   }
 
-  resetFilters() {
-    (document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>).forEach(el => el.checked = false);
+  resetFilters(): void {
+    (document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>).forEach(
+      el => (el.checked = false),
+    );
     (document.querySelectorAll('.shape-btn') as NodeListOf<HTMLElement>).forEach(el => el.classList.remove('active'));
     (document.querySelector('.search-input') as HTMLInputElement).value = '';
     (document.querySelector('.clear-btn') as HTMLElement).classList.remove('active');
@@ -42,47 +47,53 @@ export class Filters {
     document.dispatchEvent(new Event('reset-sliders'));
   }
 
-  search(arr) {
+  search(arr: ToysDataType): void {
     if (this.state.query) {
       arr = arr.filter(el => el.name.toLowerCase().includes(this.state.query.toLowerCase()));
     }
     this.color(arr);
   }
 
-  color(arr) {
+  color(arr: ToysDataType): void {
     if (this.state.color.length) {
       arr = arr.filter(el => this.state.color.includes(el.color));
     }
     this.shape(arr);
   }
 
-  shape(arr) {
+  shape(arr: ToysDataType): void {
     if (this.state.shape.length) {
       arr = arr.filter(el => this.state.shape.includes(el.shape));
-    } 
+    }
     this.size(arr);
   }
 
-  size(arr) {
+  size(arr: ToysDataType): void {
     if (this.state.size.length) {
       arr = arr.filter(el => this.state.size.includes(el.size));
-    } 
+    }
     this.favorite(arr);
   }
 
-  favorite(arr) {
+  favorite(arr: ToysDataType): void {
     if (this.state.favorite) {
       arr = arr.filter(el => el.favorite);
-    } 
+    }
     this.minmax(arr);
   }
 
-  minmax(arr) {
-    arr = arr.filter(el => +el.count >= this.state.minCount && +el.count <= this.state.maxCount && +el.year >= this.state.minYear && +el.year <= this.state.maxYear);
+  minmax(arr: ToysDataType): void {
+    arr = arr.filter(
+      el =>
+        +el.count >= this.state.minCount &&
+        +el.count <= this.state.maxCount &&
+        +el.year >= this.state.minYear &&
+        +el.year <= this.state.maxYear,
+    );
     this.sort(arr);
   }
-  
-  sort(arr) {
+
+  sort(arr: ToysDataType): void {
     switch (this.state.sort) {
       case 'alphabet-sort-reverse':
         arr = this.sortText(arr).reverse();
@@ -97,20 +108,20 @@ export class Filters {
         arr = this.sortText(arr);
         break;
     }
-    this.generateCards(arr)
+    this.generateCards(arr);
   }
 
-  generateCards(arr = this.initArr) {
-    const cardsWrapper = document.querySelector('.cards-wrapper');
+  generateCards(arr: ToysDataType): void {
+    const cardsWrapper = document.querySelector('.cards-wrapper') as HTMLElement;
     if (cardsWrapper.innerHTML) cardsWrapper.innerHTML = '';
-    if (!arr.length) cardsWrapper.innerHTML = '<p class="no-overlap-title">Извините, совпадений не найдено</p>';
-    let state = [];
+    if (arr && !arr.length) cardsWrapper.innerHTML = '<p class="no-overlap-title">Извините, совпадений не найдено</p>';
+    let state: string[] = [];
     if (localStorage.getItem('webdev163-chosen') !== null) {
-      state = JSON.parse(localStorage.getItem('webdev163-chosen'));
-      (document.querySelector('.toys-count-num') as HTMLElement).textContent = state.length;
+      state = JSON.parse(localStorage.getItem('webdev163-chosen') || '');
+      (document.querySelector('.toys-count-num') as HTMLElement).textContent = String(state.length);
       this.chosenArr = state;
     }
-    arr = arr.map(el => {
+    arr.map(el => {
       const div = document.createElement('div');
       div.className = 'card-item';
       div.dataset.num = el.num;
@@ -120,10 +131,9 @@ export class Filters {
       div.innerHTML = this.getCardHtml(el);
       cardsWrapper.append(div);
     });
-    
   }
 
-  getCardHtml({ num, name, count, year, shape, color, size, favorite }) {
+  getCardHtml({ num, name, count, year, shape, color, size, favorite }: ToyInterface): string {
     return `
       <h2 class="card-title">${name}</h3>
       <div class="card-content-wrapper">

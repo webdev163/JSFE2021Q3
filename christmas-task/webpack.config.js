@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const svgToMiniDataURI = require('mini-svg-data-uri');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const dotenv = require('dotenv');
 
@@ -184,21 +184,21 @@ module.exports = {
         minifyJS: true,
       },
     }),
-    // new ForkTsCheckerWebpackPlugin({
-    //   logger: {
-    //     infrastructure: 'silent',
-    //     issues: 'webpack-infrastructure',
-    //     devServer: true,
-    //   },
-    //   typescript: {
-    //     configFile: '../tsconfig.json',
-    //     diagnosticOptions: {
-    //       semantic: true,
-    //       syntactic: true,
-    //     },
-    //     mode: 'write-references',
-    //   },
-    // }),
+    new ForkTsCheckerWebpackPlugin({
+      logger: {
+        infrastructure: 'silent',
+        issues: 'webpack-infrastructure',
+        devServer: true,
+      },
+      typescript: {
+        configFile: '../tsconfig.json',
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: true,
+        },
+        mode: 'write-references',
+      },
+    }),
   ],
 };
 

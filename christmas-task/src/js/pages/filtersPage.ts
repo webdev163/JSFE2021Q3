@@ -7,7 +7,7 @@ const filters = new Filters();
 
 export default class FiltersPage extends Filters {
   static setEventListeners(): void {
-    const sortSelect = document.querySelector('.sort-select') as HTMLElement;
+    const sortSelect = document.querySelector('.sort-select') as HTMLSelectElement;
     const resetButton = document.querySelector('.reset-button') as HTMLElement;
     const resetButtonLs = document.querySelector('.reset-button-ls') as HTMLElement;
     const colorControlsWrapper = document.querySelector('.color-controls-wrapper') as HTMLElement;
@@ -21,7 +21,7 @@ export default class FiltersPage extends Filters {
     const gridWrapper = document.querySelector('.grid-wrapper') as HTMLElement;
 
     gridWrapper.addEventListener('click', (e: Event) => {
-      if (e.target.closest('.card-item')) {
+      if ((e.target as HTMLElement).closest('.card-item')) {
         this.chooseToy(e);
       }
     });
@@ -32,40 +32,48 @@ export default class FiltersPage extends Filters {
       dropdown.classList.add('active');
     });
 
-    searchInput.addEventListener('keyup', Utils.debounce(() => {
-      this.updateState('search', null);
-    }, 250));
+    searchInput.addEventListener(
+      'keyup',
+      Utils.debounce(() => {
+        this.updateState('search');
+      }, 250),
+    );
 
     clearSearchButton.addEventListener('click', () => {
       searchInput.value = '';
-      this.updateState('search', null);
+      this.updateState('search');
     });
 
-    sortSelect.addEventListener('change', e => {
+    sortSelect.addEventListener('change', (e: Event) => {
       this.updateState('sort', e);
     });
 
-    shapeControlsInner.addEventListener('click', (e) => {
-      if (e.target.classList.contains('shape-btn')) {
+    shapeControlsInner.addEventListener('click', (e: Event) => {
+      if ((e.target as HTMLElement).classList.contains('shape-btn')) {
         this.updateState('shape', e);
       }
-    })
+    });
 
-    sizeControlsArr.forEach(el => el.addEventListener('click', (e) => {
-      if (e.target.classList.contains('size-controls-item')) {
-        this.updateState('size', e);
-      }
-    }))
+    sizeControlsArr.forEach(el =>
+      el.addEventListener('click', (e: Event) => {
+        if ((e.target as HTMLElement).classList.contains('size-controls-item')) {
+          this.updateState('size', e);
+        }
+      }),
+    );
 
-    checkboxFavorite.addEventListener('click', (e) => {
-      if (e.target.classList.contains('favorite-controls-item')) {
+    checkboxFavorite.addEventListener('click', (e: Event) => {
+      if ((e.target as HTMLElement).classList.contains('favorite-controls-item')) {
         this.updateState('favorite', e);
       }
-    })
+    });
 
-    document.addEventListener('slider-change', Utils.debounce(() => {
-      this.updateState('minmax', null);
-    }, 250)) 
+    document.addEventListener(
+      'slider-change',
+      Utils.debounce(() => {
+        this.updateState('minmax');
+      }, 250),
+    );
 
     resetButton.addEventListener('click', () => {
       filters.resetFilters();
@@ -80,8 +88,8 @@ export default class FiltersPage extends Filters {
       filters.resetFilters();
     });
 
-    colorControlsWrapper.addEventListener('click', e => {
-      if (e.target.classList.contains('color-controls-item')) {
+    colorControlsWrapper.addEventListener('click', (e: Event) => {
+      if ((e.target as HTMLElement).classList.contains('color-controls-item')) {
         this.updateState('color', e);
       }
     });
@@ -108,115 +116,133 @@ export default class FiltersPage extends Filters {
     });
   }
 
-  static updateState(type, e) {
+  static updateState(type: string, e?: Event): void {
     switch (type) {
-      case 'search':
+      case 'search': {
         const searchInput = document.querySelector('.search-input') as HTMLInputElement;
         const searchQuery = searchInput.value;
         filters.state.query = searchQuery;
         break;
+      }
 
       case 'color':
-        const targetColor = e.target.dataset.value
-        if (e.target.checked) {
-          filters.state.color.push(targetColor)
-        } else {
-          filters.state.color = filters.state.color.filter(el => el !== targetColor)
+        if (e) {
+          const targetColor = (e.target as HTMLElement).dataset.value || '';
+          if ((e.target as HTMLInputElement).checked) {
+            filters.state.color.push(targetColor);
+          } else {
+            filters.state.color = filters.state.color.filter((el: string) => el !== targetColor);
+          }
         }
         break;
-    
+
       case 'shape':
-        const targetShape = e.target.dataset.value;
-        if (!e.target.classList.contains('active')) {
-          filters.state.shape.push(targetShape)
-        } else {
-          filters.state.shape = filters.state.shape.filter(el => el !== targetShape)
+        if (e) {
+          const targetShape = (e.target as HTMLElement).dataset.value || '';
+          if (!(e.target as HTMLElement).classList.contains('active')) {
+            filters.state.shape.push(targetShape);
+          } else {
+            filters.state.shape = filters.state.shape.filter((el: string) => el !== targetShape);
+          }
+          (e.target as HTMLElement).classList.toggle('active');
         }
-        e.target.classList.toggle('active');
         break;
-    
+
       case 'size':
-        const targetCheckbox = e.target;
-        const targetSize = targetCheckbox.dataset.value;
-        if (targetCheckbox.checked) {
-          filters.state.size.push(targetSize)
-        } else {
-          filters.state.size = filters.state.size.filter(el => el !== targetSize)
+        if (e) {
+          const targetCheckbox = e.target as HTMLInputElement;
+          const targetSize = targetCheckbox.dataset.value || '';
+          if (targetCheckbox.checked) {
+            filters.state.size.push(targetSize);
+          } else {
+            filters.state.size = filters.state.size.filter((el: string) => el !== targetSize);
+          }
         }
         break;
-    
+
       case 'favorite':
-        if (e.target.checked) {
-          filters.state.favorite = true;
-        } else {
-          filters.state.favorite = false;
+        if (e) {
+          if ((e.target as HTMLInputElement).checked) {
+            filters.state.favorite = true;
+          } else {
+            filters.state.favorite = false;
+          }
         }
         break;
 
       case 'minmax':
-        filters.state.minCount = (document.getElementById('count-slider-value-min') as HTMLElement).textContent;
-        filters.state.maxCount = (document.getElementById('count-slider-value-max') as HTMLElement).textContent;
-        filters.state.minYear = (document.getElementById('year-slider-value-min') as HTMLElement).textContent;
-        filters.state.maxYear = (document.getElementById('year-slider-value-max') as HTMLElement).textContent;
+        filters.state.minCount = Number((document.getElementById('count-slider-value-min') as HTMLElement).textContent);
+        filters.state.maxCount = Number((document.getElementById('count-slider-value-max') as HTMLElement).textContent);
+        filters.state.minYear = Number((document.getElementById('year-slider-value-min') as HTMLElement).textContent);
+        filters.state.maxYear = Number((document.getElementById('year-slider-value-max') as HTMLElement).textContent);
         break;
-    
-      default: //sorting
-        const targetSort = e.target.value;
-        filters.state.sort = targetSort;
+
+      default:
+        //sorting
+        if (e) {
+          const targetSort = (e.target as HTMLSelectElement).value;
+          filters.state.sort = targetSort;
+        }
         break;
     }
-    
-    // console.log(filters.state);
-    
-    filters.search(filters.initArr)
+
+    filters.search(filters.initArr);
   }
 
-  static chooseToy(e: Event) {
-    const cardItem = e.target.closest('.card-item');
-    const cardNum = cardItem.dataset.num;
-    const textElement = document.querySelector('.toys-count-num') as HTMLElement;
-    if (cardItem.classList.contains('chosen')) {
-      cardItem.classList.remove('chosen');
-      filters.chosenArr = filters.chosenArr.filter(el => el !== cardNum);
-      textElement.textContent--;
-    } else {
-      if (filters.chosenArr.length >= 20) {
-        this.openPopup();
-        return;
+  static chooseToy(e: Event): void {
+    const clicked: HTMLElement = e.target as HTMLElement;
+    const cardItem: HTMLElement | null = clicked.closest('.card-item');
+    if (cardItem !== null) {
+      const cardNum: string = cardItem.dataset.num as string;
+      const textElement = document.querySelector('.toys-count-num') as HTMLElement;
+      let totalChosen = Number(textElement.textContent);
+      if (cardItem.classList.contains('chosen')) {
+        cardItem.classList.remove('chosen');
+        filters.chosenArr = filters.chosenArr.filter((el: string) => el !== cardNum);
+        totalChosen--;
+        textElement.textContent = String(totalChosen);
+      } else {
+        if (filters.chosenArr.length >= 20) {
+          this.openPopup();
+          return;
+        }
+        cardItem.classList.add('chosen');
+        filters.chosenArr.push(cardNum);
+        totalChosen++;
+        textElement.textContent = String(totalChosen);
+        localStorage.setItem('webdev163-chosen', JSON.stringify(filters.chosenArr));
       }
-      cardItem.classList.add('chosen');
-      filters.chosenArr.push(cardNum);
-      textElement.textContent++;
-      localStorage.setItem('webdev163-chosen', JSON.stringify(filters.chosenArr));
     }
   }
 
-  static updateLocalstorage() {
+  static updateLocalstorage(): void {
     localStorage.setItem('webdev163-filters', JSON.stringify(filters.state));
   }
 
-  static getLocalstorage() {
+  static getLocalstorage(): void {
     if (localStorage.getItem('webdev163-filters') !== null) {
-      const filtersPreviousState = JSON.parse(localStorage.getItem('webdev163-filters'));
-      document.querySelector('.sort-select').value = filtersPreviousState.sort;
-      filtersPreviousState.color.forEach(el => {
-        document.querySelector(`.color-controls-item[data-value=${el}]`).checked = true;
-      })
-      filtersPreviousState.shape.forEach(el => {
-        document.querySelector(`.shape-btn[data-value=${el}]`).classList.add('active');
-      })
-      filtersPreviousState.size.forEach(el => {
-        document.querySelector(`.size-controls-item[data-value=${el}]`).checked = true;
-      })
-      filtersPreviousState.favorite ? document.querySelector('.favorite-controls-item').checked = true : 0;
+      const filtersPreviousState = JSON.parse(localStorage.getItem('webdev163-filters') || '');
+      (document.querySelector('.sort-select') as HTMLSelectElement).value = filtersPreviousState.sort;
+      filtersPreviousState.color.forEach((el: string) => {
+        (document.querySelector(`.color-controls-item[data-value=${el}]`) as HTMLInputElement).checked = true;
+      });
+      filtersPreviousState.shape.forEach((el: string) => {
+        (document.querySelector(`.shape-btn[data-value=${el}]`) as HTMLElement).classList.add('active');
+      });
+      filtersPreviousState.size.forEach((el: string) => {
+        (document.querySelector(`.size-controls-item[data-value=${el}]`) as HTMLInputElement).checked = true;
+      });
+      filtersPreviousState.favorite
+        ? ((document.querySelector('.favorite-controls-item') as HTMLInputElement).checked = true)
+        : 0;
       filters.state = filtersPreviousState;
     }
   }
 
-  static openPopup() {
-    const popup = document.querySelector('.popup');
-    const popupBtn = document.querySelector('.popup-btn');
-    const overlay = document.querySelector('#overlay');
+  static openPopup(): void {
+    const popup = document.querySelector('.popup') as HTMLElement;
+    const popupBtn = document.querySelector('.popup-btn') as HTMLElement;
+    const overlay = document.querySelector('#overlay') as HTMLElement;
     popup.classList.add('active');
     setTimeout(() => {
       overlay.classList.add('active');
@@ -224,6 +250,6 @@ export default class FiltersPage extends Filters {
     popupBtn.addEventListener('click', () => {
       popup.classList.remove('active');
       overlay.classList.remove('active');
-    })
+    });
   }
 }

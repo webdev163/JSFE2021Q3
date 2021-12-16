@@ -24,6 +24,7 @@
     "@babel/preset-typescript": "^7.16.0",
     "@linthtml/linthtml": "^0.8.0",
     "@types/webpack-env": "^1.16.3",
+    "@types/wnumb": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "autoprefixer": "^10.3.1",
@@ -82,7 +83,8 @@
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
-    "nouislider": "^15.5.0"
+    "nouislider": "^15.5.0",
+    "wnumb": "^1.2.0"
   },
   "browserslist": [
     "> 0.25%",

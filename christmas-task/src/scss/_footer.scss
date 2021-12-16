@@ -1,19 +1,12 @@
 .footer {
-  position: fixed;
-  bottom: 15px;
-  left: 350px;
-  @media screen and (max-width: 1250px) {
-    position: static;
-    padding-bottom: 20px;
+  margin-top: 25px;
+  @media screen and (max-width: 1000px) {
+    display: none;
   }
 }
 
 .footer-container {
-  width: 92%;
-  margin: 0 auto;
-  @media screen and (max-width: 1250px) {
-    width: 100%;
-  }
+  width: 100%;
 }
 
 .footer-info-wrapper {

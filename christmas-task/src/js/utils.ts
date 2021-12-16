@@ -90,8 +90,6 @@ export default class Utils {
     });
 
     document.addEventListener('reset-sliders', () => {
-      console.log('123');
-      
       countSlider.noUiSlider.set([1, 12]);
       yearSlider.noUiSlider.set([1940, 2020]);
     });

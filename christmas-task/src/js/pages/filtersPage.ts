@@ -181,7 +181,7 @@ export default class FiltersPage extends Filters {
       textElement.textContent--;
     } else {
       if (filters.chosenArr.length >= 20) {
-        alert('Извините, все слоты заполнены');
+        this.openPopup();
         return;
       }
       cardItem.classList.add('chosen');
@@ -211,5 +211,19 @@ export default class FiltersPage extends Filters {
       filtersPreviousState.favorite ? document.querySelector('.favorite-controls-item').checked = true : 0;
       filters.state = filtersPreviousState;
     }
+  }
+
+  static openPopup() {
+    const popup = document.querySelector('.popup');
+    const popupBtn = document.querySelector('.popup-btn');
+    const overlay = document.querySelector('#overlay');
+    popup.classList.add('active');
+    setTimeout(() => {
+      overlay.classList.add('active');
+    }, 200);
+    popupBtn.addEventListener('click', () => {
+      popup.classList.remove('active');
+      overlay.classList.remove('active');
+    })
   }
 }

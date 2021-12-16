@@ -139,6 +139,10 @@ export class Filters {
           <p class="favorite">Любимая: ${favorite ? 'да' : 'нет'}</p>
         </div>
       </div>
+      <div class="card-btn-wrapper">
+        <button class="add-btn btn">Добавить</button>
+        <button class="delete-btn btn">Удалить</button>
+      </div>
     `;
   }
 }

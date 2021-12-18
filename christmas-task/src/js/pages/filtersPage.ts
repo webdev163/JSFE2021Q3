@@ -39,7 +39,7 @@ export default class FiltersPage extends Filters {
       'keyup',
       Utils.debounce(() => {
         this.updateState('search');
-      }, 250),
+      }, 1000),
     );
 
     clearSearchButton.addEventListener('click', () => {
@@ -121,6 +121,7 @@ export default class FiltersPage extends Filters {
       this.setEventListeners();
       Utils.handleSearchInput();
       Utils.createSliders();
+      filters.filterSearch(filters.initArr);
     });
   }
 

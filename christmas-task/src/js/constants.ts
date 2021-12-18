@@ -8,4 +8,6 @@ export default class Constants {
   static SLIDER_YEAR_MIN = 1940;
 
   static SLIDER_YEAR_MAX = 2020;
+
+  static CARDS_ANIMATION_OFFSET = -100;
 }

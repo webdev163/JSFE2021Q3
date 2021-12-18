@@ -65,9 +65,12 @@ export default class Utils {
       connect: true,
     });
 
-    countSlider?.noUiSlider?.on('update', function (values) {
+    countSlider?.noUiSlider?.on('update', (values) => {
       countSliderOutputMin.innerHTML = String(values[0]);
       countSliderOutputMax.innerHTML = String(values[1]);
+    });
+
+    countSlider?.noUiSlider?.on('change', () => {
       document.dispatchEvent(new Event('slider-change'));
     });
 
@@ -84,9 +87,12 @@ export default class Utils {
       connect: true,
     });
 
-    yearSlider?.noUiSlider?.on('update', function (values) {
+    yearSlider?.noUiSlider?.on('update', (values) => {
       yearSliderOutputMin.innerHTML = String(values[0]);
       yearSliderOutputMax.innerHTML = String(values[1]);
+    });
+
+    yearSlider?.noUiSlider?.on('set', () => {
       document.dispatchEvent(new Event('slider-change'));
     });
 

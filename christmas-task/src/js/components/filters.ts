@@ -130,7 +130,7 @@ export class Filters {
     }
     arr.map(el => {
       const div = document.createElement('div');
-      div.className = 'card-item';
+      div.className = 'card-item hidden';
       div.dataset.num = el.num;
       if (state.includes(el.num)) {
         div.classList.add('chosen');
@@ -138,6 +138,7 @@ export class Filters {
       div.innerHTML = this.getCardHtml(el);
       cardsWrapper.append(div);
     });
+    this.animateCards();
   }
 
   getCardHtml({ num, name, count, year, shape, color, size, favorite }: ToyInterface): string {
@@ -161,5 +162,33 @@ export class Filters {
         <button class="delete-btn btn">Удалить</button>
       </div>
     `;
+  }
+
+  animateCards() {
+    let elements: NodeList;
+    let windowHeight: number;
+
+    const init = () => {
+      elements = document.querySelectorAll('.hidden');
+      windowHeight = window.innerHeight;
+    };
+
+    const checkPosition = () => {
+      for (let i = 0; i < elements.length; i += 1) {
+        const element = elements[i] as HTMLElement;
+        const positionFromTop = element.getBoundingClientRect().top
+
+        if (positionFromTop - windowHeight <= Constants.CARDS_ANIMATION_OFFSET) {
+          element.classList.add('animated');
+          element.classList.remove('hidden');
+        }
+      }
+    };
+
+    window.addEventListener('scroll', checkPosition);
+    window.addEventListener('resize', init);
+
+    init();
+    checkPosition();
   }
 }

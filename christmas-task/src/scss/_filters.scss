@@ -563,3 +563,23 @@
   font-size: 22px;
   margin-top: 50px;
 }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.animated {
+  animation-name: fadeInUp;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}

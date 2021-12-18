@@ -1,6 +1,8 @@
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 import wNumb from 'wNumb';
+import { StateInterface } from './types';
+import Constants from './constants';
 
 export default class Utils {
   static debounce = (fn: () => void, ms = 0): (() => void) => {
@@ -37,13 +39,13 @@ export default class Utils {
     const yearSliderOutputMin = document.getElementById('year-slider-value-min') as HTMLElement;
     const yearSliderOutputMax = document.getElementById('year-slider-value-max') as HTMLElement;
 
-    let minCount = 1;
-    let maxCount = 12;
-    let minYear = 1940;
-    let maxYear = 2020;
+    let minCount = Constants.SLIDER_COUNT_MIN;
+    let maxCount = Constants.SLIDER_COUNT_MAX;
+    let minYear = Constants.SLIDER_YEAR_MIN;
+    let maxYear = Constants.SLIDER_YEAR_MAX;
 
     if (localStorage.getItem('webdev163-filters') !== null) {
-      const filtersPreviousState = JSON.parse(localStorage.getItem('webdev163-filters') || '');
+      const filtersPreviousState: StateInterface = JSON.parse(localStorage.getItem('webdev163-filters') || '');
       minCount = filtersPreviousState.minCount;
       maxCount = filtersPreviousState.maxCount;
       minYear = filtersPreviousState.minYear;
@@ -52,8 +54,8 @@ export default class Utils {
 
     noUiSlider.create(countSlider, {
       range: {
-        min: 1,
-        max: 12,
+        min: Constants.SLIDER_COUNT_MIN,
+        max: Constants.SLIDER_COUNT_MAX,
       },
       step: 1,
       start: [minCount, maxCount],
@@ -71,8 +73,8 @@ export default class Utils {
 
     noUiSlider.create(yearSlider, {
       range: {
-        min: 1940,
-        max: 2020,
+        min: Constants.SLIDER_YEAR_MIN,
+        max: Constants.SLIDER_YEAR_MAX,
       },
       step: 10,
       start: [minYear, maxYear],
@@ -89,8 +91,8 @@ export default class Utils {
     });
 
     document.addEventListener('reset-sliders', () => {
-      countSlider?.noUiSlider?.set([1, 12]);
-      yearSlider?.noUiSlider?.set([1940, 2020]);
+      countSlider?.noUiSlider?.set([Constants.SLIDER_COUNT_MIN, Constants.SLIDER_COUNT_MAX]);
+      yearSlider?.noUiSlider?.set([Constants.SLIDER_YEAR_MIN, Constants.SLIDER_YEAR_MAX]);
     });
   }
 }

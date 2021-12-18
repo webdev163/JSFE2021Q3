@@ -1,7 +1,9 @@
 import Render from '../render';
-import { Filters } from '../filters';
+import { Filters } from '../components/filters';
 import filtersPageHtml from './filtersPage.html';
 import Utils from '../utils';
+import { StateInterface, ToysDataType } from '../types';
+import Constants from '../constants';
 
 const filters = new Filters();
 
@@ -9,7 +11,7 @@ export default class FiltersPage extends Filters {
   static setEventListeners(): void {
     const sortSelect = document.querySelector('.sort-select') as HTMLSelectElement;
     const resetButton = document.querySelector('.reset-button') as HTMLElement;
-    const resetButtonLs = document.querySelector('.reset-button-ls') as HTMLElement;
+    const resetSettings = document.querySelector('.reset-button-ls') as HTMLElement;
     const colorControlsWrapper = document.querySelector('.color-controls-wrapper') as HTMLElement;
     const dropdown = document.querySelector('.custom-dropdown') as HTMLElement;
     const select = document.querySelector('.sort-select') as HTMLSelectElement;
@@ -19,6 +21,7 @@ export default class FiltersPage extends Filters {
     const searchInput = document.querySelector('.search-input') as HTMLInputElement;
     const clearSearchButton = document.querySelector('.clear-btn') as HTMLElement;
     const gridWrapper = document.querySelector('.grid-wrapper') as HTMLElement;
+    const toysCount = document.querySelector('.toys-count') as HTMLElement;
 
     gridWrapper.addEventListener('click', (e: Event) => {
       if ((e.target as HTMLElement).closest('.card-item')) {
@@ -79,7 +82,7 @@ export default class FiltersPage extends Filters {
       filters.resetFilters();
     });
 
-    resetButtonLs.addEventListener('click', () => {
+    resetSettings.addEventListener('click', () => {
       localStorage.clear();
       (document.querySelector('.toys-count-num') as HTMLElement).textContent = '0';
       filters.chosenArr = [];
@@ -104,10 +107,15 @@ export default class FiltersPage extends Filters {
     window.onbeforeunload = () => {
       this.updateLocalstorage();
     };
+
+    toysCount.addEventListener('click', () => {
+      filters.resetFilters(false);
+      this.showChosenToys();
+    });
   }
 
   static async render(): Promise<void> {
-    const html = filtersPageHtml;
+    const html: string = filtersPageHtml;
     await Render.render(html).then(() => {
       this.getLocalstorage();
       this.setEventListeners();
@@ -186,7 +194,7 @@ export default class FiltersPage extends Filters {
         break;
     }
 
-    filters.search(filters.initArr);
+    filters.filterSearch(filters.initArr);
   }
 
   static chooseToy(e: Event): void {
@@ -202,7 +210,7 @@ export default class FiltersPage extends Filters {
         totalChosen--;
         textElement.textContent = String(totalChosen);
       } else {
-        if (filters.chosenArr.length >= 20) {
+        if (filters.chosenArr.length >= Constants.CHOOSE_LIMIT) {
           this.openPopup();
           return;
         }
@@ -210,8 +218,8 @@ export default class FiltersPage extends Filters {
         filters.chosenArr.push(cardNum);
         totalChosen++;
         textElement.textContent = String(totalChosen);
-        localStorage.setItem('webdev163-chosen', JSON.stringify(filters.chosenArr));
       }
+      localStorage.setItem('webdev163-chosen', JSON.stringify(filters.chosenArr));
     }
   }
 
@@ -221,7 +229,7 @@ export default class FiltersPage extends Filters {
 
   static getLocalstorage(): void {
     if (localStorage.getItem('webdev163-filters') !== null) {
-      const filtersPreviousState = JSON.parse(localStorage.getItem('webdev163-filters') || '');
+      const filtersPreviousState: StateInterface = JSON.parse(localStorage.getItem('webdev163-filters') || '');
       (document.querySelector('.sort-select') as HTMLSelectElement).value = filtersPreviousState.sort;
       filtersPreviousState.color.forEach((el: string) => {
         (document.querySelector(`.color-controls-item[data-value=${el}]`) as HTMLInputElement).checked = true;
@@ -251,5 +259,18 @@ export default class FiltersPage extends Filters {
       popup.classList.remove('active');
       overlay.classList.remove('active');
     });
+  }
+
+  static showChosenToys(): void {
+    let chosenArr: Array<string> = [];
+    let resultArr: ToysDataType = filters.initArr;
+    if (localStorage.getItem('webdev163-chosen') !== null) {
+      chosenArr = JSON.parse(localStorage.getItem('webdev163-chosen') || '') as Array<string>;
+      resultArr = resultArr.filter(el => chosenArr.includes(el.num))
+    }
+    filters.generateCards(resultArr);
+    if (!chosenArr.length) {
+      (document.querySelector('.cards-wrapper') as HTMLElement).innerHTML = '<p class="no-overlap-title">Вы не выбрали ни одной игрушки</p>'
+    }
   }
 }

@@ -23,3 +23,10 @@ export interface ToyInterface {
 }
 
 export type ToysDataType = ToyInterface[];
+
+export enum SortTypes {
+  alphabetSort = 'alphabet-sort',
+  alphabetSortReversed = 'alphabet-sort-reverse',
+  yearSort = 'year-sort',
+  yearSortReversed = 'year-sort-reverse',
+}

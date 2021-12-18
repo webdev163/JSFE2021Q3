@@ -1,5 +1,6 @@
-import { data } from './data';
-import { ToyInterface, ToysDataType, StateInterface } from './types';
+import { data } from '../data';
+import { ToyInterface, ToysDataType, StateInterface, SortTypes } from '../types';
+import Constants from '../constants';
 
 export class Filters {
   initArr: ToysDataType;
@@ -10,79 +11,55 @@ export class Filters {
     this.initArr = data;
     this.state = {
       query: '',
-      sort: 'alphabet-sort',
+      sort: SortTypes.alphabetSort,
       shape: [],
       color: [],
       size: [],
       favorite: false,
-      minCount: 1,
-      maxCount: 12,
-      minYear: 1940,
-      maxYear: 2020,
+      minCount: Constants.SLIDER_COUNT_MIN,
+      maxCount: Constants.SLIDER_COUNT_MAX,
+      minYear: Constants.SLIDER_YEAR_MIN,
+      maxYear: Constants.SLIDER_YEAR_MAX,
     };
     this.chosenArr = [];
   }
 
-  sortText(arr: ToysDataType): ToysDataType {
-    return arr.sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  sortYear(arr: ToysDataType): ToysDataType {
-    return arr.sort((a: ToyInterface, b: ToyInterface) => Number(a.year) - Number(b.year));
-  }
-
-  resetFilters(): void {
-    (document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>).forEach(
-      el => (el.checked = false),
-    );
-    (document.querySelectorAll('.shape-btn') as NodeListOf<HTMLElement>).forEach(el => el.classList.remove('active'));
-    (document.querySelector('.search-input') as HTMLInputElement).value = '';
-    (document.querySelector('.clear-btn') as HTMLElement).classList.remove('active');
-    (document.querySelector('.search-input') as HTMLElement).classList.remove('active');
-    this.state.query = '';
-    this.state.shape = [];
-    this.state.color = [];
-    this.state.size = [];
-    this.state.favorite = false;
-    document.dispatchEvent(new Event('reset-sliders'));
-  }
-
-  search(arr: ToysDataType): void {
+  filterSearch(arr: ToysDataType): void {
     if (this.state.query) {
       arr = arr.filter(el => el.name.toLowerCase().includes(this.state.query.toLowerCase()));
     }
-    this.color(arr);
+    this.filterColor(arr);
   }
 
-  color(arr: ToysDataType): void {
+  filterColor(arr: ToysDataType): void {
     if (this.state.color.length) {
       arr = arr.filter(el => this.state.color.includes(el.color));
     }
-    this.shape(arr);
+    this.filterShape(arr);
   }
 
-  shape(arr: ToysDataType): void {
+  filterShape(arr: ToysDataType): void {
     if (this.state.shape.length) {
       arr = arr.filter(el => this.state.shape.includes(el.shape));
     }
-    this.size(arr);
+    this.filterSize(arr);
   }
 
-  size(arr: ToysDataType): void {
+  filterSize(arr: ToysDataType): void {
     if (this.state.size.length) {
       arr = arr.filter(el => this.state.size.includes(el.size));
     }
-    this.favorite(arr);
+    this.filterFavorite(arr);
   }
 
-  favorite(arr: ToysDataType): void {
+  filterFavorite(arr: ToysDataType): void {
     if (this.state.favorite) {
       arr = arr.filter(el => el.favorite);
     }
-    this.minmax(arr);
+    this.filterSliders(arr);
   }
 
-  minmax(arr: ToysDataType): void {
+  filterSliders(arr: ToysDataType): void {
     arr = arr.filter(
       el =>
         +el.count >= this.state.minCount &&
@@ -95,14 +72,14 @@ export class Filters {
 
   sort(arr: ToysDataType): void {
     switch (this.state.sort) {
-      case 'alphabet-sort-reverse':
-        arr = this.sortText(arr).reverse();
+      case SortTypes.alphabetSortReversed:
+        arr = this.reverseArr(this.sortText(arr));
         break;
-      case 'year-sort':
+      case SortTypes.yearSort:
         arr = this.sortYear(arr);
         break;
-      case 'year-sort-reverse':
-        arr = this.sortYear(arr).reverse();
+      case SortTypes.yearSortReversed:
+        arr = this.reverseArr(this.sortYear(arr));
         break;
       default:
         arr = this.sortText(arr);
@@ -111,11 +88,41 @@ export class Filters {
     this.generateCards(arr);
   }
 
+  sortText(arr: ToysDataType): ToysDataType {
+    return arr.sort((a: ToyInterface, b: ToyInterface) => a.name.localeCompare(b.name));
+  }
+
+  sortYear(arr: ToysDataType): ToysDataType {
+    return arr.sort((a: ToyInterface, b: ToyInterface) => Number(a.year) - Number(b.year));
+  }
+
+  reverseArr<T>(array: T[]): T[] {
+    return array.reverse();
+  }
+
+  resetFilters(dispatchEvent = true): void {
+    (document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>).forEach(
+      el => (el.checked = false),
+    );
+    (document.querySelectorAll('.shape-btn') as NodeListOf<HTMLElement>).forEach(el => el.classList.remove('active'));
+    (document.querySelector('.search-input') as HTMLInputElement).value = '';
+    (document.querySelector('.clear-btn') as HTMLElement).classList.remove('active');
+    (document.querySelector('.search-input') as HTMLElement).classList.remove('active');
+    this.state.query = '';
+    this.state.shape = [];
+    this.state.color = [];
+    this.state.size = [];
+    this.state.favorite = false;
+    if (dispatchEvent) {
+      document.dispatchEvent(new Event('reset-sliders'));
+    } 
+  }
+
   generateCards(arr: ToysDataType): void {
     const cardsWrapper = document.querySelector('.cards-wrapper') as HTMLElement;
     if (cardsWrapper.innerHTML) cardsWrapper.innerHTML = '';
     if (arr && !arr.length) cardsWrapper.innerHTML = '<p class="no-overlap-title">Извините, совпадений не найдено</p>';
-    let state: string[] = [];
+    let state: Array<string> = [];
     if (localStorage.getItem('webdev163-chosen') !== null) {
       state = JSON.parse(localStorage.getItem('webdev163-chosen') || '');
       (document.querySelector('.toys-count-num') as HTMLElement).textContent = String(state.length);

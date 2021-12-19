@@ -18,7 +18,7 @@ module.exports = {
   mode: isProd ? 'production' : 'development',
   entry: {
     main: [
-      './js/index.ts',
+      './index.ts',
       './scss/style.scss',
     ],
   },
@@ -171,7 +171,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'views/index.html',
+      template: 'assets/index.html',
+      favicon: 'assets/static/favicon.ico',
       minify: isDev ? false : {
         collapseWhitespace: true,
         keepClosingSlash: true,

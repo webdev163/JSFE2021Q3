@@ -259,7 +259,7 @@ export default class FiltersPage extends Filters {
     popupBtn.addEventListener('click', () => {
       popup.classList.remove('active');
       overlay.classList.remove('active');
-    });
+    }, { once: true });
   }
 
   static showChosenToys(): void {

@@ -1,4 +1,3 @@
-import { data } from '../data';
 import { ToyInterface, ToysDataType, StateInterface, SortTypes } from '../types';
 import Constants from '../constants';
 
@@ -7,8 +6,8 @@ export class Filters {
   public state: StateInterface;
   public chosenArr: string[];
 
-  constructor() {
-    this.initArr = data;
+  constructor(initArr: ToysDataType) {
+    this.initArr = initArr;
     this.state = {
       query: '',
       sort: SortTypes.alphabetSort,

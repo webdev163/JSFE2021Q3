@@ -201,7 +201,7 @@ exports.csso = csso;
 
 const wds = async () => {
   const options = {
-    watchFiles: ['./src/views/**/*.html'],
+    watchFiles: ['./src/assets/**/*.html'],
     static: {
       directory: path.join(__dirname, './build'),
     },

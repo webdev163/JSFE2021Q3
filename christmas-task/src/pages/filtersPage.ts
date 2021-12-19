@@ -4,10 +4,11 @@ import filtersPageHtml from './filtersPage.html';
 import Utils from '../utils';
 import { StateInterface, ToysDataType } from '../types';
 import Constants from '../constants';
+import Data from '../data';
 
-const filters = new Filters();
+let filters: Filters;
 
-export default class FiltersPage extends Filters {
+export default class FiltersPage {
   private static setEventListeners(): void {
     const sortSelect = document.querySelector('.sort-select') as HTMLSelectElement;
     const resetButton = document.querySelector('.reset-button') as HTMLElement;
@@ -116,6 +117,8 @@ export default class FiltersPage extends Filters {
 
   public static async render(): Promise<void> {
     const html: string = filtersPageHtml;
+    const json: ToysDataType = await Data.getJson();
+    filters = new Filters(json);
     await Render.render(html).then(() => {
       this.getLocalstorage();
       this.setEventListeners();

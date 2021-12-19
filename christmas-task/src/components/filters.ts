@@ -3,9 +3,9 @@ import { ToyInterface, ToysDataType, StateInterface, SortTypes } from '../types'
 import Constants from '../constants';
 
 export class Filters {
-  initArr: ToysDataType;
-  state: StateInterface;
-  chosenArr: string[];
+  public initArr: ToysDataType;
+  public state: StateInterface;
+  public chosenArr: string[];
 
   constructor() {
     this.initArr = data;
@@ -24,42 +24,42 @@ export class Filters {
     this.chosenArr = [];
   }
 
-  filterSearch(arr: ToysDataType): void {
+  public filterSearch(arr: ToysDataType): void {
     if (this.state.query) {
       arr = arr.filter(el => el.name.toLowerCase().includes(this.state.query.toLowerCase()));
     }
     this.filterColor(arr);
   }
 
-  filterColor(arr: ToysDataType): void {
+  private filterColor(arr: ToysDataType): void {
     if (this.state.color.length) {
       arr = arr.filter(el => this.state.color.includes(el.color));
     }
     this.filterShape(arr);
   }
 
-  filterShape(arr: ToysDataType): void {
+  private filterShape(arr: ToysDataType): void {
     if (this.state.shape.length) {
       arr = arr.filter(el => this.state.shape.includes(el.shape));
     }
     this.filterSize(arr);
   }
 
-  filterSize(arr: ToysDataType): void {
+  private filterSize(arr: ToysDataType): void {
     if (this.state.size.length) {
       arr = arr.filter(el => this.state.size.includes(el.size));
     }
     this.filterFavorite(arr);
   }
 
-  filterFavorite(arr: ToysDataType): void {
+  private filterFavorite(arr: ToysDataType): void {
     if (this.state.favorite) {
       arr = arr.filter(el => el.favorite);
     }
     this.filterSliders(arr);
   }
 
-  filterSliders(arr: ToysDataType): void {
+  private filterSliders(arr: ToysDataType): void {
     arr = arr.filter(
       el =>
         +el.count >= this.state.minCount &&
@@ -70,7 +70,7 @@ export class Filters {
     this.sort(arr);
   }
 
-  sort(arr: ToysDataType): void {
+  private sort(arr: ToysDataType): void {
     switch (this.state.sort) {
       case SortTypes.alphabetSortReversed:
         arr = this.reverseArr(this.sortText(arr));
@@ -88,19 +88,19 @@ export class Filters {
     this.generateCards(arr);
   }
 
-  sortText(arr: ToysDataType): ToysDataType {
+  private sortText(arr: ToysDataType): ToysDataType {
     return arr.sort((a: ToyInterface, b: ToyInterface) => a.name.localeCompare(b.name));
   }
 
-  sortYear(arr: ToysDataType): ToysDataType {
+  private sortYear(arr: ToysDataType): ToysDataType {
     return arr.sort((a: ToyInterface, b: ToyInterface) => Number(a.year) - Number(b.year));
   }
 
-  reverseArr<T>(array: T[]): T[] {
+  private reverseArr<T>(array: T[]): T[] {
     return array.reverse();
   }
 
-  resetFilters(dispatchEvent = true): void {
+  public resetFilters(dispatchEvent = true): void {
     (document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>).forEach(
       el => (el.checked = false),
     );
@@ -115,10 +115,10 @@ export class Filters {
     this.state.favorite = false;
     if (dispatchEvent) {
       document.dispatchEvent(new Event('reset-sliders'));
-    } 
+    }
   }
 
-  generateCards(arr: ToysDataType): void {
+  public generateCards(arr: ToysDataType): void {
     const cardsWrapper = document.querySelector('.cards-wrapper') as HTMLElement;
     if (cardsWrapper.innerHTML) cardsWrapper.innerHTML = '';
     if (arr && !arr.length) cardsWrapper.innerHTML = '<p class="no-overlap-title">Извините, совпадений не найдено</p>';
@@ -141,7 +141,7 @@ export class Filters {
     this.animateCards();
   }
 
-  getCardHtml({ num, name, count, year, shape, color, size, favorite }: ToyInterface): string {
+  private getCardHtml({ num, name, count, year, shape, color, size, favorite }: ToyInterface): string {
     return `
       <h2 class="card-title">${name}</h3>
       <div class="card-content-wrapper">
@@ -164,7 +164,7 @@ export class Filters {
     `;
   }
 
-  animateCards() {
+  private animateCards(): void {
     let elements: NodeList;
     let windowHeight: number;
 
@@ -176,7 +176,7 @@ export class Filters {
     const checkPosition = () => {
       for (let i = 0; i < elements.length; i += 1) {
         const element = elements[i] as HTMLElement;
-        const positionFromTop = element.getBoundingClientRect().top
+        const positionFromTop = element.getBoundingClientRect().top;
 
         if (positionFromTop - windowHeight <= Constants.CARDS_ANIMATION_OFFSET) {
           element.classList.add('animated');

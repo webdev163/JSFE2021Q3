@@ -8,7 +8,7 @@ import Constants from '../constants';
 const filters = new Filters();
 
 export default class FiltersPage extends Filters {
-  static setEventListeners(): void {
+  private static setEventListeners(): void {
     const sortSelect = document.querySelector('.sort-select') as HTMLSelectElement;
     const resetButton = document.querySelector('.reset-button') as HTMLElement;
     const resetSettings = document.querySelector('.reset-button-ls') as HTMLElement;
@@ -114,7 +114,7 @@ export default class FiltersPage extends Filters {
     });
   }
 
-  static async render(): Promise<void> {
+  public static async render(): Promise<void> {
     const html: string = filtersPageHtml;
     await Render.render(html).then(() => {
       this.getLocalstorage();
@@ -125,7 +125,7 @@ export default class FiltersPage extends Filters {
     });
   }
 
-  static updateState(type: string, e?: Event): void {
+  private static updateState(type: string, e?: Event): void {
     switch (type) {
       case 'search': {
         const searchInput = document.querySelector('.search-input') as HTMLInputElement;
@@ -198,7 +198,7 @@ export default class FiltersPage extends Filters {
     filters.filterSearch(filters.initArr);
   }
 
-  static chooseToy(e: Event): void {
+  private static chooseToy(e: Event): void {
     const clicked: HTMLElement = e.target as HTMLElement;
     const cardItem: HTMLElement | null = clicked.closest('.card-item');
     if (cardItem !== null) {
@@ -224,11 +224,11 @@ export default class FiltersPage extends Filters {
     }
   }
 
-  static updateLocalstorage(): void {
+  private static updateLocalstorage(): void {
     localStorage.setItem('webdev163-filters', JSON.stringify(filters.state));
   }
 
-  static getLocalstorage(): void {
+  private static getLocalstorage(): void {
     if (localStorage.getItem('webdev163-filters') !== null) {
       const filtersPreviousState: StateInterface = JSON.parse(localStorage.getItem('webdev163-filters') || '');
       (document.querySelector('.sort-select') as HTMLSelectElement).value = filtersPreviousState.sort;
@@ -248,7 +248,7 @@ export default class FiltersPage extends Filters {
     }
   }
 
-  static openPopup(): void {
+  private static openPopup(): void {
     const popup = document.querySelector('.popup') as HTMLElement;
     const popupBtn = document.querySelector('.popup-btn') as HTMLElement;
     const overlay = document.querySelector('#overlay') as HTMLElement;
@@ -256,22 +256,27 @@ export default class FiltersPage extends Filters {
     setTimeout(() => {
       overlay.classList.add('active');
     }, 200);
-    popupBtn.addEventListener('click', () => {
-      popup.classList.remove('active');
-      overlay.classList.remove('active');
-    }, { once: true });
+    popupBtn.addEventListener(
+      'click',
+      () => {
+        popup.classList.remove('active');
+        overlay.classList.remove('active');
+      },
+      { once: true },
+    );
   }
 
-  static showChosenToys(): void {
+  private static showChosenToys(): void {
     let chosenArr: Array<string> = [];
     let resultArr: ToysDataType = filters.initArr;
     if (localStorage.getItem('webdev163-chosen') !== null) {
       chosenArr = JSON.parse(localStorage.getItem('webdev163-chosen') || '') as Array<string>;
-      resultArr = resultArr.filter(el => chosenArr.includes(el.num))
+      resultArr = resultArr.filter(el => chosenArr.includes(el.num));
     }
     filters.generateCards(resultArr);
     if (!chosenArr.length) {
-      (document.querySelector('.cards-wrapper') as HTMLElement).innerHTML = '<p class="no-overlap-title">Вы не выбрали ни одной игрушки</p>'
+      (document.querySelector('.cards-wrapper') as HTMLElement).innerHTML =
+        '<p class="no-overlap-title">Вы не выбрали ни одной игрушки</p>';
     }
   }
 }

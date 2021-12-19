@@ -5,7 +5,7 @@ import { StateInterface } from './types';
 import Constants from './constants';
 
 export default class Utils {
-  static debounce = (fn: () => void, ms = 0): (() => void) => {
+  public static debounce = (fn: () => void, ms = 0): (() => void) => {
     let timeoutId: number;
     return (...args: []) => {
       clearTimeout(timeoutId);
@@ -13,7 +13,7 @@ export default class Utils {
     };
   };
 
-  static handleSearchInput(): void {
+  public static handleSearchInput(): void {
     const searchInput = document.querySelector('.search-input') as HTMLInputElement;
     const clearButton = document.querySelector('.clear-btn') as HTMLElement;
     searchInput.addEventListener('input', () => {
@@ -31,7 +31,7 @@ export default class Utils {
     });
   }
 
-  static createSliders(): void {
+  public static createSliders(): void {
     const countSlider = document.getElementById('count-slider-wrapper') as noUiSlider.target;
     const countSliderOutputMin = document.getElementById('count-slider-value-min') as HTMLElement;
     const countSliderOutputMax = document.getElementById('count-slider-value-max') as HTMLElement;
@@ -65,7 +65,7 @@ export default class Utils {
       connect: true,
     });
 
-    countSlider?.noUiSlider?.on('update', (values) => {
+    countSlider?.noUiSlider?.on('update', values => {
       countSliderOutputMin.innerHTML = String(values[0]);
       countSliderOutputMax.innerHTML = String(values[1]);
     });
@@ -87,7 +87,7 @@ export default class Utils {
       connect: true,
     });
 
-    yearSlider?.noUiSlider?.on('update', (values) => {
+    yearSlider?.noUiSlider?.on('update', values => {
       yearSliderOutputMin.innerHTML = String(values[0]);
       yearSliderOutputMax.innerHTML = String(values[1]);
     });

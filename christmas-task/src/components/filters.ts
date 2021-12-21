@@ -77,6 +77,9 @@ export class Filters {
   private sort(arr: ToysData): void {
     let filteredArr: ToysData = arr;
     switch (this.state.sort) {
+      case SortTypes.alphabetSort:
+        filteredArr = this.sortText(arr);
+        break;
       case SortTypes.alphabetSortReversed:
         filteredArr = this.reverseArr(this.sortText(arr));
         break;
@@ -87,7 +90,6 @@ export class Filters {
         filteredArr = this.reverseArr(this.sortYear(arr));
         break;
       default:
-        filteredArr = this.sortText(arr);
         break;
     }
     this.generateCards(filteredArr);

@@ -130,6 +130,14 @@ export default class FiltersPage {
 
   private static updateState(type: string, e?: Event): void {
     switch (type) {
+      case UpdateStateTypes.sort: {
+        if (e) {
+          const targetSort = (e.target as HTMLSelectElement).value;
+          filters.state.sort = targetSort;
+        }
+        break;
+      }
+
       case UpdateStateTypes.search: {
         const searchInput = document.querySelector('.search-input') as HTMLInputElement;
         const searchQuery = searchInput.value;
@@ -190,11 +198,6 @@ export default class FiltersPage {
         break;
 
       default:
-        //sorting
-        if (e) {
-          const targetSort = (e.target as HTMLSelectElement).value;
-          filters.state.sort = targetSort;
-        }
         break;
     }
 

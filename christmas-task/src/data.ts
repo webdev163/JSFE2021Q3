@@ -1,10 +1,10 @@
-import { ToysDataType } from './types';
+import { ToysData } from './types';
 
 export default class Data {
-  public static async getJson(): Promise<ToysDataType> {
+  public static async getJson(): Promise<ToysData> {
     const url: string = 'https://raw.githubusercontent.com/webdev163/image-data/master/toysdata.json';
     const res: Response = await fetch(url);
-    const data: ToysDataType = await res.json();
+    const data: ToysData = await res.json();
     return data;
   }
 }

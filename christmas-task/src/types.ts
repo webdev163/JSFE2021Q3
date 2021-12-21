@@ -1,4 +1,4 @@
-export interface StateInterface {
+export interface State {
   query: string;
   sort: string;
   shape: string[];
@@ -11,7 +11,7 @@ export interface StateInterface {
   maxYear: number;
 }
 
-export interface ToyInterface {
+export interface Toy {
   num: string;
   name: string;
   count: string;
@@ -22,7 +22,7 @@ export interface ToyInterface {
   favorite: boolean;
 }
 
-export type ToysDataType = ToyInterface[];
+export type ToysData = Toy[];
 
 export enum SortTypes {
   alphabetSort = 'alphabet-sort',

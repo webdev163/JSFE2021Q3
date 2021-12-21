@@ -1,7 +1,7 @@
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 import wNumb from 'wNumb';
-import { StateInterface } from './types';
+import { State } from './types';
 import Constants from './constants';
 
 export default class Utils {
@@ -45,7 +45,7 @@ export default class Utils {
     let maxYear = Constants.SLIDER_YEAR_MAX;
 
     if (localStorage.getItem('webdev163-filters') !== null) {
-      const filtersPreviousState: StateInterface = JSON.parse(localStorage.getItem('webdev163-filters') || '');
+      const filtersPreviousState: State = JSON.parse(localStorage.getItem('webdev163-filters') || '');
       minCount = filtersPreviousState.minCount;
       maxCount = filtersPreviousState.maxCount;
       minYear = filtersPreviousState.minYear;

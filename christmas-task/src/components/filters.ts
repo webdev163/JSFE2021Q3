@@ -1,12 +1,12 @@
-import { ToyInterface, ToysDataType, StateInterface, SortTypes } from '../types';
+import { Toy, ToysData, State, SortTypes } from '../types';
 import Constants from '../constants';
 
 export class Filters {
-  public initArr: ToysDataType;
-  public state: StateInterface;
+  public initArr: ToysData;
+  public state: State;
   public chosenArr: string[];
 
-  constructor(initArr: ToysDataType) {
+  constructor(initArr: ToysData) {
     this.initArr = initArr;
     this.state = {
       query: '',
@@ -23,42 +23,42 @@ export class Filters {
     this.chosenArr = [];
   }
 
-  public filterSearch(arr: ToysDataType): void {
+  public filterSearch(arr: ToysData): void {
     if (this.state.query) {
       arr = arr.filter(el => el.name.toLowerCase().includes(this.state.query.toLowerCase()));
     }
     this.filterColor(arr);
   }
 
-  private filterColor(arr: ToysDataType): void {
+  private filterColor(arr: ToysData): void {
     if (this.state.color.length) {
       arr = arr.filter(el => this.state.color.includes(el.color));
     }
     this.filterShape(arr);
   }
 
-  private filterShape(arr: ToysDataType): void {
+  private filterShape(arr: ToysData): void {
     if (this.state.shape.length) {
       arr = arr.filter(el => this.state.shape.includes(el.shape));
     }
     this.filterSize(arr);
   }
 
-  private filterSize(arr: ToysDataType): void {
+  private filterSize(arr: ToysData): void {
     if (this.state.size.length) {
       arr = arr.filter(el => this.state.size.includes(el.size));
     }
     this.filterFavorite(arr);
   }
 
-  private filterFavorite(arr: ToysDataType): void {
+  private filterFavorite(arr: ToysData): void {
     if (this.state.favorite) {
       arr = arr.filter(el => el.favorite);
     }
     this.filterSliders(arr);
   }
 
-  private filterSliders(arr: ToysDataType): void {
+  private filterSliders(arr: ToysData): void {
     arr = arr.filter(
       el =>
         +el.count >= this.state.minCount &&
@@ -69,7 +69,7 @@ export class Filters {
     this.sort(arr);
   }
 
-  private sort(arr: ToysDataType): void {
+  private sort(arr: ToysData): void {
     switch (this.state.sort) {
       case SortTypes.alphabetSortReversed:
         arr = this.reverseArr(this.sortText(arr));
@@ -87,12 +87,12 @@ export class Filters {
     this.generateCards(arr);
   }
 
-  private sortText(arr: ToysDataType): ToysDataType {
-    return arr.sort((a: ToyInterface, b: ToyInterface) => a.name.localeCompare(b.name));
+  private sortText(arr: ToysData): ToysData {
+    return arr.sort((a: Toy, b: Toy) => a.name.localeCompare(b.name));
   }
 
-  private sortYear(arr: ToysDataType): ToysDataType {
-    return arr.sort((a: ToyInterface, b: ToyInterface) => Number(a.year) - Number(b.year));
+  private sortYear(arr: ToysData): ToysData {
+    return arr.sort((a: Toy, b: Toy) => Number(a.year) - Number(b.year));
   }
 
   private reverseArr<T>(array: T[]): T[] {
@@ -117,7 +117,7 @@ export class Filters {
     }
   }
 
-  public generateCards(arr: ToysDataType): void {
+  public generateCards(arr: ToysData): void {
     const cardsWrapper = document.querySelector('.cards-wrapper') as HTMLElement;
     if (cardsWrapper.innerHTML) cardsWrapper.innerHTML = '';
     if (arr && !arr.length) cardsWrapper.innerHTML = '<p class="no-overlap-title">Извините, совпадений не найдено</p>';
@@ -140,7 +140,7 @@ export class Filters {
     this.animateCards();
   }
 
-  private getCardHtml({ num, name, count, year, shape, color, size, favorite }: ToyInterface): string {
+  private getCardHtml({ num, name, count, year, shape, color, size, favorite }: Toy): string {
     return `
       <h2 class="card-title">${name}</h3>
       <div class="card-content-wrapper">

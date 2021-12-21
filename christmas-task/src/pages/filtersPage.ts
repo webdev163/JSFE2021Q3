@@ -2,7 +2,7 @@ import Render from '../render';
 import { Filters } from '../components/filters';
 import filtersPageHtml from './filtersPage.html';
 import Utils from '../utils';
-import { StateInterface, ToysDataType } from '../types';
+import { State, ToysData } from '../types';
 import Constants from '../constants';
 import Data from '../data';
 
@@ -117,7 +117,7 @@ export default class FiltersPage {
 
   public static async render(): Promise<void> {
     const html: string = filtersPageHtml;
-    const json: ToysDataType = await Data.getJson();
+    const json: ToysData = await Data.getJson();
     filters = new Filters(json);
     await Render.render(html).then(() => {
       this.getLocalstorage();
@@ -233,7 +233,7 @@ export default class FiltersPage {
 
   private static getLocalstorage(): void {
     if (localStorage.getItem('webdev163-filters') !== null) {
-      const filtersPreviousState: StateInterface = JSON.parse(localStorage.getItem('webdev163-filters') || '');
+      const filtersPreviousState: State = JSON.parse(localStorage.getItem('webdev163-filters') || '');
       (document.querySelector('.sort-select') as HTMLSelectElement).value = filtersPreviousState.sort;
       filtersPreviousState.color.forEach((el: string) => {
         (document.querySelector(`.color-controls-item[data-value=${el}]`) as HTMLInputElement).checked = true;
@@ -271,7 +271,7 @@ export default class FiltersPage {
 
   private static showChosenToys(): void {
     let chosenArr: Array<string> = [];
-    let resultArr: ToysDataType = filters.initArr;
+    let resultArr: ToysData = filters.initArr;
     if (localStorage.getItem('webdev163-chosen') !== null) {
       chosenArr = JSON.parse(localStorage.getItem('webdev163-chosen') || '') as Array<string>;
       resultArr = resultArr.filter(el => chosenArr.includes(el.num));

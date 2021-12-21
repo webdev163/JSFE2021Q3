@@ -27,7 +27,7 @@ export const handleSearchInput: () => void = () => {
     searchInput.value = '';
     searchInput.dispatchEvent(new Event('input'));
   });
-}
+};
 
 export const createSliders: () => void = () => {
   const countSlider = document.getElementById('count-slider-wrapper') as noUiSlider.target;
@@ -98,4 +98,4 @@ export const createSliders: () => void = () => {
     countSlider?.noUiSlider?.set([SliderValues.sliderCountMin, SliderValues.sliderCountMax]);
     yearSlider?.noUiSlider?.set([SliderValues.sliderYearMin, SliderValues.sliderYearMax]);
   });
-}
+};

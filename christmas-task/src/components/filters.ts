@@ -181,7 +181,7 @@ export class Filters {
     };
 
     const checkPosition: () => void = () => {
-      for (let i: number = 0; i < (elements.length as number); i += 1) {
+      for (let i = 0; i < (elements.length as number); i += 1) {
         const element: HTMLElement = elements[i] as HTMLElement;
         const positionFromTop: number = element.getBoundingClientRect().top as number;
 

@@ -14,7 +14,7 @@ export class Filters {
       shape: [],
       color: [],
       size: [],
-      favorite: false,
+      isFavorite: false,
       minCount: Constants.SLIDER_COUNT_MIN,
       maxCount: Constants.SLIDER_COUNT_MAX,
       minYear: Constants.SLIDER_YEAR_MIN,
@@ -57,8 +57,8 @@ export class Filters {
 
   private filterFavorite(arr: ToysData): void {
     let filteredArr: ToysData = arr;
-    if (this.state.favorite) {
-      filteredArr = arr.filter(el => el.favorite);
+    if (this.state.isFavorite) {
+      filteredArr = arr.filter(el => el.isFavorite);
     }
     this.filterSliders(filteredArr);
   }
@@ -117,7 +117,7 @@ export class Filters {
     this.state.shape = [];
     this.state.color = [];
     this.state.size = [];
-    this.state.favorite = false;
+    this.state.isFavorite = false;
     if (dispatchEvent) {
       document.dispatchEvent(new Event('reset-sliders'));
     }
@@ -146,7 +146,7 @@ export class Filters {
     this.animateCards();
   }
 
-  private getCardHtml({ num, name, count, year, shape, color, size, favorite }: Toy): string {
+  private getCardHtml({ num, name, count, year, shape, color, size, isFavorite }: Toy): string {
     return `
       <h2 class="card-title">${name}</h3>
       <div class="card-content-wrapper">
@@ -159,7 +159,7 @@ export class Filters {
           <p class="shape">Форма: ${shape}</p>
           <p class="color">Цвет: ${color}</p>
           <p class="size">Размер: ${size}</p>
-          <p class="favorite">Любимая: ${favorite ? 'да' : 'нет'}</p>
+          <p class="favorite">Любимая: ${isFavorite ? 'да' : 'нет'}</p>
         </div>
       </div>
       <div class="card-btn-wrapper">

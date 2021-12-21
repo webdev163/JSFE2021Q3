@@ -4,7 +4,7 @@ export interface State {
   shape: string[];
   color: string[];
   size: string[];
-  favorite: boolean;
+  isFavorite: boolean;
   minCount: number;
   maxCount: number;
   minYear: number;
@@ -19,7 +19,7 @@ export interface Toy {
   shape: string;
   color: string;
   size: string;
-  favorite: boolean;
+  isFavorite: boolean;
 }
 
 export type ToysData = Toy[];

@@ -175,9 +175,9 @@ export default class FiltersPage {
       case 'favorite':
         if (e) {
           if ((e.target as HTMLInputElement).checked) {
-            filters.state.favorite = true;
+            filters.state.isFavorite = true;
           } else {
-            filters.state.favorite = false;
+            filters.state.isFavorite = false;
           }
         }
         break;
@@ -244,7 +244,7 @@ export default class FiltersPage {
       filtersPreviousState.size.forEach((el: string) => {
         (document.querySelector(`.size-controls-item[data-value=${el}]`) as HTMLInputElement).checked = true;
       });
-      filtersPreviousState.favorite
+      filtersPreviousState.isFavorite
         ? ((document.querySelector('.favorite-controls-item') as HTMLInputElement).checked = true)
         : 0;
       filters.state = filtersPreviousState;

@@ -207,7 +207,7 @@ export default class FiltersPage {
   private static chooseToy(e: Event): void {
     const clicked: HTMLElement = e.target as HTMLElement;
     const cardItem: HTMLElement | null = clicked.closest('.card-item');
-    if (cardItem !== null) {
+    if (cardItem) {
       const cardNum: string = cardItem.dataset.num as string;
       const textElement = document.querySelector('.toys-count-num') as HTMLElement;
       let totalChosen = Number(textElement.textContent);

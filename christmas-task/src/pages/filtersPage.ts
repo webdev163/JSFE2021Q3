@@ -1,7 +1,7 @@
 import Render from '../render';
 import { Filters } from '../components/filters';
 import filtersPageHtml from './filtersPage.html';
-import Utils from '../utils';
+import { debounce, handleSearchInput, createSliders } from '../utils';
 import { State, ToysData, UpdateStateTypes } from '../types';
 import { CHOOSE_LIMIT } from '../constants';
 import Data from '../data';
@@ -38,7 +38,7 @@ export default class FiltersPage {
 
     searchInput.addEventListener(
       'keyup',
-      Utils.debounce(() => {
+      debounce(() => {
         this.updateState(UpdateStateTypes.search);
       }, 1000),
     );
@@ -74,7 +74,7 @@ export default class FiltersPage {
 
     document.addEventListener(
       'slider-change',
-      Utils.debounce(() => {
+      debounce(() => {
         this.updateState(UpdateStateTypes.minmax);
       }, 250),
     );
@@ -122,8 +122,8 @@ export default class FiltersPage {
     await Render.render(html).then(() => {
       this.getLocalstorage();
       this.setEventListeners();
-      Utils.handleSearchInput();
-      Utils.createSliders();
+      handleSearchInput();
+      createSliders();
       filters.filterSearch(filters.initArr);
     });
   }

@@ -24,67 +24,73 @@ export class Filters {
   }
 
   public filterSearch(arr: ToysData): void {
+    let filteredArr: ToysData = arr;
     if (this.state.query) {
-      arr = arr.filter(el => el.name.toLowerCase().includes(this.state.query.toLowerCase()));
+      filteredArr = arr.filter(el => el.name.toLowerCase().includes(this.state.query.toLowerCase()));
     }
-    this.filterColor(arr);
+    this.filterColor(filteredArr);
   }
 
   private filterColor(arr: ToysData): void {
+    let filteredArr: ToysData = arr;
     if (this.state.color.length) {
-      arr = arr.filter(el => this.state.color.includes(el.color));
+      filteredArr = arr.filter(el => this.state.color.includes(el.color));
     }
-    this.filterShape(arr);
+    this.filterShape(filteredArr);
   }
 
   private filterShape(arr: ToysData): void {
+    let filteredArr: ToysData = arr;
     if (this.state.shape.length) {
-      arr = arr.filter(el => this.state.shape.includes(el.shape));
+      filteredArr = arr.filter(el => this.state.shape.includes(el.shape));
     }
-    this.filterSize(arr);
+    this.filterSize(filteredArr);
   }
 
   private filterSize(arr: ToysData): void {
+    let filteredArr: ToysData = arr;
     if (this.state.size.length) {
-      arr = arr.filter(el => this.state.size.includes(el.size));
+      filteredArr = arr.filter(el => this.state.size.includes(el.size));
     }
-    this.filterFavorite(arr);
+    this.filterFavorite(filteredArr);
   }
 
   private filterFavorite(arr: ToysData): void {
+    let filteredArr: ToysData = arr;
     if (this.state.favorite) {
-      arr = arr.filter(el => el.favorite);
+      filteredArr = arr.filter(el => el.favorite);
     }
-    this.filterSliders(arr);
+    this.filterSliders(filteredArr);
   }
 
   private filterSliders(arr: ToysData): void {
-    arr = arr.filter(
+    const filteredArr = arr.filter(
       el =>
         +el.count >= this.state.minCount &&
         +el.count <= this.state.maxCount &&
         +el.year >= this.state.minYear &&
         +el.year <= this.state.maxYear,
     );
-    this.sort(arr);
+    this.sort(filteredArr);
   }
 
   private sort(arr: ToysData): void {
+    let filteredArr: ToysData = arr;
     switch (this.state.sort) {
       case SortTypes.alphabetSortReversed:
-        arr = this.reverseArr(this.sortText(arr));
+        filteredArr = this.reverseArr(this.sortText(arr));
         break;
       case SortTypes.yearSort:
-        arr = this.sortYear(arr);
+        filteredArr = this.sortYear(arr);
         break;
       case SortTypes.yearSortReversed:
-        arr = this.reverseArr(this.sortYear(arr));
+        filteredArr = this.reverseArr(this.sortYear(arr));
         break;
       default:
-        arr = this.sortText(arr);
+        filteredArr = this.sortText(arr);
         break;
     }
-    this.generateCards(arr);
+    this.generateCards(filteredArr);
   }
 
   private sortText(arr: ToysData): ToysData {

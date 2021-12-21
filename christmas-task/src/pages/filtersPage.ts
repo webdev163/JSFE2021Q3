@@ -2,7 +2,7 @@ import Render from '../render';
 import { Filters } from '../components/filters';
 import filtersPageHtml from './filtersPage.html';
 import Utils from '../utils';
-import { State, ToysData } from '../types';
+import { State, ToysData, UpdateStateTypes } from '../types';
 import { CHOOSE_LIMIT } from '../constants';
 import Data from '../data';
 
@@ -39,43 +39,43 @@ export default class FiltersPage {
     searchInput.addEventListener(
       'keyup',
       Utils.debounce(() => {
-        this.updateState('search');
+        this.updateState(UpdateStateTypes.search);
       }, 1000),
     );
 
     clearSearchButton.addEventListener('click', () => {
       searchInput.value = '';
-      this.updateState('search');
+      this.updateState(UpdateStateTypes.search);
     });
 
     sortSelect.addEventListener('change', (e: Event) => {
-      this.updateState('sort', e);
+      this.updateState(UpdateStateTypes.sort, e);
     });
 
     shapeControlsInner.addEventListener('click', (e: Event) => {
       if ((e.target as HTMLElement).classList.contains('shape-btn')) {
-        this.updateState('shape', e);
+        this.updateState(UpdateStateTypes.shape, e);
       }
     });
 
     sizeControlsArr.forEach(el =>
       el.addEventListener('click', (e: Event) => {
         if ((e.target as HTMLElement).classList.contains('size-controls-item')) {
-          this.updateState('size', e);
+          this.updateState(UpdateStateTypes.size, e);
         }
       }),
     );
 
     checkboxFavorite.addEventListener('click', (e: Event) => {
       if ((e.target as HTMLElement).classList.contains('favorite-controls-item')) {
-        this.updateState('favorite', e);
+        this.updateState(UpdateStateTypes.favorite, e);
       }
     });
 
     document.addEventListener(
       'slider-change',
       Utils.debounce(() => {
-        this.updateState('minmax');
+        this.updateState(UpdateStateTypes.minmax);
       }, 250),
     );
 
@@ -130,14 +130,14 @@ export default class FiltersPage {
 
   private static updateState(type: string, e?: Event): void {
     switch (type) {
-      case 'search': {
+      case UpdateStateTypes.search: {
         const searchInput = document.querySelector('.search-input') as HTMLInputElement;
         const searchQuery = searchInput.value;
         filters.state.query = searchQuery;
         break;
       }
 
-      case 'color':
+      case UpdateStateTypes.color:
         if (e) {
           const targetColor = (e.target as HTMLElement).dataset.value || '';
           if ((e.target as HTMLInputElement).checked) {
@@ -148,7 +148,7 @@ export default class FiltersPage {
         }
         break;
 
-      case 'shape':
+      case UpdateStateTypes.shape:
         if (e) {
           const targetShape = (e.target as HTMLElement).dataset.value || '';
           if (!(e.target as HTMLElement).classList.contains('active')) {
@@ -160,7 +160,7 @@ export default class FiltersPage {
         }
         break;
 
-      case 'size':
+      case UpdateStateTypes.size:
         if (e) {
           const targetCheckbox = e.target as HTMLInputElement;
           const targetSize = targetCheckbox.dataset.value || '';
@@ -172,7 +172,7 @@ export default class FiltersPage {
         }
         break;
 
-      case 'favorite':
+      case UpdateStateTypes.favorite:
         if (e) {
           if ((e.target as HTMLInputElement).checked) {
             filters.state.isFavorite = true;
@@ -182,7 +182,7 @@ export default class FiltersPage {
         }
         break;
 
-      case 'minmax':
+      case UpdateStateTypes.minmax:
         filters.state.minCount = Number((document.getElementById('count-slider-value-min') as HTMLElement).textContent);
         filters.state.maxCount = Number((document.getElementById('count-slider-value-max') as HTMLElement).textContent);
         filters.state.minYear = Number((document.getElementById('year-slider-value-min') as HTMLElement).textContent);

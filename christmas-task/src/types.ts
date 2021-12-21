@@ -37,3 +37,13 @@ export enum SliderValues {
   sliderYearMin = 1940,
   sliderYearMax = 2020,
 }
+
+export enum UpdateStateTypes {
+  search = 'search',
+  color = 'color',
+  shape = 'shape',
+  size = 'size',
+  favorite = 'favorite',
+  minmax = 'minmax',
+  sort = 'sort',
+}

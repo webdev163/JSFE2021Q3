@@ -3,7 +3,7 @@ import { Filters } from '../components/filters';
 import filtersPageHtml from './filtersPage.html';
 import Utils from '../utils';
 import { State, ToysData } from '../types';
-import Constants from '../constants';
+import { CHOOSE_LIMIT } from '../constants';
 import Data from '../data';
 
 let filters: Filters;
@@ -214,7 +214,7 @@ export default class FiltersPage {
         totalChosen--;
         textElement.textContent = String(totalChosen);
       } else {
-        if (filters.chosenArr.length >= Constants.CHOOSE_LIMIT) {
+        if (filters.chosenArr.length >= CHOOSE_LIMIT) {
           this.openPopup();
           return;
         }

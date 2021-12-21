@@ -30,3 +30,10 @@ export enum SortTypes {
   yearSort = 'year-sort',
   yearSortReversed = 'year-sort-reverse',
 }
+
+export enum SliderValues {
+  sliderCountMin = 1,
+  sliderCountMax = 12,
+  sliderYearMin = 1940,
+  sliderYearMax = 2020,
+}

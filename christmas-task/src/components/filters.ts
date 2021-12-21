@@ -1,5 +1,5 @@
-import { Toy, ToysData, State, SortTypes } from '../types';
-import Constants from '../constants';
+import { Toy, ToysData, State, SortTypes, SliderValues } from '../types';
+import { CARDS_ANIMATION_OFFSET } from '../constants';
 
 export class Filters {
   public initArr: ToysData;
@@ -15,10 +15,10 @@ export class Filters {
       color: [],
       size: [],
       isFavorite: false,
-      minCount: Constants.SLIDER_COUNT_MIN,
-      maxCount: Constants.SLIDER_COUNT_MAX,
-      minYear: Constants.SLIDER_YEAR_MIN,
-      maxYear: Constants.SLIDER_YEAR_MAX,
+      minCount: SliderValues.sliderCountMin,
+      maxCount: SliderValues.sliderCountMax,
+      minYear: SliderValues.sliderYearMin,
+      maxYear: SliderValues.sliderYearMax,
     };
     this.chosenArr = [];
   }
@@ -183,7 +183,7 @@ export class Filters {
         const element: HTMLElement = elements[i] as HTMLElement;
         const positionFromTop: number = element.getBoundingClientRect().top as number;
 
-        if (positionFromTop - windowHeight <= Constants.CARDS_ANIMATION_OFFSET) {
+        if (positionFromTop - windowHeight <= CARDS_ANIMATION_OFFSET) {
           element.classList.add('animated');
           element.classList.remove('hidden');
         }

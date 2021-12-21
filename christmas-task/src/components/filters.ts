@@ -173,15 +173,15 @@ export class Filters {
     let elements: NodeList;
     let windowHeight: number;
 
-    const init = () => {
-      elements = document.querySelectorAll('.hidden');
-      windowHeight = window.innerHeight;
+    const init: () => void = () => {
+      elements = document.querySelectorAll('.hidden') as NodeList;
+      windowHeight = window.innerHeight as number;
     };
 
-    const checkPosition = () => {
-      for (let i = 0; i < elements.length; i += 1) {
-        const element = elements[i] as HTMLElement;
-        const positionFromTop = element.getBoundingClientRect().top;
+    const checkPosition: () => void = () => {
+      for (let i: number = 0; i < (elements.length as number); i += 1) {
+        const element: HTMLElement = elements[i] as HTMLElement;
+        const positionFromTop: number = element.getBoundingClientRect().top as number;
 
         if (positionFromTop - windowHeight <= Constants.CARDS_ANIMATION_OFFSET) {
           element.classList.add('animated');

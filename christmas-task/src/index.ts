@@ -1,8 +1,9 @@
 // import FiltersPage from './pages/filters/filters';
-import mainPage from './pages/main/main';
+// import mainPage from './pages/main/main';
+import treePage from './pages/tree/tree';
 import './router';
 
-mainPage.render();
+treePage.render();
 
 // eslint-disable-next-line no-console
 // console.log(`

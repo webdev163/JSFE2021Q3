@@ -3,9 +3,26 @@ import treePageHtml from './tree.html';
 
 export default class TreePage {
   private static setEventListeners(): void {
-    // (document.querySelector('.main-btn') as HTMLElement).addEventListener('click', () => {
-    //   document.dispatchEvent(new Event('render-filters'));
-    // })
+    const mainLink = document.querySelector('.main-link') as HTMLElement;
+    const toysLink = document.querySelector('.toys-link') as HTMLElement;
+    const treeLink = document.querySelector('.tree-link') as HTMLElement;
+
+    mainLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      document.dispatchEvent(new Event('render-main'));
+    })
+
+    toysLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      document.dispatchEvent(new Event('render-filters'));
+    })
+
+    treeLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    })
   }
 
   public static async render(): Promise<void> {

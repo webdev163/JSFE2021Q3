@@ -1,10 +1,10 @@
-import Render from '../render';
-import { Filters } from '../components/filters';
-import filtersPageHtml from './filtersPage.html';
-import { debounce, handleSearchInput, createSliders } from '../utils';
-import { State, ToysData, UpdateStateTypes } from '../types';
-import { CHOOSE_LIMIT } from '../constants';
-import Data from '../data';
+import Render from '../../render';
+import { Filters } from '../../components/filters';
+import filtersPageHtml from './filters.html';
+import { debounce, handleSearchInput, createSliders } from '../../utils';
+import { State, ToysData, UpdateStateTypes } from '../../types';
+import { CHOOSE_LIMIT } from '../../constants';
+import Data from '../../data';
 
 let filters: Filters;
 
@@ -23,6 +23,9 @@ export default class FiltersPage {
     const clearSearchButton = document.querySelector('.clear-btn') as HTMLElement;
     const gridWrapper = document.querySelector('.grid-wrapper') as HTMLElement;
     const toysCount = document.querySelector('.toys-count') as HTMLElement;
+    const mainLink = document.querySelector('.main-link') as HTMLElement;
+    const toysLink = document.querySelector('.toys-link') as HTMLElement;
+    const treeLink = document.querySelector('.tree-link') as HTMLElement;
 
     gridWrapper.addEventListener('click', (e: Event) => {
       if ((e.target as HTMLElement).closest('.card-item')) {
@@ -113,6 +116,23 @@ export default class FiltersPage {
       filters.resetFilters(false);
       this.showChosenToys();
     });
+
+    mainLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      document.dispatchEvent(new Event('render-main'));
+    })
+
+    toysLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    })
+
+    treeLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      document.dispatchEvent(new Event('render-tree'));
+    })
   }
 
   public static async render(): Promise<void> {

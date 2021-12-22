@@ -1,7 +1,7 @@
 .main-menu-list {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding-left: 0;
   width: 300px;
   margin-left: -14px;
@@ -20,11 +20,23 @@
     color: inherit;
     transition: color .3s;
     display: inline-block;
+    padding-bottom: 3px;
   }
   &:hover {
     cursor: pointer;
     a {
-      color: lighten(#3B5757, 35%);
+      color: #ffde98;
     }
-  } 
+    &.active {
+      cursor: default;
+      a {
+        color: #ffeabc;
+        cursor: default;
+      }
+    } 
+  }
+  &.active a {
+    border-bottom: 1px solid #ffeabc;
+    color: #ffeabc;
+  }
 }

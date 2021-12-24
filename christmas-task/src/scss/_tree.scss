@@ -241,7 +241,7 @@
 }
 
 .garland-button-blue {
-  background: blue;
+  background: #2686f5;
 }
 
 .garland-button-yellow {
@@ -249,7 +249,7 @@
 }
 
 .garland-button-green {
-  background: green;
+  background: #4cee4c;
 }
 
 .tree-reset-button {
@@ -294,6 +294,7 @@
   width: 80px;
   height: 80px;
   position: relative;
+  position: relative;
   &::after {
     content: "";
     background-color: #89bcbe;
@@ -306,6 +307,21 @@
     z-index: -1;
     border-radius: 10px;
   }
+}
+
+.toy-count {
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  background-color: #44c4ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .done-tree-grid {
@@ -341,6 +357,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .tree-img {
@@ -350,6 +368,7 @@
   background-size: contain;
   width: 500px;
   height: 714px;
+  position: relative;
 }
 
 .control-btn-wrapper {
@@ -361,6 +380,9 @@
   &:hover {
     cursor: pointer;
     filter: invert(10%);
+  }
+  &.active {
+    filter: invert(15%) sepia(54%) saturate(3092%) hue-rotate(331deg) brightness(109%) contrast(101%);
   }
 }
 

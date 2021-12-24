@@ -22,6 +22,15 @@ export interface Toy {
   isFavorite: boolean;
 }
 
+export interface TreeState {
+  treeNum: string,
+  backgroundNum: string,
+  lights: string,
+  isLightsChecked: boolean,
+  isSnowflakesChecked: boolean,
+  isSoundChecked: boolean,
+}
+
 export type ToysData = Toy[];
 
 export enum SortTypes {

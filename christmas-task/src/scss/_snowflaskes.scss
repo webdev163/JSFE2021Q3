@@ -1,0 +1,14 @@
+.fa-snowflake {
+  color: #fff;
+  position: absolute;
+  top: -20px;
+  animation: fall linear forwards;
+  background-image: url('../assets/img/snowflake-regular.svg');
+}
+
+@keyframes fall {
+  to {
+    top: 105vh;
+    transform: rotate(359deg);
+  }
+}

@@ -14,38 +14,38 @@
     <div class="choose-tree-wrapper">
       <p class="choose-tree-title tree-title">Выберите ёлку</p>
       <div class="choose-tree-grid">
-        <div class="choose-tree-grid-item"></div>
-        <div class="choose-tree-grid-item"></div>
-        <div class="choose-tree-grid-item"></div>
-        <div class="choose-tree-grid-item"></div>
+        <div class="choose-tree-grid-item" data-num="1"></div>
+        <div class="choose-tree-grid-item" data-num="2"></div>
+        <div class="choose-tree-grid-item" data-num="3"></div>
+        <div class="choose-tree-grid-item" data-num="4"></div>
       </div>
     </div>
     <div class="choose-bg-wrapper">
       <p class="choose-bg-title tree-title">Выберите фон</p>
       <div class="choose-bg-grid">
-        <div class="choose-bg-grid-item"></div>
-        <div class="choose-bg-grid-item"></div>
-        <div class="choose-bg-grid-item"></div>
-        <div class="choose-bg-grid-item"></div>
-        <div class="choose-bg-grid-item"></div>
-        <div class="choose-bg-grid-item"></div>
-        <div class="choose-bg-grid-item"></div>
-        <div class="choose-bg-grid-item"></div>
+        <div class="choose-bg-grid-item" data-num="1"></div>
+        <div class="choose-bg-grid-item" data-num="2"></div>
+        <div class="choose-bg-grid-item" data-num="3"></div>
+        <div class="choose-bg-grid-item" data-num="4"></div>
+        <div class="choose-bg-grid-item" data-num="5"></div>
+        <div class="choose-bg-grid-item" data-num="6"></div>
+        <div class="choose-bg-grid-item" data-num="7"></div>
+        <div class="choose-bg-grid-item" data-num="8"></div>
       </div>
     </div>
     <div class="choose-garland-wrapper">
       <p class="choose-garland-title tree-title">Гирлянда</p>
       <div class="garland-controls-wrapper">
         <div class="garland-button-wrapper">
-          <button class="garland-button garland-button-multicolor active"></button>
-          <button class="garland-button garland-button-red"></button>
-          <button class="garland-button garland-button-blue"></button>
-          <button class="garland-button garland-button-yellow"></button>
-          <button class="garland-button garland-button-green"></button>
+          <button class="garland-button garland-button-multicolor" data-value="multicolor"></button>
+          <button class="garland-button garland-button-red" data-value="red"></button>
+          <button class="garland-button garland-button-blue" data-value="blue"></button>
+          <button class="garland-button garland-button-yellow" data-value="yellow"></button>
+          <button class="garland-button garland-button-green" data-value="green"></button>
         </div>
         <div class="garland-checkbox-wrapper">
           <label class="label-checkbox" for="checkbox-garland"></label>
-          <input class="slide-checkbox slide-checkbox-garland" type="checkbox" name="checkbox-garland" id="checkbox-garland">
+          <input class="slide-checkbox slide-checkbox-garland" type="checkbox" name="checkbox-garland" id="checkbox-garland" checked>
           <label class="custom-checkbox" for="checkbox-garland"></label>
         </div>
       </div>
@@ -53,32 +53,82 @@
     <button type="button" class="tree-reset-button btn">Сбросить настройки</button>
   </div>
   <div class="center-wrapper">
-    <div class="tree-img"></div>
+    <div class="tree-img">
+      <div class="lightrope-wrapper">
+        <ul class="lightrope">
+          <li style="transform: rotate(20deg) translate(-9px, -15px);"></li>
+          <li style="transform: rotate(16deg) translate(-8px, -2px)"></li>
+          <li style="transform: rotate(12deg) translate(-8px, 8px);"></li>
+          <li style="transform: rotate(8deg) translate(-10px, 16px)"></li>
+          <li style="transform: rotate(4deg) translate(-15px, 20px);"></li>
+          <li style="transform: rotate(0deg) translate(-17px, 23px);"></li>
+          <li style="transform: rotate(-4deg) translate(-18px, 21px);"></li>
+          <li style="transform: rotate(-8deg) translate(-18px, 17px);"></li>
+          <li style="transform: rotate(-12deg) translate(-16px, 10px);"></li>
+          <li style="transform: rotate(-16deg) translate(-13px, 1px);"></li>
+          <li style="transform: rotate(-20deg) translate(-9px, -15px);"></li>
+        </ul>
+        <ul class="lightrope">
+          <li style="transform: rotate(20deg) translate(-9px, -15px);"></li>
+          <li style="transform: rotate(16deg) translate(-8px, -2px)"></li>
+          <li style="transform: rotate(8deg) translate(-10px, 9px)"></li>
+          <li style="transform: rotate(4deg) translate(-15px, 17px);"></li>
+          <li style="transform: rotate(0deg) translate(-17px, 20px);"></li>
+          <li style="transform: rotate(-4deg) translate(-18px, 21px);"></li>
+          <li style="transform: rotate(-12deg) translate(-18px, 14px);"></li>
+          <li style="transform: rotate(-16deg) translate(-13px, 1px);"></li>
+          <li style="transform: rotate(-20deg) translate(-9px, -15px);"></li>
+        </ul>
+        <ul class="lightrope">
+          <li style="transform: rotate(20deg) translate(-9px, -15px);"></li>
+          <li style="transform: rotate(16deg) translate(-8px, -2px)"></li>
+          <li style="transform: rotate(8deg) translate(-10px, 9px)"></li>
+          <li style="transform: rotate(0deg) translate(-17px, 12px);"></li>
+          <li style="transform: rotate(-8deg) translate(-18px, 9px);"></li>
+          <li style="transform: rotate(-16deg) translate(-13px, 1px);"></li>
+          <li style="transform: rotate(-20deg) translate(-9px, -15px);"></li>
+        </ul>
+        <ul class="lightrope">
+          <li style="transform: rotate(20deg) translate(-9px, -15px);"></li>
+          <li style="transform: rotate(14deg) translate(-8px, 0px)"></li>
+          <li style="transform: rotate(0deg) translate(-12px, 5px);"></li>
+          <li style="transform: rotate(-20deg) translate(-13px, 1px);"></li>
+          <li style="transform: rotate(-25deg) translate(-9px, -15px);"></li>
+        </ul>
+        <ul class="lightrope">
+          <li style="transform: rotate(16deg) translate(-14px, -15px);"></li>
+          <li style="transform: rotate(-3deg) translate(-6px, -11px);"></li>
+          <li style="transform: rotate(-17deg) translate(0px, -16px);"></li>
+        </ul>
+      </div>
+    </div>
   </div>
   <div class="right-side-wrapper">
     <div class="choose-toy-wrapper">
       <p class="choose-toy-title tree-title">Игрушки</p>
       <div class="choose-toy-grid">
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
-        <div class="choose-toy-grid-item"></div>
+        <div class="choose-toy-grid-item" data-num="0">
+          <p class="toy-count">5</span></p>
+        </div>
+        <div class="choose-toy-grid-item" data-num="1"></div>
+        <div class="choose-toy-grid-item" data-num="2"></div>
+        <div class="choose-toy-grid-item" data-num="3"></div>
+        <div class="choose-toy-grid-item" data-num="4"></div>
+        <div class="choose-toy-grid-item" data-num="5"></div>
+        <div class="choose-toy-grid-item" data-num="6"></div>
+        <div class="choose-toy-grid-item" data-num="7"></div>
+        <div class="choose-toy-grid-item" data-num="8"></div>
+        <div class="choose-toy-grid-item" data-num="9"></div>
+        <div class="choose-toy-grid-item" data-num="10"></div>
+        <div class="choose-toy-grid-item" data-num="11"></div>
+        <div class="choose-toy-grid-item" data-num="12"></div>
+        <div class="choose-toy-grid-item" data-num="13"></div>
+        <div class="choose-toy-grid-item" data-num="14"></div>
+        <div class="choose-toy-grid-item" data-num="15"></div>
+        <div class="choose-toy-grid-item" data-num="16"></div>
+        <div class="choose-toy-grid-item" data-num="17"></div>
+        <div class="choose-toy-grid-item" data-num="18"></div>
+        <div class="choose-toy-grid-item" data-num="19"></div>
       </div>
     </div>
     <div class="done-tree-wrapper">

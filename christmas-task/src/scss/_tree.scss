@@ -294,7 +294,9 @@
   width: 80px;
   height: 80px;
   position: relative;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &::after {
     content: "";
     background-color: #89bcbe;
@@ -322,6 +324,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.toy-img {
+  width: 47px;
+  position: absolute;
+  cursor: move;
 }
 
 .done-tree-grid {
@@ -361,14 +369,14 @@
   position: relative;
 }
 
+.tree-img-wrapper {
+  position: relative;
+}
+
 .tree-img {
-  margin-top: 150px;
-  background-image: url('../assets/img/tree/1.png');
-  background-position: center center;
-  background-size: contain;
+  margin-top: 100px;
   width: 500px;
   height: 714px;
-  position: relative;
 }
 
 .control-btn-wrapper {

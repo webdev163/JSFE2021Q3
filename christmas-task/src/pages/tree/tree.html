@@ -53,7 +53,11 @@
     <button type="button" class="tree-reset-button btn">Сбросить настройки</button>
   </div>
   <div class="center-wrapper">
-    <div class="tree-img">
+    <map name="image-map" class="droppable">
+      <area coords="243,6,134,226,69,431,25,590,97,674,205,700,304,701,381,685,445,656,477,595,476,531,387,218" shape="poly">
+  </map>
+    <div class="tree-img-wrapper">
+      <img src="assets/img/tree/1.png" alt="" class="tree-img" usemap="#image-map">
       <div class="lightrope-wrapper">
         <ul class="lightrope">
           <li style="transform: rotate(20deg) translate(-9px, -15px);"></li>
@@ -106,30 +110,7 @@
   <div class="right-side-wrapper">
     <div class="choose-toy-wrapper">
       <p class="choose-toy-title tree-title">Игрушки</p>
-      <div class="choose-toy-grid">
-        <div class="choose-toy-grid-item" data-num="0">
-          <p class="toy-count">5</span></p>
-        </div>
-        <div class="choose-toy-grid-item" data-num="1"></div>
-        <div class="choose-toy-grid-item" data-num="2"></div>
-        <div class="choose-toy-grid-item" data-num="3"></div>
-        <div class="choose-toy-grid-item" data-num="4"></div>
-        <div class="choose-toy-grid-item" data-num="5"></div>
-        <div class="choose-toy-grid-item" data-num="6"></div>
-        <div class="choose-toy-grid-item" data-num="7"></div>
-        <div class="choose-toy-grid-item" data-num="8"></div>
-        <div class="choose-toy-grid-item" data-num="9"></div>
-        <div class="choose-toy-grid-item" data-num="10"></div>
-        <div class="choose-toy-grid-item" data-num="11"></div>
-        <div class="choose-toy-grid-item" data-num="12"></div>
-        <div class="choose-toy-grid-item" data-num="13"></div>
-        <div class="choose-toy-grid-item" data-num="14"></div>
-        <div class="choose-toy-grid-item" data-num="15"></div>
-        <div class="choose-toy-grid-item" data-num="16"></div>
-        <div class="choose-toy-grid-item" data-num="17"></div>
-        <div class="choose-toy-grid-item" data-num="18"></div>
-        <div class="choose-toy-grid-item" data-num="19"></div>
-      </div>
+      <div class="choose-toy-grid"></div>
     </div>
     <div class="done-tree-wrapper">
       <p class="done-tree-title tree-title">Вы нарядили</p>

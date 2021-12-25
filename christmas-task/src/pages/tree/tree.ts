@@ -1,6 +1,8 @@
 import { Tree } from '../../components/tree';
 import Render from '../../render';
 import treePageHtml from './tree.html';
+import { ToysData } from '../../types';
+import Data from '../../data';
 
 let tree: Tree;
 const audio: HTMLAudioElement = new Audio('audio/audio.mp3');
@@ -16,16 +18,19 @@ export default class TreePage {
     const garlandCheckboxWrapper = document.querySelector('.garland-checkbox-wrapper') as HTMLElement;
     const controlBtnSound = document.querySelector('.control-btn-sound') as HTMLElement;
     const controlBtnSnowflakes = document.querySelector('.control-btn-snowflake') as HTMLElement;
+    
 
     mainLink.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      this.emptyTreeToys();
       document.dispatchEvent(new Event('render-main'));
     })
 
     toysLink.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      this.emptyTreeToys();
       document.dispatchEvent(new Event('render-filters'));
     })
 
@@ -71,6 +76,7 @@ export default class TreePage {
       controlBtnSnowflakes.classList.toggle('active');
       this.updateState('snowflakes');
     })
+
   }
 
   public static async render(): Promise<void> {
@@ -79,7 +85,21 @@ export default class TreePage {
       tree = new Tree;
       this.setEventListeners();
       this.generateToys();
+      this.showTreeToys();
+      this.handleToysDrag();
     });
+  }
+
+  public static showTreeToys() {
+    for (let i = 0; i < document.body.children.length; i++) {
+      if (document.body.children[i].tagName === 'IMG') {
+        (document.body.children[i] as HTMLElement).style.display = 'block';
+      }
+    }
+  }
+
+  public static emptyTreeToys() {
+    document.querySelectorAll('.toy-img').forEach(el => el.remove());
   }
 
   private static updateState(type: string, e?: Event): void {
@@ -92,7 +112,7 @@ export default class TreePage {
     
       case 'tree':
         const clickedTreeNum = (e?.target as HTMLElement).dataset.num;
-        (document.querySelector('.tree-img') as HTMLElement).style.backgroundImage = `url("../assets/img/tree/${clickedTreeNum}.png")`
+        (document.querySelector('.tree-img') as HTMLImageElement).src = `../assets/img/tree/${clickedTreeNum}.png`
         tree.state.treeNum = clickedTreeNum as string;
         break;
 
@@ -142,8 +162,98 @@ export default class TreePage {
     }
   }
 
-  private static generateToys() {
+  private static async generateToys() {
+    let chosenArr: Array<string> = [];
+    let chosenDataArr: ToysData;
+    const toysGrid = document.querySelector('.choose-toy-grid') as HTMLElement;
+    const json: ToysData = await Data.getJson();
+    
+    if (localStorage.getItem('webdev163-chosen') !== null) {
+      chosenArr = JSON.parse(localStorage.getItem('webdev163-chosen') || '') as Array<string>;
+    }
+    chosenDataArr = chosenArr.length ? chosenArr.map(el => json[Number(el) - 1]) : json.slice(0, 20);
+    for (let i = 0; i < 20; i++) {
+      const div = document.createElement('div');
+      div.className = 'choose-toy-grid-item';
+      div.dataset.item = String(i);
+      if (chosenDataArr[i]) {
+        const counter = document.createElement('p');
+        counter.className = 'toy-count';
+        counter.textContent = chosenDataArr[i].count;
+        div.append(counter);
+        for (let j = 0; j < Number(chosenDataArr[i].count); j++) {
+          const img = document.createElement('img');
+          img.className = 'toy-img';
+          img.src = `assets/img/toys/${chosenDataArr[i].num}.png`;
+          img.dataset.imgnum = String(i);
+          img.draggable = false;
+          div.append(img);
+        }
+      }
+      toysGrid.append(div);
+    }
+    this.handleToysDrag();
+  }
 
+  private static handleToysDrag() {
+    const toys = document.querySelectorAll('.toy-img') as NodeList;
+    toys.forEach(el => el.addEventListener('mousedown', (e: Event) => {
+      const clicked = el as HTMLElement;
+      const clickedNum = clicked.dataset.imgnum as string;
+      const clickedParent = document.querySelector(`[data-item="${clickedNum}"]`) as HTMLElement;
+
+      this.updateToyCount(clickedParent);
+
+      if (clicked.classList.contains('toy-img')) {
+        const mouseevent = e as MouseEvent;
+        let shiftX = mouseevent.clientX - clicked.getBoundingClientRect().left;
+        let shiftY = mouseevent.clientY - clicked.getBoundingClientRect().top;
+        let isDroppable: boolean = false;
+        const moveAt = (pageX: number, pageY: number) => {
+          clicked.style.left = pageX - shiftX + 'px';
+          clicked.style.top = pageY - shiftY + 'px';
+        }
+        const onMouseMove = (event: MouseEvent) => {
+          
+
+          moveAt(event.pageX, event.pageY);
+          clicked.hidden = true;
+          let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+          clicked.hidden = false;
+
+          if (!elemBelow) return;
+          isDroppable = elemBelow.closest('.droppable') ? true : false;
+        }
+
+        clicked.ondragstart = function () {
+          return false;
+        };
+        clicked.style.position = 'absolute';
+        clicked.style.zIndex = String(1000);
+        document.body.append(clicked);
+        
+        onMouseMove(mouseevent);
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        document.addEventListener('mouseup', () => {
+          document.removeEventListener('mousemove', onMouseMove);
+          clicked.onmouseup = null;
+          if (!isDroppable) {
+            clicked.remove();
+            clickedParent?.append(clicked);
+            clicked.removeAttribute('style');
+          }
+          this.updateToyCount(clickedParent);
+        }, { once: true })
+      }
+    }))
+  }
+
+  private static updateToyCount(toyWrapper: HTMLElement) {
+    const currentToyCount = toyWrapper.querySelectorAll('img').length
+    const toyCounter = toyWrapper.querySelector('.toy-count') as HTMLElement;
+    toyCounter.textContent = String(currentToyCount);
   }
 
   private static createSnowflake(): void {

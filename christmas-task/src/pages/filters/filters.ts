@@ -144,7 +144,9 @@ export default class FiltersPage {
       this.setEventListeners();
       handleSearchInput();
       createSliders();
-      filters.filterSearch(filters.initArr);
+      setTimeout(() => {
+        filters.filterSearch(filters.initArr);
+      }, 300);
     });
   }
 

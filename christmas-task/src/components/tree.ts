@@ -2,6 +2,7 @@ import { TreeState } from '../types';
 
 export class Tree {
   public state: TreeState;
+  public activeToys: { [key: string]: string }
 
   constructor() {
     this.state = {
@@ -12,5 +13,6 @@ export class Tree {
       isSnowflakesChecked: false,
       isSoundChecked: false,
     };
+    this.activeToys = {}
   }
 }

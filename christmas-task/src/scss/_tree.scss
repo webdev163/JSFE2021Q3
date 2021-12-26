@@ -252,8 +252,17 @@
   background: #4cee4c;
 }
 
-.tree-reset-button {
-  padding: 7px 15px;
+.tree-btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tree-reset-button,
+.tree-save-button,
+.tree-delete-toys-button {
+  padding: 7px 10px;
+  flex-basis: 30%;
 }
 
 .center-wrapper {
@@ -280,6 +289,7 @@
 
 .choose-toy-wrapper {
   margin-bottom: 40px;
+  min-height: 474px;
 }
 
 .choose-toy-grid {
@@ -333,17 +343,34 @@
 }
 
 .done-tree-grid {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  row-gap: 20px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 345px;
+  padding-right: 10px;
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 100px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background-clip: content-box;
+    background-color: #89bcbe;
+  }
 }
 
 .done-tree-grid-item {
-  width: 161px;
-  height: 161px;
+  width: 100%;
+  height: 345px;
   position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &::after {
     content: "";
     background-color: #89bcbe;
@@ -356,6 +383,23 @@
     z-index: -1;
     border-radius: 10px;
   }
+  &:hover {
+    filter: sepia(5%);
+  }
+  & .toy-img {
+    width: 15px;
+    cursor: pointer;
+  }
+  &:not(:last-child) {
+    margin-bottom: 25px;
+  }
+}
+
+.done-tree-inner {
+  width: 600px;
+  height: 300px;
+  position: absolute;
+  transform: translateX(5px);
 }
 
 .center-wrapper {
@@ -374,7 +418,7 @@
 }
 
 .tree-img {
-  margin-top: 100px;
+  margin-top: 200px;
   width: 500px;
   height: 714px;
 }
@@ -396,4 +440,10 @@
 
 .control-btn-snowflake {
   margin-left: 30px;
+}
+
+.done-tree-img {
+  height: 250px;
+  position: relative;
+  margin-top: 65px;
 }

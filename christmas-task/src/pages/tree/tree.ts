@@ -1,8 +1,7 @@
 import { Tree } from '../../components/tree';
 import Render from '../../render';
 import treePageHtml from './tree.html';
-import { ToysData, TreeState } from '../../types';
-import Data from '../../data';
+import { TreeState, TreeUpdateStateTypes } from '../../types';
 
 let tree: Tree;
 const audio: HTMLAudioElement = new Audio('audio/audio.mp3');
@@ -21,114 +20,118 @@ export default class TreePage {
     const treeResetBtn = document.querySelector('.tree-reset-button') as HTMLElement;
     const treeSavetBtn = document.querySelector('.tree-save-button') as HTMLElement;
     const treeDeleteToystBtn = document.querySelector('.tree-delete-toys-button') as HTMLElement;
-    
 
-    mainLink.addEventListener('click', (e) => {
+    mainLink.addEventListener('click', (e: Event) => {
       e.preventDefault();
       e.stopPropagation();
       this.emptyTreeToys();
       audio.pause();
       document.dispatchEvent(new Event('render-main'));
-    })
+    });
 
-    toysLink.addEventListener('click', (e) => {
+    toysLink.addEventListener('click', (e: Event) => {
       e.preventDefault();
       e.stopPropagation();
       this.emptyTreeToys();
       audio.pause();
       document.dispatchEvent(new Event('render-filters'));
-    })
+    });
 
-    treeLink.addEventListener('click', (e) => {
+    treeLink.addEventListener('click', (e: Event) => {
       e.preventDefault();
       e.stopPropagation();
-    })
+    });
 
-    chooseTreeGrid.addEventListener('click', (e) => {
+    chooseTreeGrid.addEventListener('click', (e: Event) => {
       const clicked = e.target as HTMLElement;
       if (clicked.dataset.num) {
         this.updateState('tree', e);
       }
-    })
+    });
 
-    chooseBgGrid.addEventListener('click', (e) => {
+    chooseBgGrid.addEventListener('click', (e: Event) => {
       const clicked = e.target as HTMLElement;
       if (clicked.dataset.num) {
-        this.updateState('background', e);
+        this.updateState(TreeUpdateStateTypes.background, e);
       }
-    })
+    });
 
-    garlandBtnWrapper.addEventListener('click', (e) => {
+    garlandBtnWrapper.addEventListener('click', (e: Event) => {
       const clicked = e.target as HTMLElement;
       if (clicked.dataset.value) {
-        this.updateState('lights', e);
+        this.updateState(TreeUpdateStateTypes.lights, e);
       }
-    })
+    });
 
-    garlandCheckboxWrapper.addEventListener('click', (e) => {
+    garlandCheckboxWrapper.addEventListener('click', (e: Event) => {
       const clicked = e.target as HTMLElement;
       if (clicked.classList.contains('slide-checkbox')) {
-        this.updateState('lights', e);
+        this.updateState(TreeUpdateStateTypes.lights, e);
       }
-    })
+    });
 
     controlBtnSound.addEventListener('click', () => {
       controlBtnSound.classList.toggle('active');
-      this.updateState('sound');
-    })
+      this.updateState(TreeUpdateStateTypes.sound);
+    });
 
     controlBtnSnowflakes.addEventListener('click', () => {
       controlBtnSnowflakes.classList.toggle('active');
-      this.updateState('snowflakes');
-    })
-    
+      this.updateState(TreeUpdateStateTypes.snowflakes);
+    });
+
     treeResetBtn.addEventListener('click', () => {
       this.resetSettings();
-    })
+    });
 
     treeSavetBtn.addEventListener('click', () => {
       this.saveTree();
-    })
+    });
 
     treeDeleteToystBtn.addEventListener('click', () => {
       this.emptyTreeToys();
-    })
+    });
   }
 
   public static async render(): Promise<void> {
     const html: string = treePageHtml;
     await Render.render(html).then(() => {
-      tree = new Tree;
+      tree = new Tree();
       this.setEventListeners();
       this.getLocalstorage();
-      this.generateToys();
+      Tree.generateToys();
+      Tree.generateLightropes();
       this.loadTree();
     });
   }
 
-  public static emptyTreeToys() {
+  public static emptyTreeToys(): void {
     const toysWrapper = document.querySelector('#active-toys') as HTMLElement;
     const toysGrid = document.querySelector('.choose-toy-grid') as HTMLElement;
     toysWrapper.innerHTML = '';
     toysGrid.innerHTML = '';
-    this.generateToys();
+    Tree.generateToys();
   }
 
   private static updateState(type: string, e?: Event): void {
     switch (type) {
-      case 'background':
+      case TreeUpdateStateTypes.background: {
         const clickedBgNum = (e?.target as HTMLElement).dataset.num;
-        (document.querySelector('.center-wrapper') as HTMLElement).style.backgroundImage = `url("../assets/img/bg/${clickedBgNum}.jpg")`
+        (
+          document.querySelector('.center-wrapper') as HTMLElement
+        ).style.backgroundImage = `url("../assets/img/bg/${clickedBgNum}.jpg")`;
         tree.state.backgroundNum = clickedBgNum as string;
         break;
-    
-      case 'tree':
+      }
+
+      case TreeUpdateStateTypes.tree: {
         const clickedTreeNum = (e?.target as HTMLElement).dataset.num;
-        (document.querySelector('.tree-img') as HTMLImageElement).src = `../assets/img/tree/${clickedTreeNum}.png`
+        (document.querySelector('.tree-img') as HTMLImageElement).src = `../assets/img/tree/${clickedTreeNum}.png`;
         tree.state.treeNum = clickedTreeNum as string;
         break;
+      }
 
-      case 'lights':
+      case TreeUpdateStateTypes.lights: {
         if ((e?.target as HTMLElement).classList.contains('slide-checkbox')) {
           const checkbox = e?.target as HTMLInputElement;
           tree.state.isLightsChecked = checkbox.checked;
@@ -139,26 +142,28 @@ export default class TreePage {
           (document.querySelectorAll('.lightrope') as NodeList).forEach(el => {
             const elem = el as HTMLElement;
             elem.className = 'lightrope';
-            elem.classList.add(clickedColor)
+            elem.classList.add(clickedColor);
             tree.state.lights = clickedColor;
-          })
+          });
         }
         break;
+      }
 
-      case 'snowflakes':
-        const controlBtnSnowflake = document.querySelector('.control-btn-snowflake') as HTMLElement
+      case TreeUpdateStateTypes.snowflakes: {
+        const controlBtnSnowflake = document.querySelector('.control-btn-snowflake') as HTMLElement;
         const snowflakesIntervalId: number = setInterval(() => {
           if (controlBtnSnowflake.classList.contains('active')) {
-          this.createSnowflake()
+            Tree.createSnowflake();
           } else {
             clearInterval(snowflakesIntervalId);
           }
         }, 50);
         tree.state.isSnowflakesChecked = tree.state.isSnowflakesChecked ? false : true;
         break;
+      }
 
-      case 'sound':
-        const controlBtnSound = document.querySelector('.control-btn-sound') as HTMLElement
+      case TreeUpdateStateTypes.sound: {
+        const controlBtnSound = document.querySelector('.control-btn-sound') as HTMLElement;
         if (controlBtnSound.classList.contains('active')) {
           tree.state.isSoundChecked = true;
           audio.play();
@@ -167,7 +172,8 @@ export default class TreePage {
           audio.pause();
         }
         break;
-    
+      }
+
       default:
         break;
     }
@@ -182,8 +188,12 @@ export default class TreePage {
   private static getLocalstorage(): void {
     if (localStorage.getItem('webdev163-tree-settings') !== null) {
       const previousState: TreeState = JSON.parse(localStorage.getItem('webdev163-tree-settings') || '');
-      (document.querySelector(`.choose-tree-grid-item[data-num="${previousState.treeNum}"]`) as HTMLInputElement).click();
-      (document.querySelector(`.choose-bg-grid-item[data-num="${previousState.backgroundNum}"]`) as HTMLInputElement).click();
+      (
+        document.querySelector(`.choose-tree-grid-item[data-num="${previousState.treeNum}"]`) as HTMLInputElement
+      ).click();
+      (
+        document.querySelector(`.choose-bg-grid-item[data-num="${previousState.backgroundNum}"]`) as HTMLInputElement
+      ).click();
       if (!previousState.isLightsChecked) {
         (document.querySelector('.slide-checkbox-garland') as HTMLInputElement).click();
       }
@@ -196,99 +206,13 @@ export default class TreePage {
         audio.play();
       }
       (document.querySelector(`.garland-button-${previousState.lights}`) as HTMLInputElement).click();
-      
+
       tree.state = previousState;
     }
   }
 
-  private static async generateToys() {
-    let chosenArr: Array<string> = [];
-    let chosenDataArr: ToysData;
-    const toysGrid = document.querySelector('.choose-toy-grid') as HTMLElement;
-    const json: ToysData = await Data.getJson();
-    
-    if (localStorage.getItem('webdev163-chosen') !== null) {
-      chosenArr = JSON.parse(localStorage.getItem('webdev163-chosen') || '') as Array<string>;
-    }
-    chosenDataArr = chosenArr.length ? chosenArr.map(el => json[Number(el) - 1]) : json.slice(0, 20);
-    for (let i = 0; i < 20; i++) {
-      const div = document.createElement('div');
-      div.className = 'choose-toy-grid-item';
-      div.dataset.item = String(i);
-      if (chosenDataArr[i]) {
-        const counter = document.createElement('p');
-        counter.className = 'toy-count';
-        counter.textContent = chosenDataArr[i].count;
-        div.append(counter);
-        for (let j = 0; j < Number(chosenDataArr[i].count); j++) {
-          const img = document.createElement('img');
-          img.className = 'toy-img';
-          img.src = `assets/img/toys/${chosenDataArr[i].num}.png`;
-          img.dataset.imgnum = String(i);
-          img.draggable = false;
-          div.append(img);
-        }
-      }
-      toysGrid.append(div);
-    }
-    this.handleToysDrag();
-  }
-
-  private static handleToysDrag() {
-    const toys = document.querySelectorAll('#active-toys .toy-img, .choose-toy-grid .toy-img') as NodeList;
-    toys.forEach(el => el.addEventListener('mousedown', (e: Event) => {
-      const clicked = el as HTMLElement;
-      const clickedNum = clicked.dataset.imgnum as string;
-      const clickedParent = document.querySelector(`[data-item="${clickedNum}"]`) as HTMLElement;
-
-      this.updateToyCount(clickedParent);
-
-      if (clicked.classList.contains('toy-img')) {
-        const mouseevent = e as MouseEvent;
-        let shiftX = mouseevent.clientX - clicked.getBoundingClientRect().left;
-        let shiftY = mouseevent.clientY - clicked.getBoundingClientRect().top;
-        let isDroppable: boolean = false;
-        const moveAt = (clientX: number, clientY: number) => {
-          clicked.style.left = (clientX - shiftX) / window.innerWidth * 100 + '%';
-          clicked.style.top = (clientY - shiftY) / window.innerHeight * 100 + '%';
-        }
-        const onMouseMove = (event: MouseEvent) => {
-          moveAt(event.clientX, event.clientY);
-          clicked.hidden = true;
-          let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-          clicked.hidden = false;
-
-          if (!elemBelow) return;
-          isDroppable = elemBelow.closest('.droppable') ? true : false;
-        }
-
-        clicked.ondragstart = function () {
-          return false;
-        };
-        clicked.style.position = 'absolute';
-        clicked.style.zIndex = String(1000);
-        (document.querySelector('#active-toys') as HTMLElement).append(clicked);
-        
-        onMouseMove(mouseevent);
-
-        document.addEventListener('mousemove', onMouseMove);
-
-        document.addEventListener('mouseup', () => {
-          document.removeEventListener('mousemove', onMouseMove);
-          clicked.onmouseup = null;
-          if (!isDroppable) {
-            clicked.remove();
-            clickedParent?.append(clicked);
-            clicked.removeAttribute('style');
-          }
-          this.updateToyCount(clickedParent);
-        }, { once: true })
-      }
-    }))
-  }
-
-  private static resetSettings() {
-    let previousState = tree.state;
+  private static resetSettings(): void {
+    const previousState = tree.state;
     (document.querySelector('.choose-tree-grid-item[data-num="1"]') as HTMLInputElement).click();
     (document.querySelector('.choose-bg-grid-item[data-num="1"]') as HTMLInputElement).click();
     if (!previousState.isLightsChecked) {
@@ -303,55 +227,42 @@ export default class TreePage {
       audio.currentTime = 0;
     }
     (document.querySelector('.garland-button-multicolor') as HTMLInputElement).click();
-    tree = new Tree;
+    tree = new Tree();
     localStorage.removeItem('webdev163-tree-settings');
-  }
-
-  private static updateToyCount(toyWrapper: HTMLElement) {
-    const currentToyCount = toyWrapper.querySelectorAll('img').length
-    const toyCounter = toyWrapper.querySelector('.toy-count') as HTMLElement;
-    toyCounter.textContent = String(currentToyCount);
-  }
-
-  private static createSnowflake(): void {
-    const snowFlake = document.createElement('i') as HTMLElement;
-    const centerWrapper = document.querySelector('.center-wrapper') as HTMLElement;
-    snowFlake.classList.add('fas');
-    snowFlake.classList.add('fa-snowflake');
-    snowFlake.style.left = Math.random() * window.innerWidth + 'px';
-    snowFlake.style.animationDuration = Math.random() * 3 + 2 + 's';
-    snowFlake.style.opacity = String(Math.random());
-    snowFlake.style.height = snowFlake.style.width = Math.random() * 10 + 10 + 'px';
-
-    centerWrapper.appendChild(snowFlake);
-
-    setTimeout(() => {
-      snowFlake.remove();
-    }, 5000)
   }
 
   private static saveTree() {
     const activeToys = (document.getElementById('active-toys') as HTMLElement).innerHTML;
-    const activeGridItem = document.querySelector(`.done-tree-grid-item[data-num="${tree.state.treeNum}"]`) as HTMLElement;
+    const activeGridItem = document.querySelector(
+      `.done-tree-grid-item[data-num="${tree.state.treeNum}"]`,
+    ) as HTMLElement;
     const activeToysWrapper = activeGridItem.querySelector('.active-toys-wrapper') as HTMLElement;
     tree.activeToys[tree.state.treeNum] = activeToys;
     activeToysWrapper.innerHTML = '';
     activeToysWrapper.innerHTML = activeToys;
     localStorage.setItem('webdev163-done-tree', JSON.stringify(tree.activeToys));
+    Tree.openPopup();
     this.loadTree();
   }
 
   private static loadTree() {
     if (localStorage.getItem('webdev163-done-tree') !== null) {
       const activeToys = JSON.parse(localStorage.getItem('webdev163-done-tree') || '') as { [key: string]: string };
-      for (let key in activeToys) {
+      for (const key in activeToys) {
         const activeGridItem = document.querySelector(`.done-tree-grid-item[data-num="${key}"]`) as HTMLElement;
-        const activeToysWrapper = document.querySelector(`.done-tree-grid-item[data-num="${key}"] .active-toys-wrapper`) as HTMLElement;
+        const activeToysWrapper = document.querySelector(
+          `.done-tree-grid-item[data-num="${key}"] .active-toys-wrapper`,
+        ) as HTMLElement;
         activeToysWrapper.innerHTML = activeToys[key];
-        activeGridItem.addEventListener('click', (e) => {
-          (document.querySelector('#active-toys') as HTMLElement).innerHTML = activeToys[key]
-          this.handleToysDrag();
-        })
+        activeGridItem.addEventListener('click', () => {
+          (
+            document.querySelector(
+              `.choose-tree-grid-item[data-num="${activeGridItem.dataset.num}"]`,
+            ) as HTMLInputElement
+          ).click();
+          (document.querySelector('#active-toys') as HTMLElement).innerHTML = activeToys[key];
+          Tree.handleToysDrag();
+        });
       }
     }
   }

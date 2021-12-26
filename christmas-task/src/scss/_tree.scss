@@ -2,6 +2,14 @@
   display: flex;
   justify-content: space-between;
   height: 100vh;
+  @media screen and (max-width: 1350px) {
+    height: auto;
+    flex-direction: column;
+  }
+}
+
+.droppable {
+  margin-top: 300px;
 }
 
 .tree-title {
@@ -27,6 +35,15 @@
     right: 0;
     position: absolute;
     z-index: -1;
+  }
+  @media screen and (max-width: 1350px) {
+    width: 96%;
+    margin: 0 auto;
+    order: 3;
+    margin-top: -50px;
+  }
+  @media screen and (max-width: 970px) {
+    margin-top: 0;
   }
 }
 
@@ -267,6 +284,9 @@
 
 .center-wrapper {
   flex-grow: 1;
+  @media screen and (max-width: 1350px) {
+    order: 1
+  }
 }
 
 .right-side-wrapper {
@@ -285,11 +305,29 @@
     position: absolute;
     z-index: -1;
   }
+  @media screen and (max-width: 1350px) {
+    width: 96%;
+    margin: 0 auto;
+    order: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    &::after {
+      background-image: unset;
+    }
+  }
+  @media screen and (max-width: 970px) {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
 }
 
 .choose-toy-wrapper {
   margin-bottom: 40px;
   min-height: 474px;
+  @media screen and (max-width: 970px) {
+    margin: 0 auto;
+  }
 }
 
 .choose-toy-grid {
@@ -298,6 +336,9 @@
   justify-content: space-between;
   flex-wrap: wrap;
   row-gap: 8px;
+  @media screen and (max-width: 1350px) {
+    width: 444px;
+  }
 }
 
 .choose-toy-grid-item {
@@ -340,6 +381,16 @@
   width: 47px;
   position: absolute;
   cursor: move;
+}
+
+.done-tree-wrapper {
+  @media screen and (max-width: 1350px) {
+    width: 45%;
+  }
+  @media screen and (max-width: 970px) {
+    width: 450px;
+    margin: 0 auto;
+  }
 }
 
 .done-tree-grid {
@@ -400,6 +451,11 @@
   height: 300px;
   position: absolute;
   transform: translateX(5px);
+  @media screen and (max-width: 1350px) {
+    width: 300px;
+    height: 450px;
+    transform: translateY(100px);
+  }
 }
 
 .center-wrapper {
@@ -411,6 +467,9 @@
   justify-content: center;
   overflow: hidden;
   position: relative;
+  @media screen and (max-width: 1350px) {
+    height: 61vh;
+  }
 }
 
 .tree-img-wrapper {

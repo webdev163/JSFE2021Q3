@@ -23,12 +23,12 @@ export interface Toy {
 }
 
 export interface TreeState {
-  treeNum: string,
-  backgroundNum: string,
-  lights: string,
-  isLightsChecked: boolean,
-  isSnowflakesChecked: boolean,
-  isSoundChecked: boolean,
+  treeNum: string;
+  backgroundNum: string;
+  lights: string;
+  isLightsChecked: boolean;
+  isSnowflakesChecked: boolean;
+  isSoundChecked: boolean;
 }
 
 export type ToysData = Toy[];
@@ -47,7 +47,7 @@ export enum SliderValues {
   sliderYearMax = 2020,
 }
 
-export enum UpdateStateTypes {
+export enum FilterUpdateStateTypes {
   search = 'search',
   color = 'color',
   shape = 'shape',
@@ -55,4 +55,12 @@ export enum UpdateStateTypes {
   favorite = 'favorite',
   minmax = 'minmax',
   sort = 'sort',
+}
+
+export enum TreeUpdateStateTypes {
+  background = 'background',
+  tree = 'tree',
+  lights = 'lights',
+  snowflakes = 'snowflakes',
+  sound = 'sound',
 }

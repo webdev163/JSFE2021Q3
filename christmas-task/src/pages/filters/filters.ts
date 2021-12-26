@@ -2,7 +2,7 @@ import Render from '../../render';
 import { Filters } from '../../components/filters';
 import filtersPageHtml from './filters.html';
 import { debounce, handleSearchInput, createSliders } from '../../utils';
-import { State, ToysData, UpdateStateTypes } from '../../types';
+import { State, ToysData, FilterUpdateStateTypes } from '../../types';
 import { CHOOSE_LIMIT } from '../../constants';
 import Data from '../../data';
 
@@ -42,43 +42,43 @@ export default class FiltersPage {
     searchInput.addEventListener(
       'keyup',
       debounce(() => {
-        this.updateState(UpdateStateTypes.search);
+        this.updateState(FilterUpdateStateTypes.search);
       }, 1000),
     );
 
     clearSearchButton.addEventListener('click', () => {
       searchInput.value = '';
-      this.updateState(UpdateStateTypes.search);
+      this.updateState(FilterUpdateStateTypes.search);
     });
 
     sortSelect.addEventListener('change', (e: Event) => {
-      this.updateState(UpdateStateTypes.sort, e);
+      this.updateState(FilterUpdateStateTypes.sort, e);
     });
 
     shapeControlsInner.addEventListener('click', (e: Event) => {
       if ((e.target as HTMLElement).classList.contains('shape-btn')) {
-        this.updateState(UpdateStateTypes.shape, e);
+        this.updateState(FilterUpdateStateTypes.shape, e);
       }
     });
 
     sizeControlsArr.forEach(el =>
       el.addEventListener('click', (e: Event) => {
         if ((e.target as HTMLElement).classList.contains('size-controls-item')) {
-          this.updateState(UpdateStateTypes.size, e);
+          this.updateState(FilterUpdateStateTypes.size, e);
         }
       }),
     );
 
     checkboxFavorite.addEventListener('click', (e: Event) => {
       if ((e.target as HTMLElement).classList.contains('favorite-controls-item')) {
-        this.updateState(UpdateStateTypes.favorite, e);
+        this.updateState(FilterUpdateStateTypes.favorite, e);
       }
     });
 
     document.addEventListener(
       'slider-change',
       debounce(() => {
-        this.updateState(UpdateStateTypes.minmax);
+        this.updateState(FilterUpdateStateTypes.minmax);
       }, 250),
     );
 
@@ -117,22 +117,22 @@ export default class FiltersPage {
       this.showChosenToys();
     });
 
-    mainLink.addEventListener('click', (e) => {
+    mainLink.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
       document.dispatchEvent(new Event('render-main'));
-    })
+    });
 
-    toysLink.addEventListener('click', (e) => {
+    toysLink.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
-    })
+    });
 
-    treeLink.addEventListener('click', (e) => {
+    treeLink.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
       document.dispatchEvent(new Event('render-tree'));
-    })
+    });
   }
 
   public static async render(): Promise<void> {
@@ -152,7 +152,7 @@ export default class FiltersPage {
 
   private static updateState(type: string, e?: Event): void {
     switch (type) {
-      case UpdateStateTypes.sort: {
+      case FilterUpdateStateTypes.sort: {
         if (e) {
           const targetSort = (e.target as HTMLSelectElement).value;
           filters.state.sort = targetSort;
@@ -160,14 +160,14 @@ export default class FiltersPage {
         break;
       }
 
-      case UpdateStateTypes.search: {
+      case FilterUpdateStateTypes.search: {
         const searchInput = document.querySelector('.search-input') as HTMLInputElement;
         const searchQuery = searchInput.value;
         filters.state.query = searchQuery;
         break;
       }
 
-      case UpdateStateTypes.color:
+      case FilterUpdateStateTypes.color:
         if (e) {
           const targetColor = (e.target as HTMLElement).dataset.value || '';
           if ((e.target as HTMLInputElement).checked) {
@@ -178,7 +178,7 @@ export default class FiltersPage {
         }
         break;
 
-      case UpdateStateTypes.shape:
+      case FilterUpdateStateTypes.shape:
         if (e) {
           const targetShape = (e.target as HTMLElement).dataset.value || '';
           if (!(e.target as HTMLElement).classList.contains('active')) {
@@ -190,7 +190,7 @@ export default class FiltersPage {
         }
         break;
 
-      case UpdateStateTypes.size:
+      case FilterUpdateStateTypes.size:
         if (e) {
           const targetCheckbox = e.target as HTMLInputElement;
           const targetSize = targetCheckbox.dataset.value || '';
@@ -202,7 +202,7 @@ export default class FiltersPage {
         }
         break;
 
-      case UpdateStateTypes.favorite:
+      case FilterUpdateStateTypes.favorite:
         if (e) {
           if ((e.target as HTMLInputElement).checked) {
             filters.state.isFavorite = true;
@@ -212,7 +212,7 @@ export default class FiltersPage {
         }
         break;
 
-      case UpdateStateTypes.minmax:
+      case FilterUpdateStateTypes.minmax:
         filters.state.minCount = Number((document.getElementById('count-slider-value-min') as HTMLElement).textContent);
         filters.state.maxCount = Number((document.getElementById('count-slider-value-max') as HTMLElement).textContent);
         filters.state.minYear = Number((document.getElementById('year-slider-value-min') as HTMLElement).textContent);

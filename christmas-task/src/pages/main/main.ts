@@ -5,7 +5,7 @@ export default class MainPage {
   private static setEventListeners(): void {
     (document.querySelector('.main-btn') as HTMLElement).addEventListener('click', () => {
       document.dispatchEvent(new Event('render-filters'));
-    })
+    });
   }
 
   public static async render(): Promise<void> {
@@ -14,5 +14,4 @@ export default class MainPage {
       this.setEventListeners();
     });
   }
-
 }

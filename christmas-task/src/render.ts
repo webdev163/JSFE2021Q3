@@ -8,7 +8,7 @@ export default class Render {
         resolve(null);
       }, 750);
     }).then(() => {
-      setTimeout(() => {
+      setTimeout((): void => {
         document.body.classList.add('loaded_hiding');
         window.setTimeout(() => {
           document.body.classList.add('loaded');

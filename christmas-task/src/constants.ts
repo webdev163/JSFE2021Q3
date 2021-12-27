@@ -21,3 +21,11 @@ export const LIGHTS_TRANSLATE_VALUES_ARR = [
 export const LIGHTS_COUNT_VALUES_ARR = [11, 9, 7, 5, 3];
 
 export const LIGHTROPES_COUNT = 5;
+
+export const DRAGGABLE_TOYS_ZINDEX_VALUE = 1000;
+
+export const VALUE_IN_PERCENTS_FACTOR = 100;
+
+export const SNOWFLAKES_MAX_SIZE = 10;
+
+export const SNOWFLAKES_LIFETIME_VALUE = 5000;

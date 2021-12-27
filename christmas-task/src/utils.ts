@@ -99,3 +99,21 @@ export const createSliders: () => void = () => {
     yearSlider?.noUiSlider?.set([SliderValues.sliderYearMin, SliderValues.sliderYearMax]);
   });
 };
+
+export const openPopup: () => void = () => {
+  const popup = document.querySelector('.popup') as HTMLElement;
+  const popupBtn = document.querySelector('.popup-btn') as HTMLElement;
+  const overlay = document.querySelector('#overlay') as HTMLElement;
+  popup.classList.add('active');
+  setTimeout(() => {
+    overlay.classList.add('active');
+  }, 200);
+  popupBtn.addEventListener(
+    'click',
+    () => {
+      popup.classList.remove('active');
+      overlay.classList.remove('active');
+    },
+    { once: true },
+  );
+};

@@ -1,7 +1,7 @@
 import Render from '../../render';
 import { Filters } from '../../components/filters';
 import filtersPageHtml from './filters.html';
-import { debounce, handleSearchInput, createSliders } from '../../utils';
+import { debounce, handleSearchInput, createSliders, openPopup } from '../../utils';
 import { State, ToysData, FilterUpdateStateTypes } from '../../types';
 import { CHOOSE_LIMIT } from '../../constants';
 import Data from '../../data';
@@ -240,7 +240,7 @@ export default class FiltersPage {
         textElement.textContent = String(totalChosen);
       } else {
         if (filters.chosenArr.length >= CHOOSE_LIMIT) {
-          this.openPopup();
+          openPopup();
           return;
         }
         cardItem.classList.add('chosen');
@@ -274,24 +274,6 @@ export default class FiltersPage {
         : 0;
       filters.state = filtersPreviousState;
     }
-  }
-
-  private static openPopup(): void {
-    const popup = document.querySelector('.popup') as HTMLElement;
-    const popupBtn = document.querySelector('.popup-btn') as HTMLElement;
-    const overlay = document.querySelector('#overlay') as HTMLElement;
-    popup.classList.add('active');
-    setTimeout(() => {
-      overlay.classList.add('active');
-    }, 200);
-    popupBtn.addEventListener(
-      'click',
-      () => {
-        popup.classList.remove('active');
-        overlay.classList.remove('active');
-      },
-      { once: true },
-    );
   }
 
   private static showChosenToys(): void {

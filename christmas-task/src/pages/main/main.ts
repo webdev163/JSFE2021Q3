@@ -3,7 +3,29 @@ import mainPageHtml from './main.html';
 
 export default class MainPage {
   private static setEventListeners(): void {
-    (document.querySelector('.main-btn') as HTMLElement).addEventListener('click', () => {
+    const mainLink = document.querySelector('.main-link') as HTMLElement;
+    const toysLink = document.querySelector('.toys-link') as HTMLElement;
+    const treeLink = document.querySelector('.tree-link') as HTMLElement;
+    const mainBtn = document.querySelector('.main-btn') as HTMLElement;
+
+    mainLink.addEventListener('click', (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+
+    toysLink.addEventListener('click', (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      document.dispatchEvent(new Event('render-filters'));
+    });
+
+    treeLink.addEventListener('click', (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      document.dispatchEvent(new Event('render-tree'));
+    });
+
+    mainBtn.addEventListener('click', () => {
       document.dispatchEvent(new Event('render-filters'));
     });
   }

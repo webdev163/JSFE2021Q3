@@ -117,12 +117,16 @@ export class Tree {
             clicked.style.top = String(((pageY - shiftY) / window.innerHeight) * VALUE_IN_PERCENTS_FACTOR + '%');
           };
           const onMouseMove = (event: MouseEvent): void => {
+            clicked.style.cursor = "not-allowed";
             moveAt(event.pageX, event.pageY);
             clicked.hidden = true;
             const elemBelow = document.elementFromPoint(event.pageX, event.pageY) as Element;
             clicked.hidden = false;
             if (!elemBelow) return;
             isDroppable = elemBelow.closest('.droppable') ? true : false;
+            if (isDroppable) {
+              clicked.style.cursor = "copy";
+            }
           };
 
           clicked.ondragstart = (): boolean => {
@@ -148,6 +152,7 @@ export class Tree {
                 clicked.removeAttribute('style');
               }
               this.updateToyCount(clickedParent);
+              clicked.style.cursor = "move";
             },
             { once: true },
           );

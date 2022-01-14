@@ -1,5 +1,6 @@
 import Render from '../../render';
 import mainPageHtml from './main.html';
+import { preventDefault } from '../../utils';
 
 export default class MainPage {
   private static setEventListeners(): void {
@@ -9,19 +10,16 @@ export default class MainPage {
     const mainBtn = document.querySelector('.main-btn') as HTMLElement;
 
     mainLink.addEventListener('click', (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
+      preventDefault(e);
     });
 
     toysLink.addEventListener('click', (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
+      preventDefault(e);
       document.dispatchEvent(new Event('render-filters'));
     });
 
     treeLink.addEventListener('click', (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
+      preventDefault(e);
       document.dispatchEvent(new Event('render-tree'));
     });
 

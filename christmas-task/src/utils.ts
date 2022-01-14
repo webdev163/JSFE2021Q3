@@ -117,3 +117,8 @@ export const openPopup: () => void = () => {
     { once: true },
   );
 };
+
+export const preventDefault: (e: Event) => void = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+}

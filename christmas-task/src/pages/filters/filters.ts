@@ -1,7 +1,7 @@
 import Render from '../../render';
 import { Filters } from '../../components/filters';
 import filtersPageHtml from './filters.html';
-import { debounce, handleSearchInput, createSliders, openPopup } from '../../utils';
+import { debounce, handleSearchInput, createSliders, openPopup, preventDefault } from '../../utils';
 import { State, ToysData, FilterUpdateStateTypes } from '../../types';
 import { CHOOSE_LIMIT } from '../../constants';
 import Data from '../../data';
@@ -34,8 +34,7 @@ export default class FiltersPage {
     });
 
     sortSelect.addEventListener('mousedown', (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
+      preventDefault(e);
       dropdown.classList.add('active');
     });
 
@@ -118,19 +117,16 @@ export default class FiltersPage {
     });
 
     mainLink.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
+      preventDefault(e);
       document.dispatchEvent(new Event('render-main'));
     });
 
     toysLink.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
+      preventDefault(e);
     });
 
     treeLink.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
+      preventDefault(e);
       document.dispatchEvent(new Event('render-tree'));
     });
   }

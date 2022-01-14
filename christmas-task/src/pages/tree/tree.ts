@@ -2,7 +2,7 @@ import { Tree } from '../../components/tree';
 import Render from '../../render';
 import treePageHtml from './tree.html';
 import { TreeState, TreeUpdateStateTypes } from '../../types';
-import { openPopup } from '../../utils';
+import { openPopup, preventDefault } from '../../utils';
 
 let tree: Tree;
 const audio: HTMLAudioElement = new Audio('audio/audio.mp3');
@@ -24,26 +24,17 @@ export default class TreePage {
     const doneTreeGridItems = document.querySelectorAll('.done-tree-grid-item') as NodeList;
 
     mainLink.addEventListener('click', (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
-      this.emptyTreeToys();
-      audio.pause();
-      this.snowflakesDisable();
+      this.onTreeLeave(e);
       document.dispatchEvent(new Event('render-main'));
     });
 
     toysLink.addEventListener('click', (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
-      this.emptyTreeToys();
-      audio.pause();
-      this.snowflakesDisable();
+      this.onTreeLeave(e);
       document.dispatchEvent(new Event('render-filters'));
     });
 
     treeLink.addEventListener('click', (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
+      preventDefault(e);
     });
 
     chooseTreeGrid.addEventListener('click', (e: Event) => {
@@ -294,7 +285,7 @@ export default class TreePage {
     }
   }
 
-  private static snowflakesDisable() {
+  private static snowflakesDisable(): void {
     if (tree.state.isSnowflakesChecked) {
       (document.querySelector('.control-btn-snowflake') as HTMLInputElement).click();
       tree.state.isSnowflakesChecked = true;
@@ -302,7 +293,7 @@ export default class TreePage {
     }
   }
 
-  private static generateSnowflakes() {
+  private static generateSnowflakes(): void {
     const controlBtnSnowflake = document.querySelector('.control-btn-snowflake') as HTMLElement;
     const snowflakesIntervalId: number = setInterval((): void => {
       if (controlBtnSnowflake.classList.contains('active')) {
@@ -311,5 +302,12 @@ export default class TreePage {
         clearInterval(snowflakesIntervalId);
       }
     }, 50);
+  }
+
+  private static onTreeLeave(e: Event): void {
+    preventDefault(e);
+    this.emptyTreeToys();
+    audio.pause();
+    this.snowflakesDisable();
   }
 }

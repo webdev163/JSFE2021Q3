@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+		<script src="https://rawgit.com/jonathantneal/svg4everybody/master/dist/svg4everybody.js"></script>
+		<script>svg4everybody();</script>
+		<title>SVG &lt;symbol&gt; sprite preview | svg-sprite</title>
+		<style>@charset "UTF-8";body{padding:0;margin:0;color:#666;background:#fafafa;font-family:Arial,Helvetica,sans-serif;font-size:1em;line-height:1.4}header{display:block;padding:3em 3em 2em 3em;background-color:#fff}header p{margin:2em 0 0 0}section{border-top:1px solid #eee;padding:2em 3em 0 3em}section ul{margin:0;padding:0}section li{display:inline;display:inline-block;background-color:#fff;position:relative;margin:0 2em 2em 0;vertical-align:top;border:1px solid #ccc;padding:1em 1em 3em 1em;cursor:default}.icon-box{margin:0;width:144px;height:144px;position:relative;background:#ccc url("data:image/gif;base64,R0lGODlhDAAMAIAAAMzMzP///yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjEgNjQuMTQwOTQ5LCAyMDEwLzEyLzA3LTEwOjU3OjAxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1LjEgV2luZG93cyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozQjk4OTI0MUY5NTIxMUUyQkJDMEI5NEFEM0Y1QTYwQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozQjk4OTI0MkY5NTIxMUUyQkJDMEI5NEFEM0Y1QTYwQyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjNCOTg5MjNGRjk1MjExRTJCQkMwQjk0QUQzRjVBNjBDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjNCOTg5MjQwRjk1MjExRTJCQkMwQjk0QUQzRjVBNjBDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAAAAAAAsAAAAAAwADAAAAhaEH6mHmmzcgzJAUG/NVGrfOZ8YLlABADs=") top left repeat;border:1px solid #ccc;display:table-cell;vertical-align:middle;text-align:center}.icon{display:inline;display:inline-block}h1{margin-top:0}h2{margin:0;padding:0;font-size:1em;font-weight:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:absolute;left:1em;right:1em;bottom:1em}footer{display:block;margin:0;padding:0 3em 3em 3em}footer p{margin:0;font-size:.7em}footer a{color:#0f7595;margin-left:0}</style>
+
+<!--
+
+Sprite shape dimensions
+====================================================================================================
+You will need to set the sprite shape dimensions via CSS when you use them as inline SVG, otherwise
+they would become a huge 100% in size. You may use the following dimension classes for doing so.
+They might well be outsourced to an external stylesheet of course.
+
+-->
+
+<style type="text/css">
+	.svg-car-dims { width: 1706.667px; height: 853.333px; }
+	.svg-flag-dims { width: 1000px; height: 1000px; }
+</style>
+<!--
+====================================================================================================
+-->
+
+	</head>
+	<body>
+
+<!--
+
+Inline <symbol> SVG sprite
+====================================================================================================
+This is an inlined version of the generated SVG sprite. The single images may be <use>d everywhere
+below within this document. Please see
+
+	https://github.com/svg-sprite/svg-sprite/blob/1.5.x/docs/configuration.md#defs--symbol-mode
+
+for further details on how to create this embeddable sprite variant.
+
+-->
+
+<svg width="0" height="0" style="position:absolute">
+		<symbol viewBox="0 0 1280 640" id="car"><path d="M352.5 105.9c-7.2 1.8-7.9 2.8-9 12.1-.4 3-1.1 6.2-1.6 7.1-.4.9-9.7 5.1-20.6 9.4-77.4 30.4-134.8 54-160.3 66.1-16.3 7.7-22.2 9.1-42.1 10.4-8.5.5-17 1.4-18.9 2-10.1 3.2-36.2 5.8-62 6.3l-11.5.2-4.7 8c-4.7 7.8-4.7 8-2.9 10 3.4 3.6 3.5 7.7.5 17.7-3 9.9-3.4 17.8-1.9 37 .5 6.7.4 8.8-.6 8.8-2.9 0-8.3 5.6-11 11.4-5 10.6-7.4 34.3-4.8 46.7 1.3 5.8 1.3 6.2.3 15.9-.5 5.4 1.6 23.8 2.8 24.4.2.1 2.9 2 6.1 4.1 7.3 4.9 12.3 10.3 13.2 14.3 1.7 7.9 16.7 15.5 35.5 18.1 10.4 1.5 96.9 9.7 108.7 10.4l3.2.2.5-16c.7-23 5-39.4 14.6-55.9 28.1-47.9 91.7-67.3 140.5-42.9 31.6 15.9 53 42.4 59.8 74.2 2.2 10.6 2.9 36.5 1.3 51.9l-.8 8.2H687c285.5 0 300.2-.1 299.5-1.8-3.3-8.7-5.6-32.5-4.5-46.1 2.8-32 17.7-56.7 45.9-75.9 39.9-27.3 84.7-28.2 124.3-2.4 23.9 15.7 39.7 39.2 46 68.7 1.8 8.4 1.5 34.1-.5 43-.8 3.8-1.4 7.1-1.2 7.3.7.8 38.6-2 47.8-3.4 18-2.8 25.3-6.5 30.4-15.2 2.4-4.1 2.8-5.7 2.8-12.7-.1-4.4-.9-11.7-2-16.3-1.8-7.9-1.8-8.8-.2-19 3.1-19.9 4-30.6 4.1-49.7.1-17.6-.1-19.5-2.3-26-4.6-13.5-10.3-19-28.3-27.4-22.2-10.4-63.3-22-116.8-33-52.3-10.8-152.4-21-205.4-21.1h-22.9l-23.6-13.9c-81.3-47.7-159.3-88.4-185.2-96.6-49.8-15.7-159.8-19.5-289.2-10l-18.8 1.4-4.7-3c-9.2-5.8-22.3-8.9-29.7-7zM543.7 137c1.3 4.5 5.8 30.5 8.8 51.5 3.3 22.6 7.4 53.9 7.1 54.2-.7.7-167.2-4-205.4-5.8-35.7-1.6-46.4-5.6-57.3-21.5-6.2-9.1-8.7-22.5-5.9-32.6 1.2-4 5.6-7.4 19.2-14.8 36.9-19.8 79.9-28.9 161.8-34 24.6-1.5 29-1.6 51-1.6l19.4.1 1.3 4.5zm64.9-1c38.3 3.6 71.7 8.6 93.4 13.9 21 5.2 45.1 16.3 72 33.2 14.1 8.8 37.9 25.9 38 27.1 0 .5-1.4.8-3.2.8-4.8 0-11.4 3.7-14 7.8-2.4 3.9-3 11.3-1.5 18.9l.9 4.3H613.4l-17.6-54-17.5-54h4.7c2.5 0 14.1.9 25.6 2z"/><path d="M261.7 327.5c-43.1 8.2-77.4 44-83.8 87.5-1.7 11.7-.7 29.2 2.4 41 11.3 43.6 49.7 75.1 94.7 77.7 50.7 2.9 95.9-31.3 107.6-81.3 2.8-11.7 2.6-34.8-.4-46.7-9.4-37.8-38.3-67-76-76.8-10.5-2.7-33.6-3.4-44.5-1.4zm37.8 31c8.4 2.1 20.9 8.5 28 14.2 11.6 9.4 21 24.2 25.1 39.3 2.3 8.7 2.4 26 0 35.5-5.8 23.7-24.2 43.9-47.3 51.9-53.1 18.6-107.4-27.7-96.9-82.8 3-15.2 9.4-27.4 20.6-38.6 11.1-11 23.7-17.8 38.5-20.6 8.4-1.6 23.5-1.1 32 1.1z"/><path d="M291.8 383.2c.2 9 .7 16.7 1.2 17.2 1.7 1.7 10.8-5.8 20.1-16.6l5.1-5.7-4.8-3.1c-5.2-3.3-13.1-6.5-18.5-7.5l-3.4-.6.3 16.3zM259.1 370c-6.2 2.2-16.7 8.2-16.4 9.4.3 1.3 23.7 21.6 24.9 21.6.7 0 1.5-.7 1.8-1.6.8-2 .8-12.7-.1-23.2-.7-9.5-.8-9.6-10.2-6.2zm61.8 34.5c-5.7 6.4-10.5 12.3-10.7 13.1-.6 2.5 4.6 3.5 15.7 2.9 5.8-.3 12.1-.8 13.9-1.1 3.3-.5 3.4-.6 2.7-4.2-.7-4.4-6.4-16.7-9.2-20.1l-1.9-2.4-10.5 11.8zm-94.9-5.4c-3.1 4.4-6.8 13.3-7.7 18.6l-.6 3.3h15.5c16.5 0 20.1-.9 18.1-4.4-1.3-2.4-20.4-21.6-21.4-21.6-.5 0-2.2 1.8-3.9 4.1zm52.6 5.5c-3.6 3.5 0 8.7 4.4 6.4 2.6-1.4 2.6-5.6.1-7-2.5-1.3-2.7-1.3-4.5.6zm-3.5 16.8c-5.7 3.2-6.8 11.1-2.2 15.7 4.3 4.2 10.1 4.3 14.3.1 4.2-4.2 4.1-10-.1-14.3-3.3-3.2-7.8-3.8-12-1.5zm-19.1 5c-1.9 2.3-.8 6.1 1.8 6.4 4.4.7 6.7-3.2 3.6-6.2-1.9-2-3.8-2-5.4-.2zm44.2 1.2c-2.7 1.9-2.8 3.6-.3 5.8 2.5 2.3 6.1.6 6.1-2.9 0-3.3-3-4.9-5.8-2.9zm-75.7 13.1c-7.7.6-7.6.5-5.9 6.5 1.6 5.5 6.1 14.6 9.2 18.6l1.8 2.3 10.3-12.2c5.7-6.7 10.4-12.9 10.5-13.8.1-1.4-1.4-1.6-10.4-1.7-5.8 0-12.7.1-15.5.3zm92 1.2c-4.4.4-6.1 1-6.3 2.2-.3 1.6 21 22.9 22.8 22.9 2.2 0 8.6-14.1 10.5-22.8l.7-3.2-10.9.2c-5.9.1-13.5.4-16.8.7zm-38.9 6.7c-1.9 1.8-1.9 2-.6 4.5.6 1.1 2.1 1.9 3.5 1.9 2 0 4.5-2.4 4.5-4.4 0-1-3.2-3.6-4.5-3.6-.7 0-2.1.7-2.9 1.6zm-18.7 17.1c-8.6 9-13.9 15.1-13.9 16.2 0 2.5 17.9 10.1 23.6 10.1h2.7l-.7-14.3c-.9-16.6-1.3-18.7-3.5-18.7-.9 0-4.6 3-8.2 6.7zm34.7-5.8c-.6 1-2.4 16.8-2.9 25.8-.3 6-.2 6.3 1.9 6.3 7.9 0 26.2-6.8 24.8-9.2-.5-.7-5.3-6.4-10.8-12.6-9.3-10.5-11.7-12.4-13-10.3zm778.7-132.4c-31.8 5.8-59.7 26.6-74.3 55.5-22.3 44.1-9.8 99.6 28.9 128.8 11.2 8.4 18.8 12.5 31.1 16.6 27.4 9.1 54.5 7 80.2-6.1 55.2-28.2 73.5-98.3 39.2-150-22.5-33.9-65.1-52.1-105.1-44.8zm38.5 31.5c34.8 9.8 57.9 44.3 53.2 79.6-6.7 50.8-59.6 79.6-105.5 57.4-23.9-11.6-39.6-35.2-41.2-62-2-33.5 19.2-64 51.6-74.5 12.2-4 28.9-4.2 41.9-.5z"/><path d="M1101.7 383.2c.3 9 .9 16.7 1.4 17.2 1.3 1.4 5.3-1.8 15.5-12.2l9.5-9.7-2.3-1.8c-5-4-18.9-9.7-23.5-9.7-1 0-1.1 3.3-.6 16.2zm-31.2-13.8c-5 1.6-13.3 5.8-16.3 8.2l-2.3 1.9 12.1 10.7c6.7 6 12.8 10.8 13.5 10.8 2.3 0 2.7-3.9 2-18.6-.8-16.2-.4-15.7-9-13zm60.2 35.2c-5.9 6.5-10.7 12.6-10.7 13.6 0 1.1 1.1 1.8 3.8 2.2 4.4.7 27.8-.7 28.9-1.7 1.5-1.6-5.1-18.3-9.4-23.6l-1.9-2.4-10.7 11.9zm-94.5-5.9c-3.9 6.2-7 13.4-7.8 18.4l-.7 3.9h15.2c8.6 0 16.1-.5 17.2-1 1.7-1 1.8-1.3.5-3.8-.8-1.5-5.9-7.1-11.4-12.5l-9.9-9.9-3.1 4.9zm52.6 5.4c-2.4 1.4-2.3 5.6.2 6.9 4.4 2.3 8-2.9 4.4-6.4-1.8-1.9-2.3-1.9-4.6-.5zm-3.7 17.2c-4.9 2.9-6.6 10.1-3.5 14.6.9 1.3 3.2 2.9 5 3.7 2.9 1.2 3.9 1.2 6.8 0 9.9-4.1 8.5-18-1.9-19.2-2.4-.3-5 .1-6.4.9zm-19.1 5.1c-1.9 2.3-.8 6.1 1.8 6.4 4.4.7 6.7-3.2 3.6-6.2-1.9-2-3.8-2-5.4-.2zm43.6 1.2c-.9.8-1.6 2.2-1.6 2.9 0 1.3 2.6 4.5 3.6 4.5 2 0 4.4-2.5 4.4-4.5 0-1.4-.8-2.9-1.9-3.5-2.5-1.3-2.7-1.3-4.5.6zm-76.1 13.3c-6 .6-6 .6-5.7 3.6.9 6.9 10.4 24.8 12.2 22.9 5.7-6.1 21-25 20.7-25.8-.4-1.2-17.6-1.7-27.2-.7zm93.2.8c-6.8.5-7.9 1.9-4.7 6 2.3 3.1 20 19.3 21 19.3.3 0 2-2.4 3.7-5.3 2.9-4.8 5.2-11.1 6.7-18l.6-2.7-10.7.2c-6 .1-13.4.3-16.6.5zM1087 449c-1.6 3.1.4 6.2 3.8 5.8 2.1-.2 2.8-.9 3-3.2.5-4.5-4.7-6.5-6.8-2.6zm-21.9 20.7c-5.6 5.9-10.1 11.3-10.1 12 0 2.8 17.2 10.3 23.7 10.3h2.6l-.7-12.3c-1-17.9-1.5-20.7-3.6-20.7-1 0-6.3 4.8-11.9 10.7zm38.4-9.8c-.7 1.2-2.3 14.4-2.9 24.3-.4 7.7-.4 7.8 1.9 7.8 4.5 0 13-2.2 19.3-5.1l6.4-2.9-1.9-2.3c-6.5-8.2-19.8-22.7-20.9-22.7-.7 0-1.5.4-1.9.9z"/></symbol>
+		<symbol viewBox="0 0 1000 1000" id="flag"><path d="M217.2 13.75c-22.28 5.9-48.72 19.22-69.69 34.73l-17.48 13.11-2.62-6.33c-3.93-9.61-20.1-23.59-29.49-25.34-21.62-3.93-41.51 4.15-50.9 20.75-9.61 17.04-8.96 21.63 12.45 93.06 10.7 36.04 69.68 233.52 131.07 439.08 61.38 205.34 113.37 377.26 115.34 381.85 1.97 4.59 6.77 11.14 10.7 14.42 21.19 18.57 56.8 12.67 69.25-11.58 9.4-18.13 9.83-16.16-39.76-182.4-25.34-84.54-46.09-155.1-46.09-156.63 0-1.53 11.14-14.2 24.68-27.96 29.28-30.16 44.14-38.46 70.13-40.21 21.63-1.31 42.16 4.15 108.13 29.05 80.61 30.36 146.58 50.46 202.28 61.6 14.86 2.84 30.37 3.71 63.35 3.93 38.01 0 46.09-.65 62.91-4.81 42.38-10.92 73.4-29.27 107.04-63.79 15.73-15.95 21.19-22.94 20.32-25.78-1.75-5.46-51.77-173.01-112.72-378.13-28.18-93.93-51.55-170.61-52.43-170.39-.66.44-12.45 12.67-26.21 27.31-51.55 54.83-75.36 66.84-133.25 66.84-29.71 0-54.83-4.37-95.24-16.16-29.93-8.52-102.02-33.64-140.46-48.93-48.93-19.22-92.62-29.05-138.93-30.8-21.63-.64-29.06-.21-42.38 3.51zm53.3 57.45c1.09 1.53 36.04 116.65 36.04 118.4 0 1.31-6.33 2.4-14.42 2.84-17.91.44-45.66 9.83-62.04 20.54-6.55 4.37-21.85 17.91-33.64 29.93-11.8 12.23-22.06 21.63-22.5 21.19-1.53-1.53-37.79-118.84-37.79-122.11 0-3.71 32.33-34.95 47.19-45.87 13.98-10.05 40.63-22.94 53.52-25.56 7.86-1.54 32.54-1.11 33.64.64zM537 151.37c13.33 3.28 34.3 7.86 46.97 9.83 12.67 2.18 23.16 3.93 23.37 4.15 1.31 1.09 37.57 120.15 36.92 121.02-3.71 3.5-87.81-14.42-130.63-27.96L499 253.82l-9.83-31.02c-5.24-17.04-13.76-44.13-18.79-60.29-5.02-16.17-9.61-30.58-10.27-32.11-.65-1.53 9.61.87 26 6.12 14.85 4.58 37.79 11.36 50.89 14.85zm-178.69 67.94c11.8 3.71 36.26 12.45 54.17 19.44 18.13 6.77 42.16 15.51 53.74 19.44l20.75 6.77 22.94 73.83c14.42 46.53 22.06 73.84 20.53 74.27-2.62.66-28.83-8.52-82.79-29.05-18.13-6.99-41.5-14.64-52.21-17.48l-19.66-5.02-22.72-72.74c-12.23-39.98-22.5-73.62-22.5-74.49.01-3.05 5.91-1.96 27.75 5.03zm469.67 113.15l22.5 74.93-5.02 4.37c-31.02 27.09-80.39 44.78-119.27 42.81l-13.98-.65-22.72-73.83c-12.67-40.63-22.28-74.49-21.63-75.15.66-.66 10.7-2.18 22.06-3.06 37.35-3.06 76.02-17.26 100.49-36.7 6.12-4.59 12.01-8.3 13.11-8.08 1.3.22 12.22 34.3 24.46 75.36zm-463.33 42.6c.22 0 8.3 26.21 18.13 58.11 9.83 31.89 18.35 59.42 18.79 61.38.88 2.84-1.96 3.93-16.38 5.9-38.67 5.46-62.91 17.91-95.02 48.93l-21.84 21.19-18.15-58.32c-9.83-32.11-17.91-59.86-17.91-61.6 0-1.75 11.58-15.29 25.78-29.71 22.5-23.37 27.74-27.52 44.13-35.61 20.1-9.61 36.92-13.54 52.43-11.8 5.45.66 10.04 1.31 10.04 1.53zm224.56 72.31c31.02 8.74 74.49 17.69 96.77 19.88l15.95 1.53 5.68 18.79c3.06 10.27 11.58 37.35 18.57 59.85 6.99 22.72 12.89 42.38 12.89 43.91 0 5.9-65.32-7.86-119.05-25.12l-27.09-8.52-9.83-31.24c-5.24-17.04-13.33-42.82-17.91-57.23-4.37-14.42-8.52-27.52-9.18-29.27-.88-2.4-.22-2.84 2.84-1.53 2.18.86 15.94 4.8 30.36 8.95z"/></symbol>
+</svg>
+
+<!--
+====================================================================================================
+-->
+
+		<header>
+			<h1>SVG <code>&lt;symbol&gt;</code> sprite preview</h1>
+			<p>This preview features two methods of using the generated sprite in conjunction with inline SVG. Please have a look at the HTML source for further details and be aware of the following constraints:</p>
+			<ul>
+				<li>Your browser has to <a href="http://caniuse.com/#feat=svg-html5" target="_blank" rel="noopener noreferrer">support inline SVG</a> for these techniques to work.</li>
+				<li>The embedded sprite (A) slightly differs from the generated external one. Please <a href="https://github.com/svg-sprite/svg-sprite/blob/1.5.x/docs/configuration.md#defs--symbol-mode" target="_blank" rel="noopener noreferrer">see the documentation</a> for details on how to create such an embeddable sprite.</li>
+				<li>Internet Explorer up to version 11 doesn't support external sprites for use with inline SVG. For IE 9-11, you may polyfill this functionality with <a href="https://github.com/jonathantneal/svg4everybody" target="_blank" rel="noopener noreferrer">SVG for Everybody</a>.</li>
+			</ul>
+		</header>
+		<section>
+
+<!--
+
+A) Inline SVG with embedded sprite
+====================================================================================================
+These SVG images make use of fragment identifiers (IDs) and are extracted out of the inline sprite
+embedded above. They may be styled via CSS.
+
+-->
+
+			<h3>A) Inline SVG with embedded sprite</h3>
+			<ul>
+
+				<li title="car">
+					<div class="icon-box">
+
+						<!-- car -->
+						<svg class="svg-car-dims">
+							<use xlink:href="#car"></use>
+						</svg>
+
+					</div>
+					<h2>car</h2>
+				</li>
+				<li title="flag">
+					<div class="icon-box">
+
+						<!-- flag -->
+						<svg class="svg-flag-dims">
+							<use xlink:href="#flag"></use>
+						</svg>
+
+					</div>
+					<h2>flag</h2>
+				</li>
+			</ul>
+
+<!--
+====================================================================================================
+-->
+
+		</section>
+		<section>
+
+<!--
+
+B) Inline SVG with external sprite (IE 9-11 with polyfill only)
+====================================================================================================
+These SVG images make use of an URL + fragment identifiers (IDs) and refer to the regular external
+SVG sprite. They may be styled via CSS. (IE 9-11 with polyfill only)
+
+-->
+
+			<h3>B) Inline SVG with external sprite (IE 9-11 with polyfill only)</h3>
+			<ul>
+
+				<li title="car">
+					<div class="icon-box">
+
+						<!-- car -->
+						<svg class="svg-car-dims">
+							<use xlink:href="sprite.svg#car"></use>
+						</svg>
+
+					</div>
+					<h2>car</h2>
+				</li>
+				<li title="flag">
+					<div class="icon-box">
+
+						<!-- flag -->
+						<svg class="svg-flag-dims">
+							<use xlink:href="sprite.svg#flag"></use>
+						</svg>
+
+					</div>
+					<h2>flag</h2>
+				</li>
+			</ul>
+
+<!--
+====================================================================================================
+-->
+
+		</section>
+		<footer>
+			<p>Generated at Thu, 13 Jan 2022 13:39:03 GMT by <a href="https://github.com/svg-sprite/svg-sprite" target="_blank" rel="noopener noreferrer">svg-sprite</a>.</p>
+		</footer>
+	</body>
+</html>

@@ -252,12 +252,12 @@ const comp = (done) => {
       throw err;
     }
   });
-  fs.writeFile((paths.src.js + `components/${process.argv[4]}/index.tsx`), `import ${process.argv[4]} from \'./${process.argv[4]}\';\n\nexport default ${process.argv[4]};\n`, (err) => {
+  fs.writeFile((paths.src.js + `components/${process.argv[4]}/index.tsx`), `import ${process.argv[4]} from './${process.argv[4]}';\n\nexport default ${process.argv[4]};\n`, (err) => {
     if (err) {
       throw err;
     }
   });
-  fs.writeFile((paths.src.js + `components/${process.argv[4]}/${process.argv[4]}.tsx`), process.argv[3] === '--class' ? `import React, { Component } from 'react';\n\nimport './${process.argv[4]}.scss';\n\ninterface Props {\n\tfoo: string;\n}\n\nexport default class ${process.argv[4]} extends Component<Props> {\n\tconstructor(props: Props) {\n\t\tsuper(props);\n\t\tthis.state = {};\n\t}\n\n\trender() {\n\t\treturn (\n\t\t\t\n\t\t);\n\t}\n}\n` : `import React, { FC } from 'react';\n\nimport './${process.argv[4]}.scss';\n\nconst ${process.argv[4]}: FC = () => {\n\treturn (\n\t\t\n\t);\n};\n\nexport default ${process.argv[4]};`, (err) => {
+  fs.writeFile((paths.src.js + `components/${process.argv[4]}/${process.argv[4]}.tsx`), process.argv[3] === '--class' ? `import React, { Component } from 'react';\n\nimport './${process.argv[4]}.scss';\n\ninterface Props {\n  foo: string;\n}\n\ninterface State {\n  bar: string;\n}\n\nexport default class ${process.argv[4]} extends Component<Props, State> {\n  constructor(props: Props) {\n    super(props);\n    this.state = {};\n  }\n\n  render() {\n    return (\n      <div></div>\n    );\n  }\n}\n` : `import React, { FC } from 'react';\n\nimport './${process.argv[4]}.scss';\n\nconst ${process.argv[4]}: FC = () => {\n  return (\n    <div></div>\n  );\n};\n\nexport default ${process.argv[4]};\n`, (err) => {
     if (err) {
       throw err;
     }

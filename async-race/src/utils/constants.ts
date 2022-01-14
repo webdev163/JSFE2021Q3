@@ -1,0 +1,1 @@
+export const CARS_PER_PAGE_COUNT = 7;

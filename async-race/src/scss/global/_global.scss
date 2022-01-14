@@ -3,3 +3,47 @@
 *::after {
   box-sizing: border-box;
 }
+
+body {
+  background-color: #2b2b2b;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  color: #fff;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding-left: 5%;
+  padding-right: 5%;
+  border: 1px solid red;
+}
+
+.text-input {
+  width: 300px;
+  outline: none;
+}
+
+.color-input {
+  cursor: pointer;
+}
+
+.btn {
+  background-color: #fff;
+  border: 1px solid #d4d4d4;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 7px 15px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #2b2b2b;
+  transition: background-color .3s, filter .3s;
+  &:hover {
+    background-color: #ffebd4;
+    filter: drop-shadow(0 0 10px #ffdb8e);
+  }
+}
+
+.hidden {
+  display: none;
+}

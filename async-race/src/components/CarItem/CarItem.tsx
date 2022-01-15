@@ -5,16 +5,19 @@ import './CarItem.scss';
 interface Props {
   carName: string;
   carColor: string;
+  carId: number;
+  deleteCar: (carId: number) => void;
+  selectCar: (carId: number) => void;
 }
 
-const CarItem: FC<Props> = ({ carName, carColor }) => {
+const CarItem: FC<Props> = ({ carName, carColor, carId, deleteCar, selectCar }) => {
   return (
-    <li className="car-item">
+    <li className="car-item" data-num={carId}>
       <div className="car-buttons-wrapper">
-        <button className="btn button-select" type="button">
+        <button className="btn button-select" type="button" onClick={() => selectCar(carId)}>
           Select
         </button>
-        <button className="btn button-remove" type="button">
+        <button className="btn button-remove" type="button" onClick={() => deleteCar(carId)}>
           Remove
         </button>
         <button className="btn button-start" type="button">

@@ -3,3 +3,11 @@ export interface CarData {
   color: string,
   id: number
 }
+
+export interface GlobalState {
+  carsArr: CarData[];
+  totalCarsCount: number | null;
+  totalPagesCount: number | null;
+  currentPage: number;
+  selectedCar: CarData;
+}

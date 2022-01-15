@@ -4,11 +4,16 @@ import CarUpdateForm from '../CarUpdateForm';
 
 import './GarageHeader.scss';
 
-const GarageHeader: FC = () => {
+interface Props {
+  createCar: (carName: string, carColor: string) => void;
+  updateCar: (name: string, color: string, carId: number) => void;
+}
+
+const GarageHeader: FC<Props> = ({ createCar, updateCar }) => {
   return (
     <div className="header-wrapper">
-      <CarCreateForm />
-      <CarUpdateForm />
+      <CarCreateForm createCar={createCar} />
+      <CarUpdateForm updateCar={updateCar} />
     </div>
   );
 };

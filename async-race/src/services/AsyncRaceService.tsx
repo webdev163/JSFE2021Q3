@@ -8,6 +8,14 @@ export default class AsyncRaceService extends Component {
     return { carsArr, totalCarsCount };
   }
 
+  static async getCar(carId: number) {
+    const response = await fetch(`http://localhost:3000/garage/${carId}`, {
+      method: 'GET',
+    });
+    const data = await response.json();
+    return data;
+  }
+
   static async createCar(name: string, color: string) {
     const response = await fetch('http://localhost:3000/garage', {
       method: 'POST',
@@ -18,8 +26,21 @@ export default class AsyncRaceService extends Component {
     return newCar;
   }
 
-  // render() {
-  //   const { foo } = this.state;
-  //   return <div />;
-  // }
+  static async updateCar(name: string, color: string, carId: number) {
+    const response = await fetch(`http://localhost:3000/garage/${carId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, color }),
+    });
+    const newCar = await response.json();
+    return newCar;
+  }
+
+  static async deleteCar(carId: number) {
+    const response = await fetch(`http://localhost:3000/garage/${carId}`, {
+      method: 'DELETE',
+    });
+    const data = await response.json();
+    return data;
+  }
 }

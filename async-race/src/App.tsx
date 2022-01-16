@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import NavMenu from './components/NavMenu';
 import GaragePage from './pages/Garage';
 import WinnersPage from './pages/Winners';
-import AppCtx from './utils/context';
+import { AppCtx } from './utils/context';
 import { GlobalState } from './utils/types';
 
 const App: FC = () => {

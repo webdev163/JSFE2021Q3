@@ -1,4 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useRef } from 'react';
+import { ActionsCtx } from '../../utils/context';
+import { CarId } from '../../utils/types';
 
 import './CarItem.scss';
 
@@ -6,11 +8,19 @@ interface Props {
   carName: string;
   carColor: string;
   carId: number;
-  deleteCar: (carId: number) => void;
-  selectCar: (carId: number) => void;
 }
 
-const CarItem: FC<Props> = ({ carName, carColor, carId, deleteCar, selectCar }) => {
+const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
+  const [isStopDisabled, toggleDisabled] = useState(true);
+  const actionsContext = React.useContext(ActionsCtx);
+  const deleteCar = actionsContext?.deleteCar as CarId;
+  const selectCar = actionsContext?.selectCar as CarId;
+  const startEngine = actionsContext?.startEngine as (carId: number, carImg: SVGSVGElement | null) => void;
+  const stopEngine = actionsContext?.stopEngine as (carId: number, animated: SVGSVGElement | null) => void;
+  const carImg = useRef<SVGSVGElement>(null);
+
+  const animated = carImg.current as SVGSVGElement;
+
   return (
     <li className="car-item" data-num={carId}>
       <div className="car-buttons-wrapper">
@@ -20,16 +30,32 @@ const CarItem: FC<Props> = ({ carName, carColor, carId, deleteCar, selectCar }) 
         <button className="btn button-remove" type="button" onClick={() => deleteCar(carId)}>
           Remove
         </button>
-        <button className="btn button-start" type="button">
+        <button
+          className="btn button-start"
+          type="button"
+          onClick={() => {
+            toggleDisabled(false);
+            startEngine(carId, carImg.current);
+          }}
+          disabled={!isStopDisabled}
+        >
           A
         </button>
-        <button className="btn button-stop" type="button">
+        <button
+          className="btn button-stop"
+          type="button"
+          onClick={() => {
+            toggleDisabled(true);
+            stopEngine(carId, animated);
+          }}
+          disabled={isStopDisabled}
+        >
           B
         </button>
       </div>
       <div className="car-item-body">
         <div className="car-name">{carName}</div>
-        <svg width="68" height="34">
+        <svg ref={carImg} className="car-img-wrapper" width="68" height="34">
           <use className="car-img" style={{ fill: carColor }} href="assets/icons/sprite.svg#car" />
         </svg>
         <svg className="flag-img" width="50" height="50">

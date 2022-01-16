@@ -1,15 +1,12 @@
 import React, { FC, useState, useEffect } from 'react';
 import { CarData } from '../../utils/types';
-import AppCtx from '../../utils/context';
+import { AppCtx, ActionsCtx } from '../../utils/context';
 
 import './CarUpdateForm.scss';
 
-interface Props {
-  updateCar: (name: string, color: string, carId: number) => void;
-}
-
-const CarUpdateForm: FC<Props> = ({ updateCar }) => {
+const CarUpdateForm: FC = () => {
   const appContext = React.useContext(AppCtx);
+  const actionsContext = React.useContext(ActionsCtx);
   const selectedCar = appContext?.selectedCar as CarData;
   const [carName, setName] = useState(selectedCar.name);
   const [carColor, setColor] = useState(selectedCar.color);
@@ -43,7 +40,7 @@ const CarUpdateForm: FC<Props> = ({ updateCar }) => {
         className="btn update-btn"
         type="button"
         onClick={() => {
-          updateCar(carName, carColor, carId);
+          actionsContext?.updateCar(carName, carColor, carId);
         }}
         disabled={isDisabled}
       >

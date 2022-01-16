@@ -1,6 +1,7 @@
 import React from 'react';
-import { GlobalState } from './types';
+import { GlobalState, Actions } from './types';
 
 const AppCtx = React.createContext<GlobalState | null>(null);
+const ActionsCtx = React.createContext<Actions | null>(null);
 
-export default AppCtx;
+export { AppCtx, ActionsCtx };

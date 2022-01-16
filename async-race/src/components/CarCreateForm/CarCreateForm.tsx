@@ -1,14 +1,13 @@
 import React, { FC, useState } from 'react';
+import { ActionsCtx } from '../../utils/context';
 
 import './CarCreateForm.scss';
 
-interface Props {
-  createCar: (carName: string, carColor: string) => void;
-}
-
-const CarCreateForm: FC<Props> = ({ createCar }) => {
+const CarCreateForm: FC = () => {
   const [carName, setName] = useState('');
   const [carColor, setColor] = useState('#000000');
+  const actionsContext = React.useContext(ActionsCtx);
+  const createCar = actionsContext?.createCar as (carName: string, carColor: string) => void;
   return (
     <div className="create-form-wrapper">
       <input type="text" className="text-input" value={carName} onChange={e => setName(e.target.value)} />

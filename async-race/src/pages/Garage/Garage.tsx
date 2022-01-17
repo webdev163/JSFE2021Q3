@@ -14,6 +14,7 @@ import { ActionsCtx } from '../../utils/context';
 import carBrands from '../../assets/data/carBrands';
 import carModels from '../../assets/data/carModels';
 import { getRandomInt, getRandomColor } from '../../utils/utils';
+import WinnerModal from '../../components/WinnerModal';
 
 import './Garage.scss';
 
@@ -31,6 +32,9 @@ export default class Garage extends Component<Props, GlobalState> {
       totalPagesCount: null,
       currentPage: 1,
       selectedCar: { name: '', color: '#000000', id: 0 },
+      isModalActive: false,
+      winner: null,
+      isRaceActive: false,
     };
   }
 
@@ -79,52 +83,35 @@ export default class Garage extends Component<Props, GlobalState> {
   };
 
   startEngine = async (carId: number, carImg: SVGSVGElement) => {
-    AsyncRaceService.startEngine(carId).then(async ({ velocity }) => {
-      const { carsArr } = this.state;
-      const newCarsArr = carsArr.map(car => {
-        const newCar = car;
-        if (car.id === carId) {
-          newCar.isActive = true;
-        }
-        return newCar;
-      }) as unknown as CarData[];
-      this.setState({ carsArr: newCarsArr });
-
-      const animationId = this.handleAnimation(carId, carImg, velocity);
-      AsyncRaceService.driveMode(carId).then(response => {
-        const result = response as unknown as {
-          success?: boolean;
-          carId?: number;
-          err?: string;
-          velocity?: number;
-        };
-        if (!result.success) {
-          let carName = '';
-          const newArr = carsArr.map(car => {
-            const newCar = car;
-            if (car.id === carId) {
-              newCar.isActive = false;
-              carName = car.name;
-            }
-            return newCar;
-          }) as unknown as CarData[];
-          const style = 'font-weight: bold;';
-          // eslint-disable-next-line no-console
-          console.log(`%c Car ${carName} stopped suddenly!`, style);
-          this.setState({ carsArr: newArr });
-          window.cancelAnimationFrame(animationId);
-        }
-      });
+    this.updateCarsArr(carId, 'isEngineOn', true);
+    return AsyncRaceService.startEngine(carId).then(async ({ velocity, distance }) => {
+      this.updateCarsArr(carId, 'isActive', true);
+      this.handleAnimation(carId, carImg, velocity, distance);
+      this.enableDriveMode(carId);
     });
   };
 
-  handleAnimation = (carId: number, carImg: SVGSVGElement, velocity: number) => {
+  enableDriveMode = async (carId: number) => {
+    return AsyncRaceService.driveMode(carId).then(response => {
+      const result = response as unknown as {
+        success?: boolean;
+        carId?: number;
+        err?: string;
+        velocity?: number;
+      };
+      if (!result.success) {
+        this.updateCarsArr(carId, 'isActive', false);
+        this.updateCarsArr(carId, 'isError', true);
+      }
+    });
+  };
+
+  handleAnimation = (carId: number, carImg: SVGSVGElement, velocity: number, distance: number) => {
     let startTime: number;
     let animationId: number;
     const target = carImg;
-    const distance = (document.querySelector('.car-item-body') as HTMLElement).clientWidth - target.clientWidth;
-    const animationTime = (distance / velocity) * MILLISECONDS_IN_SECOND;
-
+    const width = (document.querySelector('.car-item-body') as HTMLElement).clientWidth - target.clientWidth;
+    const animationTime = distance / velocity;
     const step = (timestamp: number) => {
       let isActive = false;
       const { carsArr } = this.state;
@@ -136,7 +123,7 @@ export default class Garage extends Component<Props, GlobalState> {
       if (isActive) {
         if (!startTime) startTime = timestamp;
         const currentTime = timestamp - startTime;
-        const count = (distance / animationTime) * currentTime;
+        const count = (width / animationTime) * currentTime;
         target.style.transform = `translateX(${count}px)`;
         if (currentTime < animationTime) {
           animationId = window.requestAnimationFrame(step);
@@ -150,27 +137,66 @@ export default class Garage extends Component<Props, GlobalState> {
 
   stopEngine = async (carId: number, carImg: SVGSVGElement) => {
     AsyncRaceService.stopEngine(carId).then(() => {
-      const { carsArr } = this.state;
-      const newCarsArr = carsArr.map(car => {
-        const newCar = car;
-        if (car.id === carId) {
-          newCar.isActive = false;
-        }
-        return newCar;
-      }) as unknown as CarData[];
-      this.setState({ carsArr: newCarsArr });
+      this.updateCarsArr(carId, 'isActive', false);
+      this.updateCarsArr(carId, 'isEngineOn', false);
+      this.updateCarsArr(carId, 'isError', false);
       carImg.style.removeProperty('transform');
     });
   };
 
   startRace = () => {
-    // eslint-disable-next-line no-console
-    console.clear();
-    document.querySelectorAll('.button-start').forEach(el => (el as HTMLElement).click());
+    this.setState({ isRaceActive: true })
+    const { carsArr } = this.state;
+    Promise.all(
+      carsArr.map(car => {
+        this.updateCarsArr(car.id, 'isEngineOn', true);
+        return AsyncRaceService.startEngine(car.id);
+      }),
+    ).then(response => {
+      carsArr.forEach((car, ndx) => {
+        const carImg = document.querySelector(`.car-img-wrapper-${car.id}`) as SVGSVGElement;
+        const { velocity, distance } = response[ndx];
+        this.updateCarsArr(car.id, 'isActive', true);
+        this.handleAnimation(car.id, carImg, velocity, distance);
+      });
+      Promise.any(
+        carsArr.map(car => {
+          return new Promise((resolve, reject) => {
+            return AsyncRaceService.driveMode(car.id).then(resp => {
+              const result = resp as unknown as {
+                success?: boolean;
+                carId?: number;
+                err?: string;
+                velocity?: number;
+              };
+              if (!result.success) {
+                this.updateCarsArr(car.id, 'isActive', false);
+                this.updateCarsArr(car.id, 'isError', true);
+                reject();
+              }
+              resolve(car.id);
+            });
+          });
+        }),
+      ).then(async (res) => {
+        const result = Number(res);
+        const winner = await AsyncRaceService.getCar(result);
+        const winnerId = winner.id;
+        const winnerName = winner.name;
+        this.setState({ winner: { id: winnerId, name: winnerName }, isRaceActive: false });
+        this.togglePopup();
+      });
+    });
   };
 
   resetCars = () => {
-    document.querySelectorAll('.button-stop').forEach(el => (el as HTMLElement).click());
+    const { carsArr } = this.state;
+    Promise.all(
+      carsArr.map(car => {
+        const carImg = document.querySelector(`.car-img-wrapper-${car.id}`) as SVGSVGElement;
+        return this.stopEngine(car.id, carImg);
+      }),
+    );
   };
 
   generateCars = () => {
@@ -201,6 +227,23 @@ export default class Garage extends Component<Props, GlobalState> {
     }
   };
 
+  updateCarsArr = (carId: number, carProperty: string, carValue: boolean) => {
+    const { carsArr } = this.state;
+    const newCarsArr = carsArr.map(car => {
+      const newCar = car;
+      if (car.id === carId) {
+        newCar[carProperty] = carValue;
+      }
+      return newCar;
+    });
+    this.setState({ carsArr: newCarsArr });
+  };
+
+  togglePopup = () => {
+    const { isModalActive } = this.state;
+    this.setState({ isModalActive: !isModalActive });
+  }
+
   render() {
     const { isVisible } = this.props;
     return (
@@ -217,11 +260,13 @@ export default class Garage extends Component<Props, GlobalState> {
           generateCars: this.generateCars,
           toPrevPage: this.toPrevPage,
           toNextPage: this.toNextPage,
+          togglePopup: this.togglePopup,
         }}
       >
         <div className={`garage-wrapper ${isVisible ? '' : 'hidden'}`}>
           <GarageHeader />
           <GarageBody />
+          <WinnerModal />
         </div>
       </ActionsCtx.Provider>
     );

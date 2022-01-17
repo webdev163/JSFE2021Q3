@@ -9,6 +9,9 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   color: #fff;
+  @media screen and (max-width: 750px) {
+    font-size: 15px;
+  }
 }
 
 html {
@@ -21,7 +24,7 @@ html {
   max-width: 1200px;
   padding-left: 5%;
   padding-right: 5%;
-  border: 1px solid red;
+  margin-bottom: 40px;
 }
 
 .text-input {

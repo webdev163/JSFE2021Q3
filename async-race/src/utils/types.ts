@@ -5,6 +5,8 @@ export interface CarData {
   color: string,
   id: number,
   isActive?: boolean,
+  isEngineOn?: boolean,
+  isError?: boolean,
 }
 
 export interface GlobalState {
@@ -13,6 +15,9 @@ export interface GlobalState {
   totalPagesCount: number | null;
   currentPage: number;
   selectedCar: CarData;
+  isModalActive: boolean;
+  winner: {id: number, name: string} | null;
+  isRaceActive: boolean,
 }
 
 export interface Actions {
@@ -27,4 +32,5 @@ export interface Actions {
   generateCars: () => void;
   toPrevPage: () => void;
   toNextPage: () => void;
+  togglePopup: () => void;
 }

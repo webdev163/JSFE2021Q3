@@ -12,6 +12,9 @@ const App: FC = () => {
     totalPagesCount: null,
     currentPage: 1,
     selectedCar: { name: '', color: '#000000', id: 0 },
+    isModalActive: false,
+    winner: null,
+    isRaceActive: false,
   };
   const [isWinnersVisible, toggleView] = useState(false);
   const [globalState, updateGlobalState] = useState(initialState);

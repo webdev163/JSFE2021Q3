@@ -1,6 +1,6 @@
-import React, { FC, useState, useRef } from 'react';
-import { ActionsCtx } from '../../utils/context';
-import { CarId } from '../../utils/types';
+import React, { FC, useRef } from 'react';
+import { AppCtx, ActionsCtx } from '../../utils/context';
+import { CarId, CarData } from '../../utils/types';
 
 import './CarItem.scss';
 
@@ -11,8 +11,23 @@ interface Props {
 }
 
 const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
-  const [isStopDisabled, toggleDisabled] = useState(true);
   const actionsContext = React.useContext(ActionsCtx);
+  const appContext = React.useContext(AppCtx);
+  let isStartActive = true;
+  let isStopActive = false;
+  const carsArr = appContext?.carsArr as CarData[];
+  carsArr.forEach(car => {
+    if (car.id === carId && !car.isEngineOn) {
+      isStartActive = true;
+    } else if (car.id === carId) {
+      isStartActive = false;
+    }
+    if (car.id === carId && (car.isActive || car.isError)) {
+      isStopActive = true;
+    } else if (car.id === carId) {
+      isStopActive = false;
+    }
+  }) as unknown as CarData[];
   const deleteCar = actionsContext?.deleteCar as CarId;
   const selectCar = actionsContext?.selectCar as CarId;
   const startEngine = actionsContext?.startEngine as (carId: number, carImg: SVGSVGElement | null) => void;
@@ -34,10 +49,9 @@ const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
           className="btn button-start"
           type="button"
           onClick={() => {
-            toggleDisabled(false);
             startEngine(carId, carImg.current);
           }}
-          disabled={!isStopDisabled}
+          disabled={!isStartActive}
         >
           A
         </button>
@@ -45,17 +59,16 @@ const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
           className="btn button-stop"
           type="button"
           onClick={() => {
-            toggleDisabled(true);
             stopEngine(carId, animated);
           }}
-          disabled={isStopDisabled}
+          disabled={!isStopActive}
         >
           B
         </button>
       </div>
       <div className="car-item-body">
         <div className="car-name">{carName}</div>
-        <svg ref={carImg} className="car-img-wrapper" width="68" height="34">
+        <svg ref={carImg} className={`car-img-wrapper-${carId}`} width="68" height="34">
           <use className="car-img" style={{ fill: carColor }} href="assets/icons/sprite.svg#car" />
         </svg>
         <svg className="flag-img" width="50" height="50">

@@ -1,18 +1,21 @@
 import React, { FC } from 'react';
-import { ActionsCtx } from '../../utils/context';
+import { AppCtx, ActionsCtx } from '../../utils/context';
 
 import './GaragePagination.scss';
 
 const GaragePagination: FC = () => {
   const actionsContext = React.useContext(ActionsCtx);
+  const appContext = React.useContext(AppCtx);
   const toPrevPage = actionsContext?.toPrevPage as () => void;
   const toNextPage = actionsContext?.toNextPage as () => void;
+  const isPrevDisabled = (appContext?.currentPage as number) < 2;
+  const isNextEnabled = (appContext?.currentPage as number) < (appContext?.totalPagesCount as number);
   return (
     <div className="pagination-wrapper">
-      <button className="btn" type="button" onClick={() => toPrevPage()}>
+      <button className="btn" type="button" onClick={() => toPrevPage()} disabled={isPrevDisabled}>
         Prev
       </button>
-      <button className="btn" type="button" onClick={() => toNextPage()}>
+      <button className="btn" type="button" onClick={() => toNextPage()} disabled={!isNextEnabled}>
         Next
       </button>
     </div>

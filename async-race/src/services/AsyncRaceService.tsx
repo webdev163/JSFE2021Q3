@@ -62,7 +62,6 @@ export default class AsyncRaceService extends Component {
       method: 'PATCH',
     });
     const data: StartStopEngineResponse = await response.json();
-    console.log(data);
     return data;
   }
 
@@ -71,7 +70,6 @@ export default class AsyncRaceService extends Component {
       method: 'PATCH',
     });
     const data: StartStopEngineResponse = await response.json();
-    console.log(data);
     return data;
   }
 

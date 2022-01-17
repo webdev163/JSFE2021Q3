@@ -46,8 +46,13 @@
   position: absolute;
   right: 90px;
   bottom: 5px;
+  opacity: 0.8;
 }
 
 .flag-img-inner {
   fill: #fb8d8d;
+}
+
+.car-img-wrapper {
+  z-index: 10;
 }

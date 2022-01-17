@@ -11,6 +11,11 @@ body {
   color: #fff;
 }
 
+html {
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
+}
+
 .container {
   margin: 0 auto;
   max-width: 1200px;

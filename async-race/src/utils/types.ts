@@ -22,4 +22,9 @@ export interface Actions {
   selectCar: (carId: number) => void;
   startEngine: (carId: number, carImg: SVGSVGElement) => void;
   stopEngine: (carId: number, carImg: SVGSVGElement) => void;
+  startRace: () => void;
+  resetCars: () => void;
+  generateCars: () => void;
+  toPrevPage: () => void;
+  toNextPage: () => void;
 }

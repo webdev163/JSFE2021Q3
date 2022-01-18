@@ -7,6 +7,7 @@ export interface CarData {
   isActive?: boolean,
   isEngineOn?: boolean,
   isError?: boolean,
+  velocity?: number,
 }
 
 export interface GlobalState {
@@ -18,6 +19,11 @@ export interface GlobalState {
   isModalActive: boolean;
   winner: {id: number, name: string} | null;
   isRaceActive: boolean,
+}
+
+export interface PromiseFulfilledResult {
+  status: string;
+  value: { carId: number, carVelocity: number };
 }
 
 export interface Actions {

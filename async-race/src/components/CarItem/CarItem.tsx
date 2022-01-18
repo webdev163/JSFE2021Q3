@@ -15,6 +15,7 @@ const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
   const appContext = React.useContext(AppCtx);
   let isStartActive = true;
   let isStopActive = false;
+  let isRaceActive = appContext?.isRaceActive;
   const carsArr = appContext?.carsArr as CarData[];
   carsArr.forEach(car => {
     if (car.id === carId && !car.isEngineOn) {
@@ -22,7 +23,7 @@ const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
     } else if (car.id === carId) {
       isStartActive = false;
     }
-    if (car.id === carId && (car.isActive || car.isError)) {
+    if (car.id === carId && (car.isActive || car.isError) && !isRaceActive) {
       isStopActive = true;
     } else if (car.id === carId) {
       isStopActive = false;
@@ -39,10 +40,10 @@ const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
   return (
     <li className="car-item" data-num={carId}>
       <div className="car-buttons-wrapper">
-        <button className="btn button-select" type="button" onClick={() => selectCar(carId)}>
+        <button className="btn button-select" type="button" onClick={() => selectCar(carId)} disabled={isRaceActive}>
           Select
         </button>
-        <button className="btn button-remove" type="button" onClick={() => deleteCar(carId)}>
+        <button className="btn button-remove" type="button" onClick={() => deleteCar(carId)} disabled={isRaceActive}>
           Remove
         </button>
         <button

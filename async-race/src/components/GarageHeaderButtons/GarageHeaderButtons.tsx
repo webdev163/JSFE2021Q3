@@ -12,13 +12,13 @@ const GarageHeaderButtons: FC = () => {
   const isRaceActive = appContext?.isRaceActive;
   return (
     <div className="btn-header-wrapper">
-      <button className="btn start-race-button" type="button" onClick={() => startRace()} disabled={isRaceActive}>
+      <button className="btn header-button" type="button" onClick={() => startRace()} disabled={isRaceActive}>
         Start race
       </button>
-      <button className="btn" type="button" onClick={() => resetCars()}>
+      <button className="btn header-button" type="button" onClick={() => resetCars()} disabled={isRaceActive}>
         Reset cars
       </button>
-      <button className="btn" type="button" onClick={() => generateCars()}>
+      <button className="btn header-button" type="button" onClick={() => generateCars()} disabled={isRaceActive}>
         Generate cars
       </button>
     </div>

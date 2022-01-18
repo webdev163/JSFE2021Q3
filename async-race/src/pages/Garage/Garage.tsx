@@ -9,7 +9,7 @@ import {
   CAR_NAMES_ARR_ITEMS_MIN_INDEX,
   CAR_NAMES_ARR_ITEMS_MAX_INDEX,
 } from '../../utils/constants';
-import { CarData, GlobalState } from '../../utils/types';
+import { CarData, GlobalState, PromiseFulfilledResult } from '../../utils/types';
 import { ActionsCtx } from '../../utils/context';
 import carBrands from '../../assets/data/carBrands';
 import carModels from '../../assets/data/carModels';
@@ -145,6 +145,8 @@ export default class Garage extends Component<Props, GlobalState> {
   };
 
   startRace = () => {
+    // eslint-disable-next-line no-console
+    console.clear();
     this.setState({ isRaceActive: true })
     const { carsArr } = this.state;
     Promise.all(
@@ -156,10 +158,11 @@ export default class Garage extends Component<Props, GlobalState> {
       carsArr.forEach((car, ndx) => {
         const carImg = document.querySelector(`.car-img-wrapper-${car.id}`) as SVGSVGElement;
         const { velocity, distance } = response[ndx];
+        this.updateCarsArr(car.id, 'velocity', velocity);
         this.updateCarsArr(car.id, 'isActive', true);
         this.handleAnimation(car.id, carImg, velocity, distance);
       });
-      Promise.any(
+      Promise.allSettled(
         carsArr.map(car => {
           return new Promise((resolve, reject) => {
             return AsyncRaceService.driveMode(car.id).then(resp => {
@@ -172,15 +175,20 @@ export default class Garage extends Component<Props, GlobalState> {
               if (!result.success) {
                 this.updateCarsArr(car.id, 'isActive', false);
                 this.updateCarsArr(car.id, 'isError', true);
+                const style = 'font-weight: bold;';
+                // eslint-disable-next-line no-console
+                console.log(`%c Car ${car.name} stopped suddenly!`, style);
                 reject();
               }
-              resolve(car.id);
+              const carId = car.id;
+              const carVelocity = car.velocity;
+              resolve({ carId, carVelocity });
             });
           });
         }),
-      ).then(async (res) => {
-        const result = Number(res);
-        const winner = await AsyncRaceService.getCar(result);
+      ).then(async res => {
+        const result = res.filter(res => res.status === 'fulfilled').map(el => (el as PromiseFulfilledResult).value).sort((a, b) => b.carVelocity - a.carVelocity)[0];
+        const winner = await AsyncRaceService.getCar(result.carId);
         const winnerId = winner.id;
         const winnerName = winner.name;
         this.setState({ winner: { id: winnerId, name: winnerName }, isRaceActive: false });
@@ -200,13 +208,23 @@ export default class Garage extends Component<Props, GlobalState> {
   };
 
   generateCars = () => {
+    const arr = [];
     for (let i = 0; i < GENERATE_CARS_VALUE; i += 1) {
-      const name = `${carBrands[getRandomInt(CAR_NAMES_ARR_ITEMS_MIN_INDEX, CAR_NAMES_ARR_ITEMS_MAX_INDEX)]} ${
-        carModels[getRandomInt(CAR_NAMES_ARR_ITEMS_MIN_INDEX, CAR_NAMES_ARR_ITEMS_MAX_INDEX)]
-      }`;
+      const name = `${carBrands[getRandomInt(CAR_NAMES_ARR_ITEMS_MIN_INDEX, CAR_NAMES_ARR_ITEMS_MAX_INDEX)]} ${carModels[getRandomInt(CAR_NAMES_ARR_ITEMS_MIN_INDEX, CAR_NAMES_ARR_ITEMS_MAX_INDEX)]}`;
       const color = getRandomColor();
-      this.createCar(name, color);
+      arr.push({ name, color });
     }
+    Promise.all(
+      arr.map(el => {
+        return new Promise(async resolve => {
+          await AsyncRaceService.createCar(el.name, el.color)
+          resolve(null);
+        })
+      }),
+    ).then(() => {
+      const { currentPage } = this.state;
+      this.getCars(currentPage, CARS_PER_PAGE_COUNT);
+    })
   };
 
   toPrevPage = () => {
@@ -227,7 +245,7 @@ export default class Garage extends Component<Props, GlobalState> {
     }
   };
 
-  updateCarsArr = (carId: number, carProperty: string, carValue: boolean) => {
+  updateCarsArr = (carId: number, carProperty: string, carValue: boolean | number) => {
     const { carsArr } = this.state;
     const newCarsArr = carsArr.map(car => {
       const newCar = car;

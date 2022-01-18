@@ -10,12 +10,13 @@ const GaragePagination: FC = () => {
   const toNextPage = actionsContext?.toNextPage as () => void;
   const isPrevDisabled = (appContext?.currentPage as number) < 2;
   const isNextEnabled = (appContext?.currentPage as number) < (appContext?.totalPagesCount as number);
+  const isRaceActive = appContext?.isRaceActive;
   return (
     <div className="pagination-wrapper">
-      <button className="btn" type="button" onClick={() => toPrevPage()} disabled={isPrevDisabled}>
+      <button className="btn" type="button" onClick={() => toPrevPage()} disabled={isPrevDisabled || isRaceActive}>
         Prev
       </button>
-      <button className="btn" type="button" onClick={() => toNextPage()} disabled={!isNextEnabled}>
+      <button className="btn" type="button" onClick={() => toNextPage()} disabled={!isNextEnabled || isRaceActive}>
         Next
       </button>
     </div>

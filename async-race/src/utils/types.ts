@@ -8,6 +8,13 @@ export interface CarData {
   isEngineOn?: boolean,
   isError?: boolean,
   velocity?: number,
+  animationTime?: number,
+}
+
+export interface WinnerData {
+  id: number,
+  wins: number,
+  time: number,
 }
 
 export interface GlobalState {
@@ -17,8 +24,16 @@ export interface GlobalState {
   currentPage: number;
   selectedCar: CarData;
   isModalActive: boolean;
-  winner: {id: number, name: string} | null;
+  winner: {id: number, name: string, time: number} | null;
   isRaceActive: boolean,
+  winnersArr: WinnerData[],
+  totalWinnersCount: number | null,
+}
+
+export interface WinnersState {
+  winnersArr: WinnerData[];
+  totalWinnersCount: number | null;
+  currentPage: number;
 }
 
 export interface PromiseFulfilledResult {

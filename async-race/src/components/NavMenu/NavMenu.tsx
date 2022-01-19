@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { AppCtx } from '../../utils/context';
 
 import './NavMenu.scss';
 
@@ -8,12 +9,14 @@ type Props = {
 };
 
 const NavMenu: FC<Props> = ({ winnersView, garageView }) => {
+  const appContext = React.useContext(AppCtx);
+  const areButtonsDisabled = appContext?.isRaceActive;
   return (
     <div className="nav-btn-wrapper">
-      <button type="button" className="btn nav-button" onClick={winnersView}>
+      <button type="button" className="btn nav-button" onClick={winnersView} disabled={areButtonsDisabled}>
         To garage
       </button>
-      <button type="button" className="btn nav-button" onClick={garageView}>
+      <button type="button" className="btn nav-button" onClick={garageView} disabled={areButtonsDisabled}>
         To winners
       </button>
     </div>

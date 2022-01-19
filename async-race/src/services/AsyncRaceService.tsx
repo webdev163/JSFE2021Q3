@@ -1,9 +1,14 @@
 import { Component } from 'react';
-import { CarData } from '../utils/types';
+import { CarData, WinnerData } from '../utils/types';
 
 interface GetCarsResponse {
   carsArr: CarData[];
   totalCarsCount: number;
+}
+
+interface GetWinnersResponse {
+  winnersArr: WinnerData[];
+  totalWinnersCount: number;
 }
 
 interface StartStopEngineResponse {
@@ -86,5 +91,48 @@ export default class AsyncRaceService extends Component {
         error = { carId, err };
       });
     return data || error;
+  }
+
+  static async getWinners(page: number, limit: number, sort: string, order: string): Promise<GetWinnersResponse> {
+    const response = await fetch(`${baseUrl}/winners?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`);
+    const totalWinnersCount = Number(response.headers.get('X-Total-Count'));
+    const winnersArr = await response.json();
+    return { winnersArr, totalWinnersCount };
+  }
+  
+  static async getWinner(carId: number): Promise<WinnerData> {
+    const response = await fetch(`${baseUrl}/winners/${carId}`, {
+      method: 'GET',
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  static async createWinner(id: number, wins: number, time: number): Promise<WinnerData> {
+    const response = await fetch(`${baseUrl}/winners`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, wins, time }),
+    });
+    const newWinner = await response.json();
+    return newWinner;
+  }
+
+  static async deleteWinner(carId: number): Promise<Record<string, never>> {
+    const response = await fetch(`${baseUrl}/winners/${carId}`, {
+      method: 'DELETE',
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  static async updateWinner(carId: number, wins: number, time: number): Promise<WinnerData> {
+    const response = await fetch(`${baseUrl}/winners/${carId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ wins, time }),
+    });
+    const updatedWinner = await response.json();
+    return updatedWinner;
   }
 }

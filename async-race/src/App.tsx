@@ -15,6 +15,8 @@ const App: FC = () => {
     isModalActive: false,
     winner: null,
     isRaceActive: false,
+    winnersArr: [],
+    totalWinnersCount: null,
   };
   const [isWinnersVisible, toggleView] = useState(false);
   const [globalState, updateGlobalState] = useState(initialState);

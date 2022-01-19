@@ -69,7 +69,7 @@ const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
       </div>
       <div className="car-item-body">
         <div className="car-name">{carName}</div>
-        <svg ref={carImg} className={`car-img-wrapper-${carId}`} width="68" height="34">
+        <svg ref={carImg} className={`car-img-wrapper car-img-wrapper-${carId}`} width="68" height="34">
           <use className="car-img" style={{ fill: carColor }} href="assets/icons/sprite.svg#car" />
         </svg>
         <svg className="flag-img" width="50" height="50">

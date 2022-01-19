@@ -6,3 +6,21 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
+
+.pagination-buttons-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 180px;
+}
+
+.table-link {
+  color: #fff;
+  transition: color .3s;
+  &:visited {
+    color: #fff;
+  }
+  &:hover {
+    color: $second_color;
+  }
+}

@@ -10,11 +10,12 @@ const WinnerModal: FC = () => {
   const isModalActive = appContext?.isModalActive;
   const winnerId = appContext?.winner?.id;
   const winnerName = appContext?.winner?.name;
+  const winnerTime = appContext?.winner?.time;
   
   return (
     <div className={`winner-modal ${isModalActive ? 'active' : ''}`}>
       <div className="modal-inner">
-        <p className='modal-text'>Winner is {winnerName}</p>
+        <p className='modal-text'>Winner is {winnerName} with {winnerTime} seconds!</p>
         <button className='btn' type='button' onClick={() => togglePopup()}>OK</button>
       </div>
     </div>

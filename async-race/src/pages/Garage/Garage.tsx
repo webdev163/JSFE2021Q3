@@ -256,20 +256,24 @@ const Garage: FC<Props> = ({ isVisible, updateState }) => {
           });
         }),
       ).then(async (res: PromiseSettledResult<unknown>[]): Promise<void> => {
-        const result: CarRaceData = res
+        const result: CarRaceData[] = res
           .filter((resp: PromiseSettledResult<unknown>) => resp.status === 'fulfilled')
           .map(el => (el as PromiseFulfilledResult).value)
-          .sort((a: CarRaceData, b: CarRaceData) => b.carVelocity - a.carVelocity)[0];
-        const newWinner = (await AsyncRaceService.getCar(result.carId)) as CarData;
-        const winnerId: number = newWinner.id;
-        const winnerName: string = newWinner.name;
-        togglePopup();
-        const { animationTime } = carsArr.filter((el: CarData) => el.id === winnerId)[0];
-        const animationTimeInSeconds: number =
-          Math.round(((animationTime as number) / MS_IN_SECOND) * ROUND_UP_FACTOR) / ROUND_UP_FACTOR;
-        updateWinner({ id: winnerId, name: winnerName, time: animationTimeInSeconds });
-        toggleRaceActive(false);
-        addWinner(winnerId, animationTimeInSeconds);
+          .sort((a: CarRaceData, b: CarRaceData) => b.carVelocity - a.carVelocity);
+        if (result.length) {
+          const newWinner = (await AsyncRaceService.getCar(result[0].carId)) as CarData;
+          const winnerId: number = newWinner.id;
+          const winnerName: string = newWinner.name;
+          togglePopup();
+          const { animationTime } = carsArr.filter((el: CarData) => el.id === winnerId)[0];
+          const animationTimeInSeconds: number =
+            Math.round(((animationTime as number) / MS_IN_SECOND) * ROUND_UP_FACTOR) / ROUND_UP_FACTOR;
+          updateWinner({ id: winnerId, name: winnerName, time: animationTimeInSeconds });
+          toggleRaceActive(false);
+          addWinner(winnerId, animationTimeInSeconds);
+        } else {
+          toggleRaceActive(false);
+        }
       });
     });
   };

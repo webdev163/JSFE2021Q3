@@ -1,6 +1,6 @@
 import React, { FC, useRef } from 'react';
 import { AppCtx, ActionsCtx } from '../../utils/context';
-import { CarId, CarData } from '../../utils/types';
+import { Actions, CarData, GlobalState } from '../../utils/types';
 
 import './CarItem.scss';
 
@@ -11,13 +11,13 @@ interface Props {
 }
 
 const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
-  const actionsContext = React.useContext(ActionsCtx);
-  const appContext = React.useContext(AppCtx);
+  const actionsContext = React.useContext(ActionsCtx) as Actions;
+  const appContext = React.useContext(AppCtx) as GlobalState;
   let isStartActive = true;
   let isStopActive = false;
-  let isRaceActive = appContext?.isRaceActive;
+  const isRaceActive: boolean = appContext?.isRaceActive;
   const carsArr = appContext?.carsArr as CarData[];
-  carsArr.forEach(car => {
+  carsArr.forEach((car: CarData) => {
     if (car.id === carId && !car.isEngineOn) {
       isStartActive = true;
     } else if (car.id === carId) {
@@ -29,12 +29,11 @@ const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
       isStopActive = false;
     }
   }) as unknown as CarData[];
-  const deleteCar = actionsContext?.deleteCar as CarId;
-  const selectCar = actionsContext?.selectCar as CarId;
+  const deleteCar = actionsContext?.deleteCar as (carId: number) => void;
+  const selectCar = actionsContext?.selectCar as (carId: number) => void;
   const startEngine = actionsContext?.startEngine as (carId: number, carImg: SVGSVGElement | null) => void;
   const stopEngine = actionsContext?.stopEngine as (carId: number, animated: SVGSVGElement | null) => void;
   const carImg = useRef<SVGSVGElement>(null);
-
   const animated = carImg.current as SVGSVGElement;
 
   return (

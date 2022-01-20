@@ -1,16 +1,16 @@
 import React, { FC, useState, useEffect } from 'react';
-import { CarData } from '../../utils/types';
+import { Actions, CarData, GlobalState } from '../../utils/types';
 import { AppCtx, ActionsCtx } from '../../utils/context';
 
 import './CarUpdateForm.scss';
 
 const CarUpdateForm: FC = () => {
-  const appContext = React.useContext(AppCtx);
-  const actionsContext = React.useContext(ActionsCtx);
+  const appContext = React.useContext(AppCtx) as GlobalState;
+  const actionsContext = React.useContext(ActionsCtx) as Actions;
   const selectedCar = appContext?.selectedCar as CarData;
-  const [carName, setName] = useState(selectedCar.name);
-  const [carColor, setColor] = useState(selectedCar.color);
-  const [carId, setId] = useState(selectedCar.id);
+  const [carName, setName] = useState<string>(selectedCar.name);
+  const [carColor, setColor] = useState<string>(selectedCar.color);
+  const [carId, setId] = useState<number>(selectedCar.id);
 
   useEffect(() => {
     setName(selectedCar.name);
@@ -18,7 +18,7 @@ const CarUpdateForm: FC = () => {
     setId(selectedCar.id);
   }, [selectedCar]);
 
-  const isDisabled = carId === 0;
+  const isDisabled: boolean = carId === 0;
 
   return (
     <div className="update-form-wrapper">

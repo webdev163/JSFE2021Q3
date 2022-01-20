@@ -39,8 +39,11 @@ th {
 }
 
 .table-link {
+  background-color: transparent;
+  border: none;
   text-decoration: underline;
   transition: color .3s;
+  font-weight: 700;
   &:hover {
     color: $second_color;
     cursor: pointer;

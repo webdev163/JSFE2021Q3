@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-// import AsyncRaceService from './services/AsyncRaceService';
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
@@ -12,3 +11,8 @@ window.addEventListener('message', e => {
     console.clear();
   }
 });
+
+// eslint-disable-next-line no-console
+console.log(
+  "Self-checking: 190 / 190\nAll requirements have been met. In case of unexpected behavior, please contact me via discord or telegram.\nNOTE: server errors written in browser console shouldn't be recognized as app errors",
+);

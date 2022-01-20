@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { AppCtx } from '../../utils/context';
+import { GlobalState } from '../../utils/types';
 
 import './NavMenu.scss';
 
@@ -9,8 +10,8 @@ type Props = {
 };
 
 const NavMenu: FC<Props> = ({ winnersView, garageView }) => {
-  const appContext = React.useContext(AppCtx);
-  const areButtonsDisabled = appContext?.isRaceActive;
+  const appContext = React.useContext(AppCtx) as GlobalState;
+  const areButtonsDisabled = appContext?.isRaceActive as boolean;
   return (
     <div className="nav-btn-wrapper">
       <button type="button" className="btn nav-button" onClick={winnersView} disabled={areButtonsDisabled}>

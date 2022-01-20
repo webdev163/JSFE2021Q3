@@ -1,5 +1,3 @@
-export type CarId = (carId: number) => void;
-
 export interface CarData {
   name: string,
   color: string,
@@ -54,4 +52,48 @@ export interface Actions {
   toPrevPage: () => void;
   toNextPage: () => void;
   togglePopup: () => void;
+}
+
+export interface GetCarsResponse {
+  carsArr: CarData[];
+  totalCarsCount: number;
+}
+
+export interface GetWinnersResponse {
+  winnersArr: WinnerData[];
+  totalWinnersCount: number;
+}
+
+export interface StartStopEngineResponse {
+  velocity: number;
+  distance: number;
+}
+export interface CarRaceData {
+  carId: number;
+  carVelocity: number
+}
+
+export interface DriveSuccess {
+  success: boolean;
+}
+
+export interface DriveError {
+  carId: number;
+  err: string;
+}
+
+export interface GenerateCarsData {
+  name: string;
+  color: string
+}
+
+export enum SortTypes {
+  id = 'id',
+  wins = 'wins',
+  time = 'time',
+}
+
+export enum OrderTypes {
+  asc = 'ASC',
+  desc = 'DESC',
 }

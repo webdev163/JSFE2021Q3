@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import GarageHeader from '../../components/GarageHeader';
 import GarageBody from '../../components/GarageBody';
 import AsyncRaceService from '../../services/AsyncRaceService';
@@ -7,12 +7,24 @@ import {
   GENERATE_CARS_VALUE,
   CAR_NAMES_ARR_ITEMS_MIN_INDEX,
   CAR_NAMES_ARR_ITEMS_MAX_INDEX,
+  WINNERS_PER_PAGE_COUNT,
+  MS_IN_SECOND,
+  ROUND_UP_FACTOR,
 } from '../../utils/constants';
-import { CarData, GlobalState, PromiseFulfilledResult, WinnerData } from '../../utils/types';
+import {
+  CarData,
+  GlobalState,
+  PromiseFulfilledResult,
+  WinnerData,
+  StartStopEngineResponse,
+  CarRaceData,
+  GetWinnersResponse,
+  GenerateCarsData,
+} from '../../utils/types';
 import { ActionsCtx } from '../../utils/context';
 import carBrands from '../../assets/data/carBrands';
 import carModels from '../../assets/data/carModels';
-import { getRandomInt, getRandomColor } from '../../utils/utils';
+import { getRandomInt, getRandomColor, createWinner, deleteWinner, getWinner } from '../../utils/utils';
 import WinnerModal from '../../components/WinnerModal';
 
 import './Garage.scss';
@@ -22,113 +34,136 @@ interface Props {
   updateState: (state: GlobalState) => void;
 }
 
-export default class Garage extends Component<Props, GlobalState> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      carsArr: [],
-      totalCarsCount: null,
-      totalPagesCount: null,
-      currentPage: 1,
-      selectedCar: { name: '', color: '#000000', id: 0 },
-      isModalActive: false,
-      winner: null,
-      isRaceActive: false,
-      winnersArr: [],
-      totalWinnersCount: null,
-    };
-  }
+const Garage: FC<Props> = ({ isVisible, updateState }) => {
+  const [carsArr, updateCarsArr] = useState<CarData[] | never[]>([]);
+  const [totalCarsCount, updateTotalCarsCount] = useState<number | null>(null);
+  const [totalPagesCount, updateTotalPagesCount] = useState<number | null>(null);
+  const [currentPage, updateCurrentPage] = useState<number>(1);
+  const [selectedCar, updateSelectedCar] = useState<CarData>({ name: '', color: '#000000', id: 0 });
+  const [isModalActive, toggleModal] = useState<boolean>(false);
+  const [winner, updateWinner] = useState<{ id: number; name: string; time: number } | null>(null);
+  const [isRaceActive, toggleRaceActive] = useState<boolean>(false);
+  const [winnersArr, updateWinnersArr] = useState<WinnerData[] | never[]>([]);
+  const [totalWinnersCount, updateTotalWinnersCount] = useState<number | null>(null);
 
-  componentDidMount(): void {
-    const { currentPage } = this.state;
-    this.getCars(currentPage, CARS_PER_PAGE_COUNT);
-    this.getWinners(1, 10);
-  }
+  const getCars = async (page: number, limit: number): Promise<void> => {
+    const { carsArr: newCarsArr, totalCarsCount: newTotalCarsCount } = await AsyncRaceService.getCars(page, limit);
+    const newTotalPagesCount: number = Math.ceil(newTotalCarsCount / CARS_PER_PAGE_COUNT);
+    updateCarsArr(newCarsArr);
+    updateTotalCarsCount(newTotalCarsCount);
+    updateTotalPagesCount(newTotalPagesCount);
+  };
 
-  componentDidUpdate(): void {
-    const { updateState } = this.props;
-    updateState(this.state);
-  }
+  const getWinners = async (page: number, limit: number, sort = 'id', order = ''): Promise<void> => {
+    const response = (await AsyncRaceService.getWinners(page, limit, sort, order)) as GetWinnersResponse;
+    const { winnersArr: newWinnersArr, totalWinnersCount: newTotalWinnersCount } = response;
+    updateWinnersArr(newWinnersArr);
+    updateTotalWinnersCount(newTotalWinnersCount);
+  };
 
-  async getCars(page: number, limit: number): Promise<void> {
-    const { carsArr, totalCarsCount } = await AsyncRaceService.getCars(page, limit);
-    const totalPagesCount = Math.ceil(totalCarsCount / CARS_PER_PAGE_COUNT);
-    this.setState({ carsArr, totalCarsCount, totalPagesCount });
-  }
+  useEffect(() => {
+    getCars(currentPage, CARS_PER_PAGE_COUNT);
+    getWinners(1, WINNERS_PER_PAGE_COUNT);
+  }, []);
 
-  createCar = async (carName: string, carColor: string): Promise<void> => {
-    const { carsArr, currentPage } = this.state;
+  useEffect(() => {
+    updateState({
+      carsArr,
+      totalCarsCount,
+      totalPagesCount,
+      currentPage,
+      selectedCar,
+      isModalActive,
+      winner,
+      isRaceActive,
+      winnersArr,
+      totalWinnersCount,
+    });
+  }, [
+    carsArr,
+    totalCarsCount,
+    totalPagesCount,
+    currentPage,
+    selectedCar,
+    isModalActive,
+    winner,
+    isRaceActive,
+    winnersArr,
+    totalWinnersCount,
+  ]);
+
+  const updateCarsArrFunc = (carId: number, carProperty: string, carValue: boolean | number): void => {
+    const newCarsArr: CarData[] = carsArr.map((car: CarData) => {
+      const newCar: CarData = car;
+      if (car.id === carId) {
+        newCar[carProperty] = carValue;
+      }
+      return newCar;
+    });
+    updateCarsArr(newCarsArr);
+  };
+
+  const createCar = async (carName: string, carColor: string): Promise<void> => {
     const carData = (await AsyncRaceService.createCar(carName, carColor)) as CarData;
-    this.setState({ carsArr: [...carsArr, carData] });
-    this.getCars(currentPage, CARS_PER_PAGE_COUNT);
+    updateCarsArr([...carsArr, carData]);
+    getCars(currentPage, CARS_PER_PAGE_COUNT);
   };
 
-  deleteCar = async (carId: number): Promise<void> => {
+  const deleteCar = async (carId: number): Promise<void> => {
     await AsyncRaceService.deleteCar(carId);
-    const { currentPage } = this.state;
-    this.getCars(currentPage, CARS_PER_PAGE_COUNT);
-    this.deleteWinner(carId).then(() => { this.getWinners(1, 10) }).catch(() => {});
+    getCars(currentPage, CARS_PER_PAGE_COUNT);
+    deleteWinner(carId)
+      .then(() => {
+        getWinners(1, WINNERS_PER_PAGE_COUNT);
+      })
+      .catch(() => {});
   };
 
-  selectCar = async (carId: number): Promise<void> => {
-    const carData = await AsyncRaceService.getCar(carId);
-    this.setState({ selectedCar: carData });
+  const selectCar = async (carId: number): Promise<void> => {
+    const carData = (await AsyncRaceService.getCar(carId)) as CarData;
+    updateSelectedCar(carData);
   };
 
-  updateCar = async (name: string, color: string, carId: number): Promise<void> => {
+  const updateCar = async (name: string, color: string, carId: number): Promise<void> => {
     await AsyncRaceService.updateCar(name, color, carId);
-    const { carsArr } = this.state;
-    const index = carsArr.findIndex(el => el.id === carId);
-    this.setState({
-      selectedCar: { name: '', color: '#000000', id: 0 },
-      carsArr: [...carsArr.slice(0, index), { name, color, id: carId }, ...carsArr.slice(index + 1)],
-    });
-    this.getWinners(1, 10);
+    const index: number = carsArr.findIndex((el: CarData) => el.id === carId);
+    updateSelectedCar({ name: '', color: '#000000', id: 0 });
+    updateCarsArr([...carsArr.slice(0, index), { name, color, id: carId }, ...carsArr.slice(index + 1)]);
+    getWinners(1, WINNERS_PER_PAGE_COUNT);
   };
 
-  startEngine = async (carId: number, carImg: SVGSVGElement) => {
-    this.updateCarsArr(carId, 'isEngineOn', true);
-    return AsyncRaceService.startEngine(carId).then(async ({ velocity, distance }) => {
-      this.updateCarsArr(carId, 'isActive', true);
-      this.handleAnimation(carId, carImg, velocity, distance);
-      this.enableDriveMode(carId);
-    });
-  };
-
-  enableDriveMode = async (carId: number) => {
-    return AsyncRaceService.driveMode(carId).then(response => {
-      const result = response as unknown as {
+  const enableDriveMode = async (carId: number): Promise<void> => {
+    return AsyncRaceService.driveMode(carId).then((response: unknown) => {
+      const result = response as {
         success?: boolean;
         carId?: number;
         err?: string;
-        velocity?: number;
       };
       if (!result.success) {
-        this.updateCarsArr(carId, 'isActive', false);
-        this.updateCarsArr(carId, 'isError', true);
+        updateCarsArrFunc(carId, 'isActive', false);
+        updateCarsArrFunc(carId, 'isError', true);
       }
     });
   };
 
-  handleAnimation = (carId: number, carImg: SVGSVGElement, velocity: number, distance: number) => {
+  const handleAnimation = (carId: number, carImg: SVGSVGElement, velocity: number, distance: number): number => {
     let startTime: number;
     let animationId: number;
-    const target = carImg;
-    const width = (document.querySelector('.car-item-body') as HTMLElement).clientWidth - target.clientWidth;
-    const animationTime = distance / velocity;
-    this.updateCarsArr(carId, 'animationTime', animationTime);
-    const step = (timestamp: number) => {
+    const target: SVGSVGElement = carImg;
+    const width: number = (document.querySelector('.car-item-body') as HTMLElement).clientWidth - target.clientWidth;
+    const animationTime: number = distance / velocity;
+    updateCarsArrFunc(carId, 'animationTime', animationTime);
+    const step = (timestamp: number): void => {
       let isActive = false;
-      const { carsArr } = this.state;
-      carsArr.forEach(car => {
+      carsArr.forEach((car: CarData) => {
         if (car.id === carId) {
           isActive = car.isActive as boolean;
         }
       });
       if (isActive) {
         if (!startTime) startTime = timestamp;
-        const currentTime = timestamp - startTime;
-        const count = (width / animationTime) * currentTime;
+        const currentTime: number = timestamp - startTime;
+        const count: number = (width / animationTime) * currentTime;
         target.style.transform = `translateX(${count}px)`;
         if (currentTime < animationTime) {
           animationId = window.requestAnimationFrame(step);
@@ -140,197 +175,168 @@ export default class Garage extends Component<Props, GlobalState> {
     return animationId;
   };
 
-  stopEngine = async (carId: number, carImg: SVGSVGElement) => {
+  const startEngine = async (carId: number, carImg: SVGSVGElement): Promise<void> => {
+    updateCarsArrFunc(carId, 'isEngineOn', true);
+    return AsyncRaceService.startEngine(carId).then(async ({ velocity, distance }) => {
+      updateCarsArrFunc(carId, 'isActive', true);
+      handleAnimation(carId, carImg, velocity, distance);
+      enableDriveMode(carId);
+    });
+  };
+
+  const stopEngine = async (carId: number, carImg: SVGSVGElement): Promise<void> => {
     AsyncRaceService.stopEngine(carId).then(() => {
-      this.updateCarsArr(carId, 'isActive', false);
-      this.updateCarsArr(carId, 'isEngineOn', false);
-      this.updateCarsArr(carId, 'isError', false);
+      updateCarsArrFunc(carId, 'isActive', false);
+      updateCarsArrFunc(carId, 'isEngineOn', false);
+      updateCarsArrFunc(carId, 'isError', false);
       carImg.style.removeProperty('transform');
     });
   };
 
-  startRace = () => {
+  const updateWinnerFunc = async (id: number, wins: number, time: number): Promise<void> => {
+    await AsyncRaceService.updateWinner(id, wins, time);
+    getWinners(1, WINNERS_PER_PAGE_COUNT);
+  };
+
+  const addWinner = (carId: number, currentTime: number): void => {
+    createWinner(carId, 1, currentTime)
+      .catch(async (): Promise<void> => {
+        const winnerData = (await getWinner(carId)) as WinnerData;
+        const { wins, time } = winnerData;
+        const totalWins: number = wins + 1;
+        updateWinnerFunc(carId, totalWins, currentTime < time ? currentTime : time);
+      })
+      .finally((): void => {
+        getWinners(1, WINNERS_PER_PAGE_COUNT);
+      });
+  };
+
+  const togglePopup = (): void => {
+    toggleModal(!isModalActive);
+  };
+
+  const startRace = () => {
     // eslint-disable-next-line no-console
     console.clear();
-    this.setState({ isRaceActive: true })
-    const { carsArr } = this.state;
+    toggleRaceActive(true);
     Promise.all(
-      carsArr.map(car => {
-        this.updateCarsArr(car.id, 'isEngineOn', true);
+      carsArr.map((car: CarData) => {
+        updateCarsArrFunc(car.id, 'isEngineOn', true);
         return AsyncRaceService.startEngine(car.id);
       }),
-    ).then(response => {
-      carsArr.forEach((car, ndx) => {
+    ).then((response: StartStopEngineResponse[]) => {
+      carsArr.forEach((car: CarData, ndx: number) => {
         const carImg = document.querySelector(`.car-img-wrapper-${car.id}`) as SVGSVGElement;
         const { velocity, distance } = response[ndx];
-        this.updateCarsArr(car.id, 'velocity', velocity);
-        this.updateCarsArr(car.id, 'isActive', true);
-        this.handleAnimation(car.id, carImg, velocity, distance);
+        updateCarsArrFunc(car.id, 'velocity', velocity);
+        updateCarsArrFunc(car.id, 'isActive', true);
+        handleAnimation(car.id, carImg, velocity, distance);
       });
       Promise.allSettled(
-        carsArr.map(car => {
+        carsArr.map((car: CarData) => {
           return new Promise((resolve, reject) => {
-            return AsyncRaceService.driveMode(car.id).then(resp => {
-              const result = resp as unknown as {
+            return AsyncRaceService.driveMode(car.id).then((resp: unknown) => {
+              const result = resp as {
                 success?: boolean;
                 carId?: number;
                 err?: string;
-                velocity?: number;
               };
               if (!result.success) {
-                this.updateCarsArr(car.id, 'isActive', false);
-                this.updateCarsArr(car.id, 'isError', true);
+                updateCarsArrFunc(car.id, 'isActive', false);
+                updateCarsArrFunc(car.id, 'isError', true);
                 const style = 'font-weight: bold;';
                 // eslint-disable-next-line no-console
                 console.log(`%c Car ${car.name} stopped suddenly!`, style);
                 reject();
               }
-              const carId = car.id;
-              const carVelocity = car.velocity;
+              const carId = car.id as number;
+              const carVelocity = car.velocity as number;
               resolve({ carId, carVelocity });
             });
           });
         }),
-      ).then(async res => {
-        const { carsArr } = this.state;
-        const result = res.filter(res => res.status === 'fulfilled').map(el => (el as PromiseFulfilledResult).value).sort((a, b) => b.carVelocity - a.carVelocity)[0];
-        const winner = await AsyncRaceService.getCar(result.carId);
-        const winnerId = winner.id;
-        const winnerName = winner.name;
-        this.togglePopup();
-        const { animationTime } = carsArr.filter(el => el.id === winnerId)[0];
-        const animationTimeInSeconds = Math.round(animationTime as number / 1000 * 100) / 100
-        this.setState({ winner: { id: winnerId, name: winnerName, time: animationTimeInSeconds }, isRaceActive: false });
-        this.addWinner(winnerId, animationTimeInSeconds);
+      ).then(async (res: PromiseSettledResult<unknown>[]): Promise<void> => {
+        const result: CarRaceData = res
+          .filter((resp: PromiseSettledResult<unknown>) => resp.status === 'fulfilled')
+          .map(el => (el as PromiseFulfilledResult).value)
+          .sort((a: CarRaceData, b: CarRaceData) => b.carVelocity - a.carVelocity)[0];
+        const newWinner = (await AsyncRaceService.getCar(result.carId)) as CarData;
+        const winnerId: number = newWinner.id;
+        const winnerName: string = newWinner.name;
+        togglePopup();
+        const { animationTime } = carsArr.filter((el: CarData) => el.id === winnerId)[0];
+        const animationTimeInSeconds: number =
+          Math.round(((animationTime as number) / MS_IN_SECOND) * ROUND_UP_FACTOR) / ROUND_UP_FACTOR;
+        updateWinner({ id: winnerId, name: winnerName, time: animationTimeInSeconds });
+        toggleRaceActive(false);
+        addWinner(winnerId, animationTimeInSeconds);
       });
     });
   };
 
-  createWinner = async (id: number, wins: number, time: number): Promise<WinnerData> => {
-    return await AsyncRaceService.createWinner(id, wins, time);
-  };
-
-  updateWinner = async (id: number, wins: number, time: number): Promise<void> => {
-    await AsyncRaceService.updateWinner(id, wins, time);
-    this.getWinners(1, 10);
-  };
-
-  deleteWinner = async (id: number): Promise<void> => {
-    await AsyncRaceService.deleteWinner(id);
-  };
-
-  addWinner = (carId: number, currentTime: number) => {
-    this.createWinner(carId, 1, currentTime).catch(async () => {
-      const winnerData = await this.getWinner(carId);
-      const { wins, time } = winnerData;
-      const totalWins = wins + 1;
-      this.updateWinner(carId, totalWins, currentTime < time ? currentTime : time);
-    }).finally(() => {
-      this.getWinners(1, 10);
-    })
-  }
-
-  getWinners = async (page: number, limit: number, sort: string = 'id', order: string = '') => {
-    const response = await AsyncRaceService.getWinners(page, limit, sort, order);
-    const { winnersArr, totalWinnersCount } = response;
-    this.setState({ winnersArr, totalWinnersCount });
-  }
-
-  getWinner = async (carId: number): Promise<WinnerData> => {
-    const response = await AsyncRaceService.getWinner(carId);
-    return response;
-  }
-
-  resetCars = () => {
-    const { carsArr } = this.state;
+  const resetCars = (): void => {
     Promise.all(
-      carsArr.map(car => {
+      carsArr.map((car: CarData) => {
         const carImg = document.querySelector(`.car-img-wrapper-${car.id}`) as SVGSVGElement;
-        return this.stopEngine(car.id, carImg);
+        return stopEngine(car.id, carImg);
       }),
     );
   };
 
-  generateCars = () => {
-    const arr = [];
+  const generateCars = (): void => {
+    const arr: GenerateCarsData[] = [];
     for (let i = 0; i < GENERATE_CARS_VALUE; i += 1) {
-      const name = `${carBrands[getRandomInt(CAR_NAMES_ARR_ITEMS_MIN_INDEX, CAR_NAMES_ARR_ITEMS_MAX_INDEX)]} ${carModels[getRandomInt(CAR_NAMES_ARR_ITEMS_MIN_INDEX, CAR_NAMES_ARR_ITEMS_MAX_INDEX)]}`;
-      const color = getRandomColor();
+      const name = `${carBrands[getRandomInt(CAR_NAMES_ARR_ITEMS_MIN_INDEX, CAR_NAMES_ARR_ITEMS_MAX_INDEX)]} ${
+        carModels[getRandomInt(CAR_NAMES_ARR_ITEMS_MIN_INDEX, CAR_NAMES_ARR_ITEMS_MAX_INDEX)]
+      }`;
+      const color: string = getRandomColor();
       arr.push({ name, color });
     }
-    Promise.all(
-      arr.map(el => {
-        return new Promise(async resolve => {
-          await AsyncRaceService.createCar(el.name, el.color)
-          resolve(null);
-        })
-      }),
-    ).then(() => {
-      const { currentPage } = this.state;
-      this.getCars(currentPage, CARS_PER_PAGE_COUNT);
-    })
-  };
-
-  toPrevPage = () => {
-    const { currentPage } = this.state;
-    if (currentPage > 1) {
-      const newPage = currentPage - 1;
-      this.getCars(newPage, CARS_PER_PAGE_COUNT);
-      this.setState({ currentPage: newPage });
-    }
-  };
-
-  toNextPage = () => {
-    const { currentPage, totalPagesCount } = this.state;
-    if (totalPagesCount && currentPage < totalPagesCount) {
-      const newPage = currentPage + 1;
-      this.getCars(newPage, CARS_PER_PAGE_COUNT);
-      this.setState({ currentPage: newPage });
-    }
-  };
-
-  updateCarsArr = (carId: number, carProperty: string, carValue: boolean | number) => {
-    const { carsArr } = this.state;
-    const newCarsArr = carsArr.map(car => {
-      const newCar = car;
-      if (car.id === carId) {
-        newCar[carProperty] = carValue;
-      }
-      return newCar;
+    Promise.all(arr.map((el: GenerateCarsData) => AsyncRaceService.createCar(el.name, el.color))).then(() => {
+      getCars(currentPage, CARS_PER_PAGE_COUNT);
     });
-    this.setState({ carsArr: newCarsArr });
   };
 
-  togglePopup = () => {
-    const { isModalActive } = this.state;
-    this.setState({ isModalActive: !isModalActive });
-  }
+  const toPrevPage = (): void => {
+    if (currentPage > 1) {
+      const newPage: number = currentPage - 1;
+      getCars(newPage, CARS_PER_PAGE_COUNT);
+      updateCurrentPage(newPage);
+    }
+  };
 
-  render() {
-    const { isVisible } = this.props;
-    return (
-      <ActionsCtx.Provider
-        value={{
-          createCar: this.createCar,
-          updateCar: this.updateCar,
-          selectCar: this.selectCar,
-          deleteCar: this.deleteCar,
-          startEngine: this.startEngine,
-          stopEngine: this.stopEngine,
-          startRace: this.startRace,
-          resetCars: this.resetCars,
-          generateCars: this.generateCars,
-          toPrevPage: this.toPrevPage,
-          toNextPage: this.toNextPage,
-          togglePopup: this.togglePopup,
-        }}
-      >
-        <div className={`garage-wrapper ${isVisible ? '' : 'hidden'}`}>
-          <GarageHeader />
-          <GarageBody />
-          <WinnerModal />
-        </div>
-      </ActionsCtx.Provider>
-    );
-  }
-}
+  const toNextPage = (): void => {
+    if (totalPagesCount && currentPage < totalPagesCount) {
+      const newPage: number = currentPage + 1;
+      getCars(newPage, CARS_PER_PAGE_COUNT);
+      updateCurrentPage(newPage);
+    }
+  };
+
+  return (
+    <ActionsCtx.Provider
+      value={{
+        createCar,
+        updateCar,
+        selectCar,
+        deleteCar,
+        startEngine,
+        stopEngine,
+        startRace,
+        resetCars,
+        generateCars,
+        toPrevPage,
+        toNextPage,
+        togglePopup,
+      }}
+    >
+      <div className={`garage-wrapper ${isVisible ? '' : 'hidden'}`}>
+        <GarageHeader />
+        <GarageBody />
+        <WinnerModal />
+      </div>
+    </ActionsCtx.Provider>
+  );
+};
+
+export default Garage;

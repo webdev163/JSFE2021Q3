@@ -1,8 +1,9 @@
 import React, { FC, useState, useEffect } from 'react';
 import AsyncRaceService from '../../services/AsyncRaceService';
-import { WinnerData } from '../../utils/types';
+import { WinnerData, GlobalState, GetWinnersResponse, SortTypes, OrderTypes } from '../../utils/types';
 import WinnersTableItem from '../../components/WinnersTableItem';
 import { AppCtx } from '../../utils/context';
+import { WINNERS_PER_PAGE_COUNT } from '../../utils/constants';
 
 import './Winners.scss';
 
@@ -11,79 +12,80 @@ interface Props {
 }
 
 const WinnersPage: FC<Props> = ({ isVisible }) => {
-  const appContext = React.useContext(AppCtx);
+  const appContext = React.useContext(AppCtx) as GlobalState;
   const winnersArr = appContext?.winnersArr as WinnerData[];
   const totalWinnersCount = appContext?.totalWinnersCount as number;
-  const totalPagesCount = Math.ceil(totalWinnersCount / 10);
+  const totalPagesCount = Math.ceil(totalWinnersCount / WINNERS_PER_PAGE_COUNT) as number;
   const [currentWinnersPage, setCurrentWinnersPage] = useState<number>(1);
   const [currentWinnersArr, setCurrentWinnersArr] = useState<WinnerData[]>(winnersArr);
-  const [currentTotalPagesCount, setCurrentTotalPagesCount] = useState(totalPagesCount);
-  const [sortType, setSortType] = useState('id');
-  const [orderType, setOrderType] = useState('ASC');
-  const isPrevDisabled = currentWinnersPage < 2;
-  const isNextEnabled = currentWinnersPage < currentTotalPagesCount;
+  const [currentTotalPagesCount, setCurrentTotalPagesCount] = useState<number>(totalPagesCount);
+  const [sortType, setSortType] = useState<string>(SortTypes.id);
+  const [orderType, setOrderType] = useState<string>(OrderTypes.asc);
+  const isPrevDisabled: boolean = currentWinnersPage < 2;
+  const isNextEnabled: boolean = currentWinnersPage < currentTotalPagesCount;
+
+  const getWinners = async (page: number, limit: number, sort: string = SortTypes.id, order = ''): Promise<void> => {
+    const response: GetWinnersResponse = await AsyncRaceService.getWinners(page, limit, sort, order);
+    setCurrentWinnersArr(response.winnersArr);
+  };
+
+  const updateTotalPagesCount = (): void => {
+    setCurrentTotalPagesCount(Math.ceil(totalWinnersCount / WINNERS_PER_PAGE_COUNT));
+  };
 
   useEffect(() => {
-    getWinners(currentWinnersPage, 10, sortType, orderType);
+    getWinners(currentWinnersPage, WINNERS_PER_PAGE_COUNT, sortType, orderType);
   }, [currentWinnersPage, winnersArr, sortType, orderType]);
 
   useEffect(() => {
     updateTotalPagesCount();
   }, [totalWinnersCount]);
 
-  const winnerItems = currentWinnersArr?.map((winner: WinnerData, ndx: number) => {
-    const number = (ndx + 1) + ((currentWinnersPage - 1) * 10);
-    return <WinnersTableItem key={winner.id} carId={winner.id} number={number} wins={winner.wins} time={winner.time} winnersArr={currentWinnersArr} />;
+  const winnerItems: JSX.Element[] = currentWinnersArr?.map((winner: WinnerData, ndx: number) => {
+    const number: number = ndx + 1 + (currentWinnersPage - 1) * WINNERS_PER_PAGE_COUNT;
+    return (
+      <WinnersTableItem
+        key={winner.id}
+        carId={winner.id}
+        number={number}
+        wins={winner.wins}
+        time={winner.time}
+        winnersArr={currentWinnersArr}
+      />
+    );
   });
 
-  const toPrevPage = () => {
+  const toPrevPage = (): void => {
     if (currentWinnersPage > 1) {
-      const newPage = currentWinnersPage - 1;
-      getWinners(newPage, 10, sortType, orderType);
+      const newPage: number = currentWinnersPage - 1;
+      getWinners(newPage, WINNERS_PER_PAGE_COUNT, sortType, orderType);
       setCurrentWinnersPage(newPage);
     }
-  }
+  };
 
-  const toNextPage = () => {
+  const toNextPage = (): void => {
     if (currentWinnersPage < currentTotalPagesCount) {
-      const newPage = currentWinnersPage + 1;
-      getWinners(newPage, 10);
+      const newPage: number = currentWinnersPage + 1;
+      getWinners(newPage, WINNERS_PER_PAGE_COUNT, sortType, orderType);
       setCurrentWinnersPage(newPage);
     }
-  }
+  };
 
-  const getWinners = async (page: number, limit: number, sort: string = 'id', order: string = '') => {
-    const response = await AsyncRaceService.getWinners(page, limit, sort, order);
-    setCurrentWinnersArr(response['winnersArr']);
-  }
-
-  const updateTotalPagesCount = () => {
-    setCurrentTotalPagesCount(Math.ceil(totalWinnersCount / 10));
-  }
-
-  const handleLinkClick = (type: string) => {
+  const handleLinkClick = (type: string): void => {
     setSortType(type);
-    setOrderType(orderType === 'ASC' ? 'DESC' : 'ASC');
-    getWinners(currentWinnersPage, 10, sortType, orderType);
-  }
+    setOrderType(orderType === OrderTypes.asc ? OrderTypes.desc : OrderTypes.asc);
+    getWinners(currentWinnersPage, WINNERS_PER_PAGE_COUNT, sortType, orderType);
+  };
 
-  const getWinsArrow = () => {
-    if (sortType === 'wins' && orderType === 'ASC') {
+  const getArrow = (type: string): string => {
+    if (sortType === type && orderType === OrderTypes.asc) {
       return '↑';
-    } else if (sortType === 'wins' && orderType === 'DESC') {
+    }
+    if (sortType === type && orderType === OrderTypes.desc) {
       return '↓';
     }
     return '';
-  }
-
-  const getTimeArrow = () => {
-    if (sortType === 'time' && orderType === 'ASC') {
-      return '↑';
-    } else if (sortType === 'time' && orderType === 'DESC') {
-      return '↓';
-    }
-    return '';
-  }
+  };
 
   return (
     <div className={`winners-wrapper ${isVisible ? '' : 'hidden'}`}>
@@ -97,19 +99,25 @@ const WinnersPage: FC<Props> = ({ isVisible }) => {
         </button>
       </div>
       <h3>Page #{currentWinnersPage}</h3>
-      <table className='winners-table'>
-        <thead className='winners-table-head'>
+      <table className="winners-table">
+        <thead className="winners-table-head">
           <tr>
             <td>Number</td>
             <td>Car</td>
-            <td className='name-col'>Name</td>
-            <td className='wins-col'><span className='table-link' onClick={() => handleLinkClick('wins')}>Wins {getWinsArrow()}</span></td>
-            <td className='time-col'><span className='table-link' onClick={() => handleLinkClick('time')}>Best time (seconds) {getTimeArrow()}</span></td>
+            <td className="name-col">Name</td>
+            <td className="wins-col">
+              <button type="button" className="table-link" onClick={() => handleLinkClick(SortTypes.wins)}>
+                Wins<span className="table-link-arrow"> {getArrow(SortTypes.wins)}</span>
+              </button>
+            </td>
+            <td className="time-col">
+              <button type="button" className="table-link" onClick={() => handleLinkClick(SortTypes.time)}>
+                Best time (seconds)<span className="table-link-arrow"> {getArrow(SortTypes.time)}</span>
+              </button>
+            </td>
           </tr>
         </thead>
-        <tbody>
-          {winnerItems}
-        </tbody>
+        <tbody>{winnerItems}</tbody>
       </table>
     </div>
   );

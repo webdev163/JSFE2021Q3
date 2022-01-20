@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
-import AsyncRaceService from '../../services/AsyncRaceService';
-import { WinnerData } from '../../utils/types';
+import { WinnerData, CarData } from '../../utils/types';
+import { getCarData } from '../../utils/utils';
 
 import './WinnersTableItem.scss';
 
@@ -12,33 +12,31 @@ interface Props {
   winnersArr: WinnerData[];
 }
 
-const WinnersTableItem: FC<Props> = ({ carId, number, wins, time, winnersArr}) => {
-  const [winnerData, setWinnerData] = useState({});
+const WinnersTableItem: FC<Props> = ({ carId, number, wins, time, winnersArr }) => {
+  const [winnerData, setWinnerData] = useState<{ name: string; color: string } | null>(null);
 
   useEffect(() => {
     let isMounted = true;
-    getWinnerData(carId).then(data => {
+    getCarData(carId).then((data: CarData) => {
       if (isMounted) {
         const { name, color } = data;
         setWinnerData({ name, color });
       }
-    })
-    return () => { isMounted = false };
+    });
+    return () => {
+      isMounted = false;
+    };
   }, [winnersArr]);
-
-  const getWinnerData = async (carId: number) => {
-    return await AsyncRaceService.getCar(carId);
-  }
 
   return (
     <tr>
       <td>{number}</td>
       <td>
         <svg width="68" height="34">
-          <use style={{ fill: winnerData['color'] }} href="assets/icons/sprite.svg#car" />
+          <use style={{ fill: winnerData?.color }} href="assets/icons/sprite.svg#car" />
         </svg>
       </td>
-      <td>{winnerData['name']}</td>
+      <td>{winnerData?.name}</td>
       <td>{wins}</td>
       <td>{time}</td>
     </tr>

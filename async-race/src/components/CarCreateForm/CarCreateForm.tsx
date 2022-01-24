@@ -30,7 +30,11 @@ const CarCreateForm: FC = () => {
       <button
         className="btn create-btn"
         type="button"
-        onClick={() => createCar(carName, carColor)}
+        onClick={() => {
+          createCar(carName, carColor);
+          setName('');
+          setColor('#000000');
+        }}
         disabled={isRaceActive}
       >
         Create

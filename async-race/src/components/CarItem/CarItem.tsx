@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, useState, useEffect } from 'react';
 import { AppCtx, ActionsCtx } from '../../utils/context';
 import { Actions, CarData, GlobalState } from '../../utils/types';
 import { CarItemProps } from './types';
@@ -8,22 +8,24 @@ import './CarItem.scss';
 const CarItem: FC<CarItemProps> = ({ carName, carColor, carId }) => {
   const actionsContext = React.useContext(ActionsCtx) as Actions;
   const appContext = React.useContext(AppCtx) as GlobalState;
-  let isStartActive = true;
-  let isStopActive = false;
+  const [isStartActive, setStartActive] = useState<boolean>(true);
+  const [isStopActive, setStopActive] = useState<boolean>(false);
   const isRaceActive: boolean = appContext?.isRaceActive;
   const carsArr = appContext?.carsArr as CarData[];
-  carsArr.forEach((car: CarData) => {
-    if (car.id === carId && !car.isEngineOn) {
-      isStartActive = true;
-    } else if (car.id === carId) {
-      isStartActive = false;
-    }
-    if (car.id === carId && (car.isActive || car.isError) && !isRaceActive) {
-      isStopActive = true;
-    } else if (car.id === carId) {
-      isStopActive = false;
-    }
-  }) as unknown as CarData[];
+  useEffect(() => {
+    carsArr.forEach((car: CarData) => {
+      if (car.id === carId && !car.isEngineOn) {
+        setStartActive(true);
+      } else if (car.id === carId) {
+        setStartActive(false);
+      }
+      if (car.id === carId && (car.isActive || car.isError) && !isRaceActive) {
+        setStopActive(true);
+      } else if (car.id === carId) {
+        setStopActive(false);
+      }
+    }) as unknown as CarData[];
+  });
   const deleteCar = actionsContext?.deleteCar as (carId: number) => void;
   const selectCar = actionsContext?.selectCar as (carId: number) => void;
   const startEngine = actionsContext?.startEngine as (carId: number, carImg: SVGSVGElement | null) => void;

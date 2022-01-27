@@ -20,10 +20,10 @@ const initialState: GlobalState = {
 
 const App: FC = () => {
   const [isWinnersVisible, toggleView] = useState(false);
-  const [globalState, updateGlobalState] = useState(initialState);
+  const [globalState, setGlobalState] = useState(initialState);
 
   const updateState = (state: GlobalState): void => {
-    updateGlobalState(state);
+    setGlobalState(state);
   };
 
   return (

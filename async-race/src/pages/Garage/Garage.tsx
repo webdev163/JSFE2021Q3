@@ -35,7 +35,7 @@ interface Props {
 }
 
 const Garage: FC<Props> = ({ isVisible, updateState }) => {
-  const [carsArr, updateCarsArr] = useState<CarData[] | never[]>([]);
+  const [carsArr, setCarsArr] = useState<CarData[] | never[]>([]);
   const [totalCarsCount, updateTotalCarsCount] = useState<number | null>(null);
   const [totalPagesCount, updateTotalPagesCount] = useState<number | null>(null);
   const [currentPage, updateCurrentPage] = useState<number>(1);
@@ -49,7 +49,7 @@ const Garage: FC<Props> = ({ isVisible, updateState }) => {
   const getCars = async (page: number, limit: number): Promise<void> => {
     const { carsArr: newCarsArr, totalCarsCount: newTotalCarsCount } = await AsyncRaceService.getCars(page, limit);
     const newTotalPagesCount: number = Math.ceil(newTotalCarsCount / CARS_PER_PAGE_COUNT);
-    updateCarsArr(newCarsArr);
+    setCarsArr(newCarsArr);
     updateTotalCarsCount(newTotalCarsCount);
     updateTotalPagesCount(newTotalPagesCount);
   };
@@ -100,12 +100,12 @@ const Garage: FC<Props> = ({ isVisible, updateState }) => {
       }
       return newCar;
     });
-    updateCarsArr(newCarsArr);
+    setCarsArr(newCarsArr);
   };
 
   const createCar = async (carName: string, carColor: string): Promise<void> => {
     const carData = (await AsyncRaceService.createCar(carName, carColor)) as CarData;
-    updateCarsArr([...carsArr, carData]);
+    setCarsArr([...carsArr, carData]);
     getCars(currentPage, CARS_PER_PAGE_COUNT);
   };
 
@@ -128,7 +128,7 @@ const Garage: FC<Props> = ({ isVisible, updateState }) => {
     await AsyncRaceService.updateCar(name, color, carId);
     const index: number = carsArr.findIndex((el: CarData) => el.id === carId);
     updateSelectedCar({ name: '', color: '#000000', id: 0 });
-    updateCarsArr([...carsArr.slice(0, index), { name, color, id: carId }, ...carsArr.slice(index + 1)]);
+    setCarsArr([...carsArr.slice(0, index), { name, color, id: carId }, ...carsArr.slice(index + 1)]);
     getWinners(1, WINNERS_PER_PAGE_COUNT);
   };
 

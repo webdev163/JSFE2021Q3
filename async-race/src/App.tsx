@@ -19,8 +19,9 @@ const initialState: GlobalState = {
 };
 
 const App: FC = () => {
-  const [isWinnersVisible, toggleView] = useState(false);
+  const [isWinnersVisible, setToggleView] = useState(false);
   const [globalState, setGlobalState] = useState(initialState);
+  const handleToggleView = () => setToggleView(!isWinnersVisible);
 
   const updateState = (state: GlobalState): void => {
     setGlobalState(state);
@@ -29,7 +30,7 @@ const App: FC = () => {
   return (
     <AppCtx.Provider value={globalState}>
       <div className="container">
-        <NavMenu winnersView={() => toggleView(false)} garageView={() => toggleView(true)} />
+        <NavMenu toggleView={() => handleToggleView()} />
         <GaragePage isVisible={!isWinnersVisible} updateState={updateState} />
         <WinnersPage isVisible={isWinnersVisible} />
       </div>

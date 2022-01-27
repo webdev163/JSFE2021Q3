@@ -32,29 +32,29 @@ import './Garage.scss';
 
 const Garage: FC<GarageProps> = ({ isVisible, updateState }) => {
   const [carsArr, setCarsArr] = useState<CarData[] | never[]>([]);
-  const [totalCarsCount, updateTotalCarsCount] = useState<number | null>(null);
-  const [totalPagesCount, updateTotalPagesCount] = useState<number | null>(null);
-  const [currentPage, updateCurrentPage] = useState<number>(1);
-  const [selectedCar, updateSelectedCar] = useState<CarData>({ name: '', color: INITIAL_COLOR, id: 0 });
-  const [isModalActive, toggleModal] = useState<boolean>(false);
-  const [winner, updateWinner] = useState<{ id: number; name: string; time: number } | null>(null);
-  const [isRaceActive, toggleRaceActive] = useState<boolean>(false);
-  const [winnersArr, updateWinnersArr] = useState<WinnerData[] | never[]>([]);
-  const [totalWinnersCount, updateTotalWinnersCount] = useState<number | null>(null);
+  const [totalCarsCount, setTotalCarsCount] = useState<number | null>(null);
+  const [totalPagesCount, setTotalPagesCount] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [selectedCar, setSelectedCar] = useState<CarData>({ name: '', color: INITIAL_COLOR, id: 0 });
+  const [isModalActive, setModal] = useState<boolean>(false);
+  const [winner, setWinner] = useState<{ id: number; name: string; time: number } | null>(null);
+  const [isRaceActive, setRaceStatus] = useState<boolean>(false);
+  const [winnersArr, setWinnersArr] = useState<WinnerData[] | never[]>([]);
+  const [totalWinnersCount, setTotalWinnersCount] = useState<number | null>(null);
 
   const getCars = async (page: number, limit: number): Promise<void> => {
     const { carsArr: newCarsArr, totalCarsCount: newTotalCarsCount } = await AsyncRaceService.getCars(page, limit);
     const newTotalPagesCount: number = Math.ceil(newTotalCarsCount / CARS_PER_PAGE_COUNT);
     setCarsArr(newCarsArr);
-    updateTotalCarsCount(newTotalCarsCount);
-    updateTotalPagesCount(newTotalPagesCount);
+    setTotalCarsCount(newTotalCarsCount);
+    setTotalPagesCount(newTotalPagesCount);
   };
 
   const getWinners = async (page: number, limit: number, sort = 'id', order = ''): Promise<void> => {
     const response = (await AsyncRaceService.getWinners(page, limit, sort, order)) as GetWinnersResponse;
     const { winnersArr: newWinnersArr, totalWinnersCount: newTotalWinnersCount } = response;
-    updateWinnersArr(newWinnersArr);
-    updateTotalWinnersCount(newTotalWinnersCount);
+    setWinnersArr(newWinnersArr);
+    setTotalWinnersCount(newTotalWinnersCount);
   };
 
   useEffect(() => {
@@ -117,13 +117,13 @@ const Garage: FC<GarageProps> = ({ isVisible, updateState }) => {
 
   const selectCar = async (carId: number): Promise<void> => {
     const carData = (await AsyncRaceService.getCar(carId)) as CarData;
-    updateSelectedCar(carData);
+    setSelectedCar(carData);
   };
 
   const updateCar = async (name: string, color: string, carId: number): Promise<void> => {
     await AsyncRaceService.updateCar(name, color, carId);
     const index: number = carsArr.findIndex((el: CarData) => el.id === carId);
-    updateSelectedCar({ name: '', color: INITIAL_COLOR, id: 0 });
+    setSelectedCar({ name: '', color: INITIAL_COLOR, id: 0 });
     setCarsArr([...carsArr.slice(0, index), { name, color, id: carId }, ...carsArr.slice(index + 1)]);
     getWinners(1, WINNERS_PER_PAGE_COUNT);
   };
@@ -208,13 +208,13 @@ const Garage: FC<GarageProps> = ({ isVisible, updateState }) => {
   };
 
   const togglePopup = (): void => {
-    toggleModal(!isModalActive);
+    setModal(!isModalActive);
   };
 
   const startRace = () => {
     // eslint-disable-next-line no-console
     console.clear();
-    toggleRaceActive(true);
+    setRaceStatus(true);
     Promise.all(
       carsArr.map((car: CarData) => {
         updateCarsArrFunc(car.id, 'isEngineOn', true);
@@ -264,11 +264,11 @@ const Garage: FC<GarageProps> = ({ isVisible, updateState }) => {
           const { animationTime } = carsArr.filter((el: CarData) => el.id === winnerId)[0];
           const animationTimeInSeconds: number =
             Math.round(((animationTime as number) / MS_IN_SECOND) * ROUND_UP_FACTOR) / ROUND_UP_FACTOR;
-          updateWinner({ id: winnerId, name: winnerName, time: animationTimeInSeconds });
-          toggleRaceActive(false);
+          setWinner({ id: winnerId, name: winnerName, time: animationTimeInSeconds });
+          setRaceStatus(false);
           addWinner(winnerId, animationTimeInSeconds);
         } else {
-          toggleRaceActive(false);
+          setRaceStatus(false);
         }
       });
     });
@@ -301,7 +301,7 @@ const Garage: FC<GarageProps> = ({ isVisible, updateState }) => {
     if (currentPage > 1) {
       const newPage: number = currentPage - 1;
       getCars(newPage, CARS_PER_PAGE_COUNT);
-      updateCurrentPage(newPage);
+      setCurrentPage(newPage);
     }
   };
 
@@ -309,7 +309,7 @@ const Garage: FC<GarageProps> = ({ isVisible, updateState }) => {
     if (totalPagesCount && currentPage < totalPagesCount) {
       const newPage: number = currentPage + 1;
       getCars(newPage, CARS_PER_PAGE_COUNT);
-      updateCurrentPage(newPage);
+      setCurrentPage(newPage);
     }
   };
 

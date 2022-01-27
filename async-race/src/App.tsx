@@ -4,13 +4,14 @@ import GaragePage from './pages/Garage';
 import WinnersPage from './pages/Winners';
 import { AppCtx } from './utils/context';
 import { GlobalState } from './utils/types';
+import { INITIAL_COLOR } from './utils/constants';
 
 const initialState: GlobalState = {
   carsArr: [],
   totalCarsCount: null,
   totalPagesCount: null,
   currentPage: 1,
-  selectedCar: { name: '', color: '#000000', id: 0 },
+  selectedCar: { name: '', color: INITIAL_COLOR, id: 0 },
   isModalActive: false,
   winner: null,
   isRaceActive: false,

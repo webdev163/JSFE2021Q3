@@ -1,12 +1,13 @@
 import React, { FC, useState } from 'react';
 import { AppCtx, ActionsCtx } from '../../utils/context';
 import { Actions, GlobalState } from '../../utils/types';
+import { INITIAL_COLOR } from '../../utils/constants';
 
 import './CarCreateForm.scss';
 
 const CarCreateForm: FC = () => {
   const [carName, setName] = useState<string>('');
-  const [carColor, setColor] = useState<string>('#000000');
+  const [carColor, setColor] = useState<string>(INITIAL_COLOR);
   const actionsContext = React.useContext(ActionsCtx) as Actions;
   const appContext = React.useContext(AppCtx) as GlobalState;
   const isRaceActive = appContext?.isRaceActive as boolean;
@@ -33,7 +34,7 @@ const CarCreateForm: FC = () => {
         onClick={() => {
           createCar(carName, carColor);
           setName('');
-          setColor('#000000');
+          setColor(INITIAL_COLOR);
         }}
         disabled={isRaceActive}
       >

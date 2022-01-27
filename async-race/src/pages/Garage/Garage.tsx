@@ -10,6 +10,7 @@ import {
   WINNERS_PER_PAGE_COUNT,
   MS_IN_SECOND,
   ROUND_UP_FACTOR,
+  INITIAL_COLOR,
 } from '../../utils/constants';
 import {
   CarData,
@@ -39,7 +40,7 @@ const Garage: FC<Props> = ({ isVisible, updateState }) => {
   const [totalCarsCount, updateTotalCarsCount] = useState<number | null>(null);
   const [totalPagesCount, updateTotalPagesCount] = useState<number | null>(null);
   const [currentPage, updateCurrentPage] = useState<number>(1);
-  const [selectedCar, updateSelectedCar] = useState<CarData>({ name: '', color: '#000000', id: 0 });
+  const [selectedCar, updateSelectedCar] = useState<CarData>({ name: '', color: INITIAL_COLOR, id: 0 });
   const [isModalActive, toggleModal] = useState<boolean>(false);
   const [winner, updateWinner] = useState<{ id: number; name: string; time: number } | null>(null);
   const [isRaceActive, toggleRaceActive] = useState<boolean>(false);
@@ -127,7 +128,7 @@ const Garage: FC<Props> = ({ isVisible, updateState }) => {
   const updateCar = async (name: string, color: string, carId: number): Promise<void> => {
     await AsyncRaceService.updateCar(name, color, carId);
     const index: number = carsArr.findIndex((el: CarData) => el.id === carId);
-    updateSelectedCar({ name: '', color: '#000000', id: 0 });
+    updateSelectedCar({ name: '', color: INITIAL_COLOR, id: 0 });
     setCarsArr([...carsArr.slice(0, index), { name, color, id: carId }, ...carsArr.slice(index + 1)]);
     getWinners(1, WINNERS_PER_PAGE_COUNT);
   };

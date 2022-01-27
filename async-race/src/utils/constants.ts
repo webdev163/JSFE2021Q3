@@ -11,3 +11,5 @@ export const WINNERS_PER_PAGE_COUNT = 10;
 export const MS_IN_SECOND = 1000;
 
 export const ROUND_UP_FACTOR = 100;
+
+export const INITIAL_COLOR = '#000000';

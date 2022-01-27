@@ -24,7 +24,7 @@ const CarItem: FC<CarItemProps> = ({ carName, carColor, carId }) => {
       } else if (car.id === carId) {
         setStopActive(false);
       }
-    }) as unknown as CarData[];
+    });
   });
   const deleteCar = actionsContext?.deleteCar as (carId: number) => void;
   const selectCar = actionsContext?.selectCar as (carId: number) => void;

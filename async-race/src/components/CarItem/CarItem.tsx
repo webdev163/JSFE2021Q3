@@ -1,16 +1,11 @@
 import React, { FC, useRef } from 'react';
 import { AppCtx, ActionsCtx } from '../../utils/context';
 import { Actions, CarData, GlobalState } from '../../utils/types';
+import { CarItemProps } from './types';
 
 import './CarItem.scss';
 
-interface Props {
-  carName: string;
-  carColor: string;
-  carId: number;
-}
-
-const CarItem: FC<Props> = ({ carName, carColor, carId }) => {
+const CarItem: FC<CarItemProps> = ({ carName, carColor, carId }) => {
   const actionsContext = React.useContext(ActionsCtx) as Actions;
   const appContext = React.useContext(AppCtx) as GlobalState;
   let isStartActive = true;

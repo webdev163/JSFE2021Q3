@@ -1,14 +1,11 @@
 import React, { FC } from 'react';
 import { AppCtx } from '../../utils/context';
 import { GlobalState } from '../../utils/types';
+import { NavMenuProps } from './types';
 
 import './NavMenu.scss';
 
-type Props = {
-  toggleView: () => void;
-};
-
-const NavMenu: FC<Props> = ({ toggleView }) => {
+const NavMenu: FC<NavMenuProps> = ({ toggleView }) => {
   const appContext = React.useContext(AppCtx) as GlobalState;
   const areButtonsDisabled = appContext?.isRaceActive as boolean;
   return (

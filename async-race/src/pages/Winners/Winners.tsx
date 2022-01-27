@@ -4,14 +4,11 @@ import { WinnerData, GlobalState, GetWinnersResponse, SortTypes, OrderTypes } fr
 import WinnersTableItem from '../../components/WinnersTableItem';
 import { AppCtx } from '../../utils/context';
 import { WINNERS_PER_PAGE_COUNT } from '../../utils/constants';
+import { WinnersProps } from './types';
 
 import './Winners.scss';
 
-interface Props {
-  isVisible: boolean;
-}
-
-const WinnersPage: FC<Props> = ({ isVisible }) => {
+const WinnersPage: FC<WinnersProps> = ({ isVisible }) => {
   const appContext = React.useContext(AppCtx) as GlobalState;
   const winnersArr = appContext?.winnersArr as WinnerData[];
   const totalWinnersCount = appContext?.totalWinnersCount as number;

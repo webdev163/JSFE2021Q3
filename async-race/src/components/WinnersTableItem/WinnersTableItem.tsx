@@ -1,18 +1,11 @@
 import React, { FC, useState, useEffect } from 'react';
-import { WinnerData, CarData } from '../../utils/types';
+import { CarData } from '../../utils/types';
 import { getCarData } from '../../utils/utils';
+import { WinnersTableItemProps } from './types';
 
 import './WinnersTableItem.scss';
 
-interface Props {
-  carId: number;
-  number: number;
-  wins: number;
-  time: number;
-  winnersArr: WinnerData[];
-}
-
-const WinnersTableItem: FC<Props> = ({ carId, number, wins, time, winnersArr }) => {
+const WinnersTableItem: FC<WinnersTableItemProps> = ({ carId, number, wins, time, winnersArr }) => {
   const [winnerData, setWinnerData] = useState<{ name: string; color: string } | null>(null);
 
   useEffect(() => {

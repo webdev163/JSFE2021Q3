@@ -14,7 +14,6 @@ import {
 } from '../../utils/constants';
 import {
   CarData,
-  GlobalState,
   PromiseFulfilledResult,
   WinnerData,
   StartStopEngineResponse,
@@ -27,15 +26,11 @@ import carBrands from '../../assets/data/carBrands';
 import carModels from '../../assets/data/carModels';
 import { getRandomInt, getRandomColor, createWinner, deleteWinner, getWinner } from '../../utils/utils';
 import WinnerModal from '../../components/WinnerModal';
+import { GarageProps } from './types';
 
 import './Garage.scss';
 
-interface Props {
-  isVisible: boolean;
-  updateState: (state: GlobalState) => void;
-}
-
-const Garage: FC<Props> = ({ isVisible, updateState }) => {
+const Garage: FC<GarageProps> = ({ isVisible, updateState }) => {
   const [carsArr, setCarsArr] = useState<CarData[] | never[]>([]);
   const [totalCarsCount, updateTotalCarsCount] = useState<number | null>(null);
   const [totalPagesCount, updateTotalPagesCount] = useState<number | null>(null);

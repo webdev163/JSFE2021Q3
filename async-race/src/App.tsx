@@ -5,19 +5,20 @@ import WinnersPage from './pages/Winners';
 import { AppCtx } from './utils/context';
 import { GlobalState } from './utils/types';
 
+const initialState: GlobalState = {
+  carsArr: [],
+  totalCarsCount: null,
+  totalPagesCount: null,
+  currentPage: 1,
+  selectedCar: { name: '', color: '#000000', id: 0 },
+  isModalActive: false,
+  winner: null,
+  isRaceActive: false,
+  winnersArr: [],
+  totalWinnersCount: null,
+};
+
 const App: FC = () => {
-  const initialState: GlobalState = {
-    carsArr: [],
-    totalCarsCount: null,
-    totalPagesCount: null,
-    currentPage: 1,
-    selectedCar: { name: '', color: '#000000', id: 0 },
-    isModalActive: false,
-    winner: null,
-    isRaceActive: false,
-    winnersArr: [],
-    totalWinnersCount: null,
-  };
   const [isWinnersVisible, toggleView] = useState(false);
   const [globalState, updateGlobalState] = useState(initialState);
 

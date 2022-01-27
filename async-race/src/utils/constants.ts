@@ -13,3 +13,5 @@ export const MS_IN_SECOND = 1000;
 export const ROUND_UP_FACTOR = 100;
 
 export const INITIAL_COLOR = '#000000';
+
+export const CURRENT_PAGE_PAGINATION_MIN_VALUE = 1;

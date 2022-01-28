@@ -16,16 +16,17 @@ export interface WinnerData {
 }
 
 export interface GlobalState {
-  carsArr: CarData[];
-  totalCarsCount: number | null;
-  totalPagesCount: number | null;
-  currentPage: number;
-  selectedCar: CarData;
-  isModalActive: boolean;
-  winner: {id: number, name: string, time: number} | null;
-  isRaceActive: boolean,
-  winnersArr: WinnerData[],
-  totalWinnersCount: number | null,
+  carsArr?: CarData[];
+  totalCarsCount?: number | null;
+  totalPagesCount?: number | null;
+  currentPage?: number;
+  selectedCar?: CarData;
+  isModalActive?: boolean;
+  winner?: {id: number, name: string, time: number} | null;
+  isRaceActive?: boolean,
+  winnersArr?: WinnerData[],
+  totalWinnersCount?: number | null,
+  currentWinnersPage?: number;
 }
 
 export interface WinnersState {
@@ -49,8 +50,8 @@ export interface Actions {
   startRace: () => void;
   resetCars: () => void;
   generateCars: () => void;
-  toPrevPage: () => void;
-  toNextPage: () => void;
+  toPrevPage: (page: string) => void;
+  toNextPage: (page: string) => void;
   togglePopup: () => void;
 }
 
@@ -96,4 +97,9 @@ export enum SortTypes {
 export enum OrderTypes {
   asc = 'ASC',
   desc = 'DESC',
+}
+
+export enum Pages {
+  garage = 'garage',
+  winners = 'winners',
 }

@@ -10,7 +10,7 @@ const CarItem: FC<CarItemProps> = ({ carName, carColor, carId }) => {
   const appContext = React.useContext(AppCtx) as GlobalState;
   const [isStartActive, setStartActive] = useState<boolean>(true);
   const [isStopActive, setStopActive] = useState<boolean>(false);
-  const isRaceActive: boolean = appContext?.isRaceActive;
+  const isRaceActive = appContext?.isRaceActive as boolean;
   const carsArr = appContext?.carsArr as CarData[];
   useEffect(() => {
     carsArr.forEach((car: CarData) => {

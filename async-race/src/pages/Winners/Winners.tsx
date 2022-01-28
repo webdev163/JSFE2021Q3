@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import AsyncRaceService from '../../services/AsyncRaceService';
-import { WinnerData, GlobalState, GetWinnersResponse, SortTypes, OrderTypes } from '../../utils/types';
+import { WinnerData, GlobalState, GetWinnersResponse, SortTypes, OrderTypes, Pages } from '../../utils/types';
 import WinnersTableItem from '../../components/WinnersTableItem';
 import { AppCtx } from '../../utils/context';
 import { WINNERS_PER_PAGE_COUNT } from '../../utils/constants';
@@ -8,12 +8,12 @@ import { WinnersProps } from './types';
 
 import './Winners.scss';
 
-const WinnersPage: FC<WinnersProps> = ({ isVisible }) => {
+const WinnersPage: FC<WinnersProps> = ({ isVisible, toPrevPage, toNextPage }) => {
   const appContext = React.useContext(AppCtx) as GlobalState;
   const winnersArr = appContext?.winnersArr as WinnerData[];
   const totalWinnersCount = appContext?.totalWinnersCount as number;
+  const currentWinnersPage = appContext?.currentWinnersPage as number;
   const totalPagesCount = Math.ceil(totalWinnersCount / WINNERS_PER_PAGE_COUNT) as number;
-  const [currentWinnersPage, setCurrentWinnersPage] = useState<number>(1);
   const [currentWinnersArr, setCurrentWinnersArr] = useState<WinnerData[]>(winnersArr);
   const [currentTotalPagesCount, setCurrentTotalPagesCount] = useState<number>(totalPagesCount);
   const [sortType, setSortType] = useState<string>(SortTypes.id);
@@ -52,22 +52,6 @@ const WinnersPage: FC<WinnersProps> = ({ isVisible }) => {
     );
   });
 
-  const toPrevPage = (): void => {
-    if (currentWinnersPage > 1) {
-      const newPage: number = currentWinnersPage - 1;
-      getWinners(newPage, WINNERS_PER_PAGE_COUNT, sortType, orderType);
-      setCurrentWinnersPage(newPage);
-    }
-  };
-
-  const toNextPage = (): void => {
-    if (currentWinnersPage < currentTotalPagesCount) {
-      const newPage: number = currentWinnersPage + 1;
-      getWinners(newPage, WINNERS_PER_PAGE_COUNT, sortType, orderType);
-      setCurrentWinnersPage(newPage);
-    }
-  };
-
   const handleLinkClick = (type: string): void => {
     setSortType(type);
     setOrderType(orderType === OrderTypes.asc ? OrderTypes.desc : OrderTypes.asc);
@@ -88,10 +72,10 @@ const WinnersPage: FC<WinnersProps> = ({ isVisible }) => {
     <div className={`winners-wrapper ${isVisible ? '' : 'hidden'}`}>
       <h2>Winners ({totalWinnersCount})</h2>
       <div className="pagination-buttons-wrapper">
-        <button className="btn" type="button" onClick={() => toPrevPage()} disabled={isPrevDisabled}>
+        <button className="btn" type="button" onClick={() => toPrevPage(Pages.winners)} disabled={isPrevDisabled}>
           Prev
         </button>
-        <button className="btn" type="button" onClick={() => toNextPage()} disabled={!isNextEnabled}>
+        <button className="btn" type="button" onClick={() => toNextPage(Pages.winners)} disabled={!isNextEnabled}>
           Next
         </button>
       </div>

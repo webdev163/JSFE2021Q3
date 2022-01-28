@@ -7,9 +7,9 @@ import './CarsList.scss';
 
 const CarsList: FC = () => {
   const appContext = React.useContext(AppCtx) as GlobalState;
-  const renderCars: JSX.Element[] = appContext?.carsArr.map((car: CarData) => {
+  const renderCars = appContext?.carsArr?.map((car: CarData) => {
     return <CarItem key={car.id} carName={car.name} carColor={car.color} carId={car.id} />;
-  });
+  }) as JSX.Element[];
   return <ul className="cars-list">{renderCars}</ul>;
 };
 
